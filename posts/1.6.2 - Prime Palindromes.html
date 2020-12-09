@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Prime Palindromes</h1>
+
+<h2>C++</h2>
+
+<pre><code>#include &lt;cstdio&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+#include &lt;math.h&gt;
+#include &lt;fstream&gt;
+#include &lt;algorithm&gt;
+#include &lt;iostream&gt;
+
+using namespace std;
+
+// Generate the palindromes
+void gen(int seed, int parity, int l, int h, vector&lt;int&gt; &amp; palindromes){
+    // Generates a single palindrome
+    // parity = 0: even length
+    // parity = 1: odd length
+
+    string str = to_string(seed);
+    string reversed = str.substr(0,str.length()-parity);
+    reverse(reversed.begin(),reversed.end());
+
+    int pal = stoi(str+reversed);
+    if(pal&gt;=l &amp;&amp; pal&lt;=h){
+        palindromes.push_back(pal);
+    }
+}
+
+void generate(int l, int h, vector&lt;int&gt; &amp; palindromes){
+    for(int j=0; j&lt;4; j++){
+        for(int i=pow(10,j); i&lt;pow(10,j+1); i++){
+            gen(i,0,l,h,palindromes);
+            gen(i,1,l,h,palindromes);
+        }
+    }
+}
+
+// Get the primes
+void getPrimes(vector&lt;int&gt; palindromes, vector&lt;int&gt; &amp; primes){
+    bool k;
+    for(int pal:palindromes){
+        k = true;
+        for(int fact=2;fact&lt;sqrt(pal)+1;fact++){
+            if(pal%fact == 0){
+                k=false;
+                break;
+            }
+        }
+        if(k==true){
+            primes.push_back(pal);
+        }
+    }
+}
+
+// Main, obviously
+int main(){
+    // Read the input file
+    ifstream fIn("pprime.in");
+    int l, h;
+    fIn &gt;&gt; l &gt;&gt; h;
+    fIn.close();
+
+    // Do the important things
+    vector&lt;int&gt; palindromes;
+    vector&lt;int&gt; primes;
+    generate(l, h, palindromes);
+    getPrimes(palindromes,primes);
+    sort(primes.begin(),primes.end());
+
+    // Write the output file
+    ofstream fOut("pprime.out");
+    for(int i:primes){
+        fOut &lt;&lt; i &lt;&lt; endl;
+    }
+    fOut.close();
+    return 0;   
+}
+</code></pre>
+
+        </div>
+    </body>
+</html>

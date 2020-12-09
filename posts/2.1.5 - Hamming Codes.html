@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Hamming Codes</h1>
+
+<h3>hamming</h3>
+
+<h2>Algorithm</h2>
+
+<p>We start at 0, then check all 2^B possible codes to see if they work.
+If they do, append them to the solution list. Terminate when the list
+reaches length of N.</p>
+
+<p><code>bin(used^code).count('1')</code> is used to determine Hamming distance.
+The bitwise XOR contains a 1 every time a bit is different (one of the
+bits is 1 and the other is 0), so Hamming distance can be calculated
+by counting the number of times a '1' appears.</p>
+
+<h2>Python</h2>
+
+<pre><code>def solve(n,b,d):
+    # n: num. of codes
+    # b: len of codes
+    # d: hamming dist.
+    past = [0]
+    for code in range(2**b+1):
+        for used in past:
+            if bin(used^code).count('1') &lt; d:
+                break
+        else: past.append(code)
+        if len(past) == n:
+            return past
+
+def main():
+    with open('hamming.in','r') as fIn:
+        n,b,d = list(map(int,fIn.read().split()))
+    with open('hamming.out','w') as fOut:
+        res = solve(n,b,d)
+        for i in range(len(res)):
+            if i%10 == 9: end = '\n'
+            elif i != len(res)-1: end = ' '
+            else: end = '\n'
+            fOut.write(str(res[i])+end)
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

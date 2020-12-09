@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Combination Lock</h1>
+
+<p>Brute force solution. Find the numbers that work for the first digit,
+then find the ones that work for the second digit, and then find the numbers for the third digit.</p>
+
+<pre><code>def checknum(digit,c,index,n):
+    return not(abs(digit-c[index]) &gt; 2 and abs(abs(digit-c[index])-n) &gt; 2)
+
+def check(digits,c1,c2,n):
+    for c in [c1,c2]:
+        res = True
+        for i in range(len(digits)):
+            if not checknum(digits[i],c,i,n):
+                res = False
+        if res == True:
+            return True
+    return False
+
+def bruteForce(n,c1,c2):
+    res = 0
+    for i in range(1,n+1):
+        if checknum(i,c1,0,n) or checknum(i,c2,0,n):
+            for j in range(1,n+1):
+                if checknum(j,c1,1,n) or checknum(j,c2,1,n):
+                    for k in range(1,n+1):
+                        if check([i,j,k],c1,c2,n):
+                            res += 1
+                            #print(i,j,k,end='    ')
+    return res
+
+def main():
+    with open('combo.in','r') as fIn:
+        r = fIn.readlines()
+        n = int(r[0])
+        c1 = list(map(int,r[1].split()))
+        c2 = list(map(int,r[2].split()))
+    res = bruteForce(n,c1,c2)
+    print(res)
+    with open('combo.out','w') as fOut:
+        fOut.write(str(res)+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

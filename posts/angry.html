@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Angry Cows</h1>
+
+<h2>January 2016 Bronze</h2>
+
+<h3>angry</h3>
+
+<h2>Algorithm</h2>
+
+<p>For each starting haybale, simulate the chain reaction and determine which causes the most explosions.</p>
+
+<h2>Python</h2>
+
+<pre><code>def simulateStep(bales,new,radius):
+    # Simulates one step of the chain reaction with 'bales'; each of the 'new'ly exploded
+    # bales explodes all the ones in the blast 'radius'.
+    reactionStep = set() # Make sure that bales aren't exploded twice
+    for exp in new:
+        for bale in bales:
+            if abs(bale-exp) &lt;= radius:
+                reactionStep.add(bale)
+    for bale in reactionStep:
+        bales.remove(bale)
+    return list(reactionStep), bales
+
+def testBale(bales,start):
+    radius = 1
+    bales.remove(start)
+    reactionStep, bales = simulateStep(bales,[start],radius)
+    total = len(reactionStep)+1
+    while reactionStep:
+        radius += 1
+        reactionStep, bales = simulateStep(bales,reactionStep,radius)
+        total += len(reactionStep)
+    return total
+
+def testAllHaybales(bales):
+    record = 0
+    for start in bales:
+        exp = testBale(bales.copy(),start) 
+        record = max(record,exp)
+    return record
+
+def main():
+    with open('angry.in','r') as fIn:
+        bales = list(map(int,fIn.read().split()[1:]))
+    res = testAllHaybales(bales)
+    print(res)
+    with open('angry.out','w') as fOut:
+        fOut.write(str(res)+'\n')
+
+if __name__ == '__main__': main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

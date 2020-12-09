@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Palindromic Squares</h1>
+
+<p>We iterate over all N from 1 to 300; if its square in base B is palindromic, add <code>[convertBase(N,base),convertBase(N**2,base)]</code> to the list of results.</p>
+
+<pre><code>with open('palsquare.in','r') as fin:
+    base = int(fin.read())
+
+def convertBase(num,base):
+    chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    if num &lt; base: return chars[num]
+    else: return convertBase(num//base,base)+chars[num%base]
+
+def isPalindrome(square):
+    for i in range(len(str(square))):
+        if str(square)[i] != str(square)[i*-1-1]:
+            return False
+    return True
+
+def completeSearch(base):
+    res = []
+    for i in range(1,301):
+        if isPalindrome(convertBase(i**2,base)):
+            res.append([convertBase(i,base),convertBase(i**2,base)])
+    return res
+
+rawAns = completeSearch(base)
+ans = ''
+for i in rawAns:
+    ans += '%s %s\n' %(i[0],i[1])
+
+print(ans)
+
+with open('palsquare.out','w') as fout:
+    fout.write(ans)
+</code></pre>
+
+        </div>
+    </body>
+</html>

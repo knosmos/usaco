@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Party Lamps</h1>
+
+<h3>lamps</h3>
+
+<h2>Algorithm</h2>
+
+<p>There are only 16 patterns of lights (the only thing that matters is whether each button
+has been pressed an odd number of times or an even number of times), so we just check the parity
+of the number of button presses to determine whether each pattern is possible.</p>
+
+<h2>Python</h2>
+
+<pre><code>buttonStates = [ # Easier to just list them all
+    [0,0,0,0],
+    [1,0,0,0],
+    [0,1,0,0],
+    [0,0,1,0],
+    [0,0,0,1],
+    [1,1,0,0],
+    [1,0,1,0],
+    [1,0,0,1],
+    [0,1,1,0],
+    [0,1,0,1],
+    [0,0,1,1],
+    [0,1,1,1],
+    [1,0,1,1],
+    [1,1,0,1],
+    [1,1,1,0],
+    [1,1,1,1]
+]
+
+def getCombos(numLamps,counter):
+    global buttonStates
+    results = []
+    for combo in buttonStates:
+        if sum(combo) &gt; counter: return results
+        if sum(combo)%2 != counter%2: continue
+        final = [1]*numLamps
+        for i in range(len(combo)):
+            if combo[i]:
+                if i == 0:
+                    final = [int(not(j)) for j in final]
+                if i == 1:
+                    final = [int(not(final[j])) if j%2 == 1 else final[j] for j in range(len(final))]
+                if i == 2:
+                    final = [int(not(final[j])) if j%2 == 0 else final[j] for j in range(len(final))]
+                if i == 3:
+                    final = [int(not(final[j]))  if (j/3.0%1) == 0 else final[j] for j in range(len(final))]
+        results.append(final)
+    return results
+
+def validate(results,on,off):
+    newResults = []
+    for i in results:
+        valid = True
+        for j in on:
+            if not i[j-1]: valid = False
+        for j in off:
+            if i[j-1]: valid = False
+        if valid:
+            newResults.append(i)
+    return newResults
+
+def main():
+    # Get data
+    with open('lamps.in','r') as fIn:
+        numLamps, counter, on, off, _ = fIn.read().split('\n')
+    numLamps = int(numLamps)
+    counter = int(counter)
+    on = list(map(int,on.split()))[:-1]
+    off = list(map(int,off.split()))[:-1]
+
+    # Get answer
+    results = validate(getCombos(numLamps,counter),on,off)
+    results = [''.join(map(str,i)) for i in results]
+
+    # Sort by binary
+    results.sort(key=lambda i:int(i,2))
+
+    with open('lamps.out','w') as fOut:
+        if len(results) == 0:
+            fOut.write('IMPOSSIBLE\n')
+        else:
+            fOut.write('\n'.join(results)+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

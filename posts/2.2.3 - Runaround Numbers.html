@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Runaround Numbers</h1>
+
+<h3>runaround</h3>
+
+<h2>Algorithm</h2>
+
+<p>The numbers are small enough that a brute-force solution is fine.</p>
+
+<h2>Python</h2>
+
+<pre><code>def uniqueDigits(num):
+    # Does it have unique digits?
+    s = str(num)
+    return len(s) == len(set(s))
+
+def runaround(num):
+    # Is it a runaround?
+    if not(uniqueDigits(num)): return False
+    s = str(num)
+    touched = [0]
+    index = 0
+    while len(touched) &lt; len(s)+1:
+        # Get the next digit
+        new = (index+int(s[index]))%len(s)
+        if len(touched) == len(s):
+            # Does it loop back to the beginning?
+            if new != 0: return False
+        # Has a digit been visited already?
+        elif new in touched: return False
+        touched.append(new)
+        index = new
+    return True
+
+def main():
+    with open('runround.in','r') as fIn: n = int(fIn.read())
+    n += 1
+    while not(runaround(n)): n += 1
+    with open('runround.out','w') as fOut: fOut.write(str(n)+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

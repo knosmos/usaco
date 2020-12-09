@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Dual Palindromes</h1>
+
+<p>Starting at <code>S+1</code>, we search for numbers that are palidromic in at least two bases, until we have found N numbers.</p>
+
+<pre><code>def convertBase(num,base):
+    chars = '0123456789'
+    if num &lt; base: return chars[num]
+    else: return convertBase(num//base,base)+chars[num%base]
+
+def isPalindrome(num):
+    for i in range(len(str(num))):
+        if str(num)[i] != str(num)[i*-1-1]:
+            return False
+    return True
+
+def search(n,s):
+    res = []
+    currentNum = s+1
+    while len(res) &lt; n:
+        palidromicBases = 0
+        for base in range(2,11):
+            if isPalindrome(convertBase(currentNum,base)):
+                palidromicBases += 1
+        if palidromicBases &gt;= 2:
+            res.append(currentNum)
+        currentNum += 1
+    return res
+
+def main():
+    with open('dualpal.in','r') as fIn:
+        n, s = [int(i) for i in fIn.read().split(' ')]
+    res = search(n, s)
+    with open('dualpal.out','w') as fOut:
+        fOut.write(''.join([str(i)+'\n' for i in res]))
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Mixing Milk</h1>
+
+<h2>December 2018 Bronze</h2>
+
+<h3>mixmilk</h3>
+
+<h2>Algorithm</h2>
+
+<p>Just simulate all the pours. There aren't that many of them.</p>
+
+<h2>Python</h2>
+
+<pre><code>def pour(amount1,amount2,capacity):
+    # Returns the amount of milk left in the first bucket
+    # after pouring as much of it as possible into the
+    # second bucket.
+    # amount1: amount of milk in the first bucket
+    # amount2: amount of milk in the second bucket
+    # capacity: capacity of the second bucket
+    left = capacity-amount2 # how much more milk can the second bucket hold?
+    shift = min(left,amount1) # how much milk is poured?
+    return amount1-shift,amount2+shift
+
+def pourCycle(a1,a2,a3,cap1,cap2,cap3):
+    # pour a-&gt;b, b-&gt;c and c-&gt;a.
+    # a1, a2, a3: amount of milk in each bucket.
+    # cap1, cap2, cap3: capacity of each bucket.
+    a1,a2 = pour(a1,a2,cap2)
+    a2,a3 = pour(a2,a3,cap3)
+    a3,a1 = pour(a3,a1,cap1)
+    return a1,a2,a3
+
+def main():
+    # read input
+    # a_i = amount of bucket i
+    # c_i = capacity of bucket i
+    with open('mixmilk.in','r') as fIn:
+        c1,a1 = map(int,fIn.readline().split())
+        c2,a2 = map(int,fIn.readline().split())
+        c3,a3 = map(int,fIn.readline().split())
+    for _ in range(33): # 33 pour operations = 99 pours
+        a1,a2,a3 = pourCycle(a1,a2,a3,c1,c2,c3)
+    a1,a2 = pour(a1,a2,c2) # 100th pour
+    print(a1,a2,a3)
+    with open('mixmilk.out','w') as fOut:
+        fOut.write('%d\n%d\n%d\n'%(a1,a2,a3))
+
+main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

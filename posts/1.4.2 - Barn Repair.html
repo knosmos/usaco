@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Barn Repair</h1>
+
+<p>With one board, we have to cover all the unoccupied stalls.</p>
+
+<p>With two boards, we skip the largest segment of consecutive empty stalls.</p>
+
+<p>With three boards, we skip the largest and second-largest segments of consecutive empty stalls.</p>
+
+<p>Therefore, our algorithm is:</p>
+
+<p>1) Create a list of all the segments of consecutive empty stalls.</p>
+
+<p>2) Sort the list by length from largest to smallest. </p>
+
+<p>3) Since with N boards we can skip N-1 segments of stalls, we remove the first N-1 entries from the list.</p>
+
+<p>4) Output the sum of the number of occupied stalls and the sum of the rest of the list.</p>
+
+<pre><code>def generateString(c,occupied):
+    res = [' ']*c
+    for i in occupied:
+        res[i-1] = '#'
+    print(''.join(i for i in res))
+    return res
+
+def consecutiveEmpty(s):
+    new = []
+    lastSwitch = -1
+    firstStallIndex=s.index('#')
+    for i in range(firstStallIndex,len(s)-1):
+        if s[i] != s[i+1]:
+            if s[i] == ' ':
+                new.append(i-lastSwitch)
+            lastSwitch = i
+    return sorted(new)
+
+def parseInput(filename):
+    with open(filename,'r') as fIn:
+        i = fIn.read().split('\n')
+    maxBoards,numStalls,numOccupied = list(map(int,i[0].split()))
+    occupied = []
+    for line in i[1:-1]:
+        occupied.append(int(line))
+    return maxBoards,numStalls,occupied,numOccupied
+
+def main():
+    maxBoards,numStalls,occupied,numOccupied = parseInput('barn1.in')
+    s = generateString(numStalls,occupied)
+    emptyStalls = consecutiveEmpty(s)
+    print(emptyStalls)
+    res = 0
+    print(emptyStalls[0:maxBoards])
+    for i in emptyStalls[0:len(emptyStalls)-maxBoards+1]:
+        res += i
+    print(res+numOccupied)
+    with open('barn1.out','w') as fOut:
+        fOut.write(str(res+numOccupied)+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

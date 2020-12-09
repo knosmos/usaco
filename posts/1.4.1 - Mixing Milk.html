@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Mixing Milk</h1>
+
+<h2>Algorithm</h2>
+
+<p>1) Sort the farmer's list by cost.</p>
+
+<p>2) Exhaust the first farmer's supply. Add cost.</p>
+
+<p>3) Continue exhausting supplies until the next supplier has more than you need.</p>
+
+<h2>Python</h2>
+
+<pre><code>def calcCost(total,farmers):
+    cost = 0
+    farmers.sort(key=lambda i:i[0])
+    for unitCost, units in farmers:
+        if total &gt; units:
+            total -= units
+            cost += unitCost*units
+        else:
+            cost += unitCost*total
+            break
+    return cost
+
+def parseInput(filename):
+    with open(filename,'r') as fIn:
+        raw = fIn.read().split('\n')
+        total = int(raw[0].split(' ')[0])
+        farmers = [None]*(len(raw)-2)
+        for i in range(1,len(raw)-1):
+            farmers[i-1]=list(map(int, raw[i].split()))
+        print(farmers)
+    return total,farmers
+
+def main():
+    total,farmers = parseInput('milk.in')
+    res = calcCost(total,farmers)
+    with open('milk.out','w') as fOut:
+        fOut.write(str(res)+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

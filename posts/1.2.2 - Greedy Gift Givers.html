@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Greedy Gift Givers</h1>
+
+<p>We keep a dictionary <code>data</code> which stores the gifts given by each person. Then, we loop over all items in <code>data</code>, updating each person's money value as we go.</p>
+
+<pre><code>with open('gift1.in','r') as fin:
+    n = fin.read().split('\n')
+n.pop(-1) #Remove last newline
+np = int(n[0])
+names = n[1:np+1]
+print names
+
+data = {}
+currentLine = np+1
+while len(data) &lt; np:
+    money,numGifts = n[currentLine+1].split(' ')
+    money = int(money)
+    numGifts = int(numGifts)
+    personData = [money,numGifts,n[currentLine+2:currentLine+numGifts+2]]
+    data[n[currentLine]] = personData
+    currentLine += numGifts+2
+
+results = []
+for i in names:
+    results.append([i,0])
+for name,values in data.items():
+    results[names.index(name)][1] -= values[0]
+    try:
+        share = int(values[0])/values[1] # [money, numGifts, recipients]
+        results[names.index(name)][1] += values[0]%values[1]
+    except:
+        print 'cheapskate!'
+    for i in values[2]:
+        results[names.index(i)][1] += share
+
+print results #Congrats, me!
+
+final = ''
+for i in results:
+    final+='%s %d\n' %(i[0],i[1])
+with open('gift1.out','w') as fout:
+    fout.write(final)
+</code></pre>
+
+        </div>
+    </body>
+</html>

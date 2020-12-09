@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Your Ride Is Here</h1>
+
+<p>Convert letters to numbers, calculate the product mod 47 and compare them.</p>
+
+<pre><code>a = 'zABCDEFGHIJKLMNOPQRSTUVWXYZ'
+with open('ride.in','r') as fin:
+    ln1,ln2,_ = fin.read().split('\n')
+def c(chars):
+    t = 1
+    for i in chars:
+        t*=a.index(i)
+    print t
+    return t
+if c(ln1)%47 == c(ln2)%47:
+    res = 'GO\n'
+else:
+    res = 'STAY\n'
+print res
+with open('ride.out','w') as fout:
+    fout.write(res)
+</code></pre>
+
+        </div>
+    </body>
+</html>

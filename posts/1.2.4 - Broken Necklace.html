@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Broken Necklace</h1>
+
+<p>We iterate through each position j in the necklace. We see how far left we can go (determining validity with the "collectible" function) and how far right we can go.
+The number of beads that can be collected if we break the necklace position j is the sum of the number of beads that can be collected from the left and the number of beads that can be collected from the right.</p>
+
+<pre><code>with open('beads.in','r') as fin:
+    n,p,_ = fin.read().split('\n')
+n = int(n)
+
+def collectible(s): # Determine if string is collectible
+    return not('r' in s and 'b' in s) # return false if r and b are both present
+
+l = 0 # Largest value
+for j in range(0,n-1):
+    left = p[j%n]
+    pos = j
+    while pos&gt;0:
+        pos -=1
+        if collectible(left+p[pos%n]):
+            left += p[pos%n]
+        else:
+            break
+    right = p[(j+1)%n]
+    pos = j+1
+    while pos&lt;3*n-1:
+        pos += 1
+        if collectible(right+p[pos%n]):
+            right += p[pos%n]
+        else:
+            break
+    ct = len(left)+len(right)
+    if ct &gt; n:
+        ct = n
+    if ct &gt; l:
+        l = ct
+
+print l
+with open('beads.out','w') as fout:
+    fout.write(str(l)+'\n')
+</code></pre>
+
+        </div>
+    </body>
+</html>

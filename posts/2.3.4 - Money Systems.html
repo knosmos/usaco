@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Money Systems</h1>
+
+<h2>Algorithm</h2>
+
+<p>Use tabulation to find all the ways to make sums up to the target.</p>
+
+<h2>Python</h2>
+
+<pre><code>def count(coins,target):
+    # Table stores the number of ways to make each sum from 0 ... target
+    table = [1]+[0]*target
+    for coin in coins:
+        for j in range(coin,len(table)):
+            # Take each sum j above or equal to the coin value c. Let k be the
+            # difference between j and c. For each way to make k, if you add the c,
+            # you get j. So, we add k ways to the number of ways to make j.
+            k = j - coin
+            table[j] += table[k]
+    print('Ways to make target: '+str(table[target]))
+    return table[target]
+
+def main():
+    with open('money.in','r') as fIn:
+        f = fIn.read().split('\n',1)
+        target = int(f[0].split()[1])
+        coins = list(map(int,f[1].replace('\n',' ').split()))
+        print(coins)
+    with open('money.out','w') as fOut:
+        fOut.write(str(count(coins,target))+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

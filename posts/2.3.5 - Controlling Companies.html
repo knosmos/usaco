@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Controlling Companies</h1>
+
+<h3>concom</h3>
+
+<h2>Algorithm</h2>
+
+<p>First find all the companies that are directly owned by each company.
+Then, for each company, repeatedly add companies that are controlled by controlled companies
+until no new controlled companies are found.</p>
+
+<h2>Python</h2>
+
+<pre><code>from collections import Counter
+
+def getOwned(triples):
+    owned = {}
+    for t in triples:
+        if not(owned.setdefault(t[0],None)):
+            owned[t[0]] = {}
+        if not(owned[t[0]].setdefault(t[1],None)):
+            owned[t[0]][t[1]] = 0
+        owned[t[0]][t[1]] += t[2]
+    return owned
+
+def getControlled(owned):
+    controls = {}
+    for company in owned.keys():
+        totalShares = Counter(owned[company])
+        cont = True
+        controls[company] = []
+        while cont:
+            cont = False
+            newTotalShares = totalShares.copy()
+            for c,percent in totalShares.items():
+                if not(c in controls[company]):
+                    if percent &gt; 50:
+                        controls[company].append(c)
+                        if c in owned.keys():
+                            newTotalShares += Counter(owned[c])
+                        cont = True
+            totalShares = newTotalShares
+    return controls
+
+def main():
+    with open('concom.in','r') as fIn:
+        triples = list(map(lambda i:[int(j) for j in i.split()],fIn.read().split('\n')[1:-1]))
+    owned = getOwned(triples)
+    controls = getControlled(owned)
+    controls = {c:controls[c] for c in sorted(controls.keys())}
+    with open('concom.out','w') as fOut:
+        for company in controls:
+            ownedCompanies = sorted(controls[company])
+            for c in ownedCompanies:
+                if c != company:
+                    fOut.write('%d %d\n'%(company,c))
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

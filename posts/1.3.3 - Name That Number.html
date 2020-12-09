@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Name That Number</h1>
+
+<p>First, we filter out all the names that are not the same length as the number. Then, we iterate over all
+the digits d in the number. If d does not correspond to a letter in one of the remaining names, we remove that name.
+Finally, we output all the remaining names.</p>
+
+<pre><code>def trim(num,validNames):
+    mapping = {'2':'ABC','3':'DEF','4':'GHI','5':'JKL','6':'MNO','7':'PRS','8':'TUV','9':'WXY'}
+    dbg(len(validNames))
+    numlen = len(num)
+    lengthFittedNames = []
+    for name in validNames:
+        if len(name) == numlen:
+            lengthFittedNames.append(name)
+            dbg(f'{name} has been added')
+    dbg(len(lengthFittedNames))
+
+    survivedNames = lengthFittedNames
+    finalNames = []
+    for name in survivedNames:
+        for i in range(numlen):
+            if not name[i] in mapping[num[i]]:
+                break
+        else:
+            finalNames.append(name)
+    return finalNames
+
+with open('dict.txt','r') as d:
+    validNames = d.read().split('\n')
+with open('namenum.in','r') as fIn:
+    res = trim(fIn.read().rstrip(),validNames)
+with open('namenum.out','w') as fOut:
+    if len(res) == 0:
+        fOut.write("NONE")
+    else:
+        fOut.write("\n".join(res))
+    fOut.write("\n")
+</code></pre>
+
+        </div>
+    </body>
+</html>

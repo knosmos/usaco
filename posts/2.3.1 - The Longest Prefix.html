@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>The Longest Prefix</h1>
+
+<h3>prefix</h3>
+
+<h2>C++</h2>
+
+<pre><code>#include &lt;string&gt;
+#include &lt;iostream&gt;
+#include &lt;fstream&gt;
+#include &lt;vector&gt;
+#include &lt;sstream&gt;
+#include &lt;algorithm&gt;
+
+using namespace std;
+
+bool compstr(string &amp; str, string &amp; pattern, int start){
+    for (int i=0; i&lt;pattern.size(); ++i){
+        if (i+start &gt; str.size()-1){
+            return false;
+        }
+        if (str[i+start] != pattern[i]){
+            return false;
+        }
+    }
+    return true;
+}
+
+int run(vector&lt;string&gt; patterns, string str){
+    int strlen = str.size();
+    int lenpat = patterns.size();
+    bool cont = true;
+    vector&lt;int&gt; gen(lenpat,0);
+    vector&lt;int&gt; lens;
+    for (auto p:patterns){
+        lens.push_back(p.size());
+    }
+    while (cont == true){
+        vector&lt;int&gt; nextGen = gen;
+        bool found = false;
+        for (int p2 = 0; p2 &lt; lenpat; ++p2){
+            for (int p = 0; p &lt; lenpat; ++p){
+                int genp2 = gen[p2];
+                int genlen = genp2 + lens[p];
+                if (compstr(str, patterns[p], genp2)){
+                    if (nextGen[p] &lt; genlen){
+                        nextGen[p] = genlen;
+                        found = true;
+                        if (nextGen[p] &gt;= strlen){
+                            cont = false;
+                        }
+                    }
+                }
+            }
+        }
+        if (!found){
+            cont = false;
+        }
+        gen = nextGen;
+    }
+    return *max_element(gen.begin(),gen.end());
+}
+
+int main(){
+    ifstream fIn;
+    fIn.open("prefix.in");
+    string p;
+    vector&lt;string&gt; patterns;
+    string s;
+    while (true){
+        fIn &gt;&gt; p;
+        if (p == ".") {
+            break;
+        }
+        patterns.push_back(p);
+    }
+    stringstream ss;
+    while(!fIn.eof()) {
+        string s1;
+        fIn &gt;&gt; s1;
+        ss &lt;&lt; s1;
+    }
+    s = ss.str();
+    fIn.close();
+
+    int res = run(patterns,s);
+
+    ofstream fOut;
+    fOut.open("prefix.out");
+    fOut &lt;&lt; res &lt;&lt; endl;
+    fOut.close();
+
+    cout &lt;&lt; res &lt;&lt; endl;
+
+    return 0;
+}
+</code></pre>
+
+        </div>
+    </body>
+</html>

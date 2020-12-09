@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Transformations</h1>
+
+<p>Parse the inputs into matrices, apply transformations on the original matrix and test whether the transformation results in the new matrix to determine the transformation number.</p>
+
+<pre><code>with open('transform.in','r') as fin:
+    fin = fin.read().split('\n')
+    s = int(fin[0])
+    l = fin[1:s+1]
+    n = fin[s+1:2*s+1]
+    print(l)
+    print(n)
+
+def rotate(l,s):
+    # rotates list by 90 deg.
+    # l = input list, s = list size
+    n = [] # result
+    for i in range(s):
+        j = []
+        for k in range(s-1,-1,-1):
+            j.append(l[k][i])
+        n.append(j)
+    return n
+
+def reflect(l):
+    # reflects list over y-axis.
+    for i in l:
+        i.reverse()
+    return l
+
+def check(l,n,s):
+    # l = original, n = transformed, s = list size
+    rotated_list = list(l)
+    for i in range(3):
+        rotated_list = rotate(rotated_list,s)
+        if rotated_list == n:
+            return i+1
+    reflect(l)
+    if l == n:
+        return 4
+    for i in range(3):
+        l = rotate(l,s)
+        if l == n:
+            return 5
+        else:
+            print(display(l))
+    if l == n:
+        return 6
+    return 7
+
+def listify(l):
+    res = []
+    for i in l:
+        res.append(list(i))
+    return res
+
+def display(l):
+    # l = input list
+    n = ''
+    for i in l:
+        for j in i:
+            n += j
+        n += '\n'
+    return n
+
+ans = check(listify(l),listify(n),s)
+print(ans)
+
+with open('transform.out','w') as fout:
+    fout.write(str(ans)+'\n')
+</code></pre>
+
+        </div>
+    </body>
+</html>

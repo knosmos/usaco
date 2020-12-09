@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>The Tamworth Two</h1>
+
+<h3>ttwo</h3>
+
+<h2>Algorithm</h2>
+
+<p>Simulate the movements of Farmer John and the cows. If they meet, then we output the number of moves
+that it took. Otherwise, if a threshold of moves is exceeded, or if they return to their starting
+positions, we return 0.</p>
+
+<h2>Python</h2>
+
+<pre><code>def move(pos,d,grid):
+    dirchange = {(-1,0):(0,1), # Rotations clockwise
+                (0,1):(1,0),
+                (1,0):(0,-1),
+                (0,-1):(-1,0)}
+    npos = [pos[0]+d[0],pos[1]+d[1]]
+    if not(0 &lt;= npos[0] &lt; 10 and 0 &lt;= npos[1] &lt; 10): # Hit borders
+        return pos,dirchange[d]
+    if grid[npos[0]][npos[1]] == 1: # Obstacle in the way
+        return pos,dirchange[d] # Rotate
+    return npos,d # Everything is fine
+
+def run(grid,cow,john):
+    cowdir = (-1,0) # North
+    johndir = (-1,0) # John Deere
+
+    initcow = cow.copy() # Initial position of cow
+    initjohn = john.copy()
+    moves = 0
+    while True:
+        # move cow
+        cow, cowdir = move(cow,cowdir,grid)
+        # move john
+        john, johndir = move(john,johndir,grid)
+        moves += 1
+        if moves &gt;= 160000: return 0 # Timeout
+        if cow == john: # They meet!
+            return moves
+        if cow == initcow and john == initjohn and cowdir == johndir == (-1,0): # That's a loop!
+            return 0
+
+def main():
+    grid = [[0]*10 for _ in range(10)] # 0 = empty, 1 = obstacle
+    cow = [0,0]
+    john = [0,0]
+    with open('ttwo.in','r') as fIn:
+        f = fIn.read().split('\n')
+        print(f)
+        for row in range(10):
+            for col in range(10):
+                if f[row][col] != '.':
+                    if f[row][col] == '*':
+                        grid[row][col] = 1
+                    elif f[row][col] == 'F':
+                        john = [row,col]
+                    elif f[row][col] == 'C':
+                        cow = [row,col]
+    res = run(grid,cow,john)
+    with open('ttwo.out','w') as fOut:
+        fOut.write(str(res)+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Preface Numbering</h1>
+
+<h3>preface</h3>
+
+<h2>Algorithm</h2>
+
+<p>Generate all the roman numerals and count the occurences of each letter.</p>
+
+<h2>Python</h2>
+
+<pre><code>numerals = ['I','V','X','L','C','D','M']
+lt = [[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']]
+
+def conv(num):
+    global numerals, lt
+    s = ''
+    for i in lt:
+        s += i[1]*(num//i[0])
+        num = num%i[0]    
+    res = []
+    for i in numerals:
+        res.append(s.count(i))
+    return res
+
+def main():
+    global numerals
+    with open('preface.in','r') as fIn:
+        num = int(fIn.read())
+    res = [0]*7
+    for i in range(1,num+1):
+        res = [sum(k) for k in zip(res, conv(i))]
+    for i in range(6,-1,-1):
+        if res[i] != 0: break
+        res.pop(i)
+    with open('preface.out','w') as fOut:
+        for i in range(len(res)):
+            fOut.write('%s %d\n' %(numerals[i],res[i]))
+
+if __name__ == '__main__': main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Friday the Thirteenth</h1>
+
+<p>Keep a list of how many times the 13th lands on each day. Keep a list of the number of days in each month; change the value for February if it is a leap year. Record which day each year ends on the determine which day to start on for the next year. After all years have been processed, return the list of where the 13th lands.</p>
+
+<pre><code>with open('friday.in','r') as f:
+    endYear = int(f.read())
+
+def getYear(year,start):
+    '''
+    Year: the year to calculate fridays for.
+    Start: which day the year starts on.
+    Outputs:
+    - a list of len 7, with the number of 13ths that fall on each day of the week
+    - the day of the week that the year ends.
+    '''
+    months = [31,28,31,30,31,30,31,31,30,31,30,31]
+    if year%4 == 0: # Leap years
+        months[1] = 29
+    if year%100 == 0 and year%400!=0: # Century years
+        months[1] = 28
+    fridays = [0]*7
+    for i in months:
+        fridays[(start+13)%7] += 1
+        start = (start+i)%7
+    return fridays, start
+
+start = 1
+fridays = [0]*7
+for j in range(1900,1900+endYear):
+    f,start = getYear(j,start)
+    for i in range(len(f)):
+        fridays[i] += f[i]
+
+res = ''
+for i in range(len(fridays)):
+    res += str(fridays[i])
+    if i != len(fridays)-1:
+        res += ' '
+    else:
+        res += '\n'
+
+with open('friday.out','w') as f:
+    f.write(res)
+</code></pre>
+
+        </div>
+    </body>
+</html>

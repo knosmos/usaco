@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Mother's Milk</h1>
+
+<h2>Algorithm</h2>
+
+<p>This program calculates all possible states of the buckets with a DFS. The "scan"
+function calls itself for every valid pour, and terminates when it reaches a state
+that has already been visited.</p>
+
+<p>For example: if the capacity of the buckets is [1,1,3], the scan function
+searches in this manner:</p>
+
+<pre><code>                        [0,0,3]-Valid!
+                              +
+                        +-----+-----+
+                        |           |
+                        v           v
+                    [1,0,2]     [0,1,2]
+                       +        Visited
+                +------+------+
+                |             |
+                v             v
+        [0,1,2]-Valid!     [1,1,1]
+            +              Visited
+    +------+----+
+    |           |
+    v           v
+[0,0,3]       [1,1,1]
+Visited           +
+            +-----+-----+
+            |           |
+            v           v
+        [0,1,2]     [1,0,2]
+        Visited     Visited
+</code></pre>
+
+<p>The program outputs "2 3", because these are the possible values of Bucket C. Note
+that it is not necessary to remove duplicates from the final list because there are
+only three buckets, so if Bucket A is empty, the value of Bucket C is unique.</p>
+
+<h2>Python</h2>
+
+<pre><code>import copy
+
+visited = []
+capacities = []
+res = []
+
+def scan(node):
+    global visited, capacities, res
+    if node in visited:
+        return
+    visited.append(node)
+    if node[0] == 0:
+        res.append(node[2])
+    for i in range(len(node)):
+        if node[i] != 0:
+            for j in range(len(node)):
+                if i != j:
+                    if capacities[j] &gt; node[j]:
+                        newNode = copy.deepcopy(node)
+                        if capacities[j]-node[j] &gt;= node[i]:
+                            newNode[j] += node[i]
+                            newNode[i] = 0
+                        else:
+                            newNode[i] -= capacities[j]-node[j]
+                            newNode[j] = capacities[j]
+                        scan(newNode)
+
+def main():
+    global capacities, res
+    with open('milk3.in','r') as fIn:
+        capacities = list(map(int,fIn.read().split()))
+    scan([0,0,capacities[2]])
+    print(res)
+    with open('milk3.out','w') as fOut:
+        fOut.write(' '.join(list(map(str,sorted(res))))+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Ski Course Design</h1>
+
+<h2>Algorithm</h2>
+
+<p>All of the ski slopes must have heights in the interval [n,n+17] for some integer n.
+Therefore, we can loop over all possible values of n,
+to find the one with the minimum cost.</p>
+
+<h2>Pseudocode</h2>
+
+<pre><code>for each n:
+    for each hill:
+        if hill is taller than n+17:
+            remove hill-(n+17) units.
+        if hill is shorter than i:
+            add n-hill units.
+        else:
+            no change needed.
+</code></pre>
+
+<h2>Python</h2>
+
+<pre><code>def minCost(hills):
+    res = float('inf')
+    for i in range(0,max(hills)-16):
+        cost = 0
+        for hill in hills:
+            if hill &gt; i+17:
+                cost += (hill-(i+17))**2
+            elif hill &lt; i:
+                cost += (i-hill)**2
+        if res &gt; cost:
+            res = cost
+    return res
+
+def main():
+    with open('skidesign.in','r') as fIn:
+        hills = list(map(int,fIn.readlines()[1:]))
+    print(hills)
+    with open('skidesign.out','w') as fOut:
+        fOut.write(str(minCost(hills))+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Subset Sums</h1>
+
+<h3>subset</h3>
+
+<h2>Algorithm</h2>
+
+<p>We want the number of ways to make <code>(n*(n+1)/2)/2</code>, so we use tabulation to find the number of ways to make 1, the number of ways to make 2, and so on by copying and shifting the array of the number of ways to make each number. Did that make any sense at all?</p>
+
+<h2>Python</h2>
+
+<pre><code>def run(n):
+    half = (n*(n+1)/2)/2
+    if half%1 != 0: return 0
+    half = int(half)
+    ways = [1,1]+[0]*(half*2)
+    index = 1
+    for i in range(2,n+1):
+        # Copy and shift.
+        for j in range(index,-1,-1):
+            if j+i &lt; len(ways):
+                ways[j+i] += ways[j]
+        index += i
+    return int(ways[half]/2)
+
+def main():
+    with open('subset.in','r') as fIn:
+        num = int(fIn.read())
+    with open('subset.out','w') as fOut:
+        fOut.write(str(run(num))+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

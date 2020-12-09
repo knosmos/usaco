@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Sorting a Three-Valued Sequence</h1>
+
+<h2>Algorithm</h2>
+
+<p>We look through the list to see if there are corresponding misplaced elements.
+If there are, we swap them. After we have done this, the remaining misplaced
+elements are the ones where a 1 is where a 2 should be, a 2 where a 3 should be,
+and a 3 where a 1 should be. Two exchanges are needed to correct this, so we can
+find the number of swaps needed to correct them by dividing the number of remaining
+misplaced elements by 3 and multiplying by 2.</p>
+
+<h2>Python</h2>
+
+<pre><code>def run(unsortedList):
+    sortedList = sorted(unsortedList)
+    misplaced = [[],[],[]]
+
+    for i in range(len(unsortedList)):
+        if unsortedList[i] != sortedList[i]:
+            misplaced[sortedList[i]-1].append(unsortedList[i])
+
+    print(misplaced)
+
+    swaps = 0
+    for section in range(len(misplaced)):
+        for m in misplaced[section]:
+            if m != None:
+                if section+1 in misplaced[m-1]:
+                    misplaced[m-1][misplaced[m-1].index(section+1)] = None
+                    misplaced[section][misplaced[section].index(m)] = None
+                    print('swapped',section+1,m)
+                    swaps += 1
+                else:
+                    print(m,section+1,'no match found')
+
+    misplaced = [[i for i in j if i != None] for j in misplaced]
+
+    print(misplaced,'still not fixed')
+
+    remaining = sum(map(len,misplaced))
+    extra = int(remaining/3*2)
+
+    print(swaps+extra,'swaps')
+    return(swaps+extra)
+
+def main():
+    with open('sort3.in','r') as fIn:
+        unsortedList = list(map(int,fIn.readlines()))[1:]
+    with open('sort3.out','w') as fOut:
+        fOut.write(str(run(unsortedList))+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

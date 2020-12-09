@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Healthy Holsteins</h1>
+
+<h2>Algorithm</h2>
+
+<p>We generate all possible combinations of scoops and determine whether
+the scoop meets the vitamin requirements or not. If it does, we
+return it immediately.</p>
+
+<h2>Python</h2>
+
+<pre><code># Firstly, we generate the combinations of scoops
+def genScoops(scoops): # The feedtype numbers, not the vitamin contents or the number of scoops
+    res = []
+    # If there is only one scoop type, you have two choices: include or exclude.
+    if len(scoops) == 1: return [[],[scoops[0]]]
+    r = genScoops(scoops[1:])
+    # Each scoop type can either be included or excluded.
+    res = r+[[scoops[0]]+i for i in r]
+    return sorted(sorted(res),key = lambda i:len(i))
+
+# Check the vitamin content
+def checkVitamin(scoops, vitamins): # Feedtype combination
+    numVitamins = len(scoops[0])
+    scoopVit = [0]*numVitamins
+    for vit in range(numVitamins):
+        scoopVit[vit] = sum([i[vit] for i in scoops])
+    for vit in range(numVitamins):
+        if scoopVit[vit] &lt; vitamins[vit]:
+            return False
+    return True
+
+def parseInput(filename):
+    with open(filename,'r') as fIn:
+        fInRead = fIn.read().split('\n')
+        vitamins = list(map(int,fInRead[1].split()))
+        feeds = fInRead[3:-1]
+        for i in range(len(feeds)):
+            feeds[i] = list(map(int,feeds[i].split()))
+        return vitamins, feeds
+
+def main():
+    vitamins, feeds = parseInput('holstein.in')
+    feedCombos = genScoops(list(range(1,len(feeds)+1)))[1:]
+    for i in feedCombos:
+        if checkVitamin([feeds[j-1] for j in i],vitamins):
+            res = i
+            break
+    with open('holstein.out','w') as fOut:
+        fOut.write(' '.join(list(map(str,[len(res)]+res)))+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

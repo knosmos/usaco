@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Number Triangles</h1>
+
+<h2>Algorithm:</h2>
+
+<pre><code>Let p = [top node].
+For each subsequent layer:
+    Let new_p = []
+    For each node:
+        Look at the node's parents.
+        If the node has one parent:
+            Append node+sum to new_p.
+        If the node has two parents:
+            Append node+max(sums) to new_p.
+    Let p = new_p.
+</code></pre>
+
+<p>Runs in linear time.</p>
+
+<h2>Python</h2>
+
+<pre><code>def solve(rows):
+    parents = [rows[0][0]]
+    for row in rows[1:]:
+        newParents = []
+        ctr = 0
+        for i in range(len(row)):
+            # If node has one parent ...
+            if i == 0:
+                nodeParent = parents[0]
+            elif i == len(row)-1:
+                nodeParent = parents[-1] 
+            else:
+                nodeParent = max([parents[ctr],parents[ctr+1]])
+                ctr += 1
+            newParents.append(row[i] + nodeParent)
+        print(parents)
+        parents = newParents
+    return max(parents)
+
+
+def main():
+    with open('numtri.in','r') as fIn:
+        data = fIn.readlines()
+        tree = [None] * int(data[0])
+        print(data)
+        for i in range(1,len(data[1:])+1):
+            tree[i-1] = list(map(int,data[i].split()))
+        print(tree)
+    res = solve(tree)
+    with open('numtri.out','w') as fOut:
+        fOut.write(str(res)+'\n')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+<h2>C++</h2>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;fstream&gt;
+#include &lt;string&gt;
+#include &lt;algorithm&gt;
+#include &lt;iterator&gt;
+
+using namespace std;
+
+void solve(vector&lt;vector&lt;int&gt;&gt; rows, int &amp; ans){
+    vector&lt;int&gt; parents(1);
+    parents[0] = rows[0][0];
+    rows.erase(rows.begin());
+    for(auto row:rows){
+        vector&lt;int&gt; newParents(row.size());
+        int ctr = 0;
+        for(int i=0; i&lt;row.size(); ++i){
+            int nodeParent;
+            if(i==0){
+                nodeParent = parents[0];
+            }
+            else if(i==row.size()-1){
+                nodeParent = parents[parents.size()-1];
+            }
+            else{
+                int a = parents[ctr];
+                int b = parents[ctr+1];
+                ctr ++;
+                if(a&gt;b){
+                    nodeParent = a;
+                }
+                else{
+                    nodeParent = b;
+                }
+            }
+            newParents[i] = row[i] + nodeParent;
+        }
+        parents = newParents;
+        for(auto i:parents){
+            cout &lt;&lt; i &lt;&lt; " ";
+        }
+        cout &lt;&lt; endl;
+    }
+    sort(parents.begin(),parents.end());
+    ans = parents.back();
+}
+
+int main(){
+    ifstream fIn ("numtri.in");
+    string str;
+    int numRows = 0;
+    fIn &gt;&gt; numRows;
+    vector&lt;vector&lt;int&gt;&gt; rowValues(numRows);
+    for (int i = 0; i &lt; numRows; ++i)
+    {
+        rowValues[i].resize(i + 1);
+        for (int j = 0; j &lt; i + 1; ++j)
+        {
+            fIn &gt;&gt; rowValues[i][j]; 
+        }
+    }
+    fIn.close();
+
+    int ans;
+    solve(rowValues,ans);
+    ofstream fOut ("numtri.out");
+    fOut &lt;&lt; ans &lt;&lt; endl;
+    fOut.close();
+}
+</code></pre>
+
+        </div>
+    </body>
+</html>

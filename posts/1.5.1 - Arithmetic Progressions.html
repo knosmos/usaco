@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Arithmetic Progressions</h1>
+
+<pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;chrono&gt;
+#include &lt;math.h&gt;
+#include &lt;fstream&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+bool diffTest(int numElements)
+{
+    std::vector&lt;int&gt; ele(numElements);
+    for (int i = 0; i &lt; numElements; ++i)
+        ele[i] = i * i;
+
+    std::vector&lt;std::vector&lt;int&gt;&gt; diff(numElements);
+    for (int i = 0; i &lt; numElements; ++i)
+    {
+        diff[i].resize(numElements);
+        for (int j = 0; j &lt; numElements; ++j)
+            diff[i][j] = ele[i] - ele[j];
+    }
+    return true;
+}
+
+bool myfunction (vector&lt;int&gt; i,vector&lt;int&gt; j) { 
+    if (i[1] &lt; j[1]) 
+        return true;
+    else
+    if (i[1] == j[1])
+        return (i[0] &lt; j[0]);
+    return false;
+}
+
+void solvePuzzle(int largestNumber, int seqLength, vector&lt;vector&lt;int&gt;&gt;&amp; ansList)
+{
+    // generate bi-squares
+    int numBisquares = (largestNumber + 2) * (largestNumber + 1) / 2;
+    int maxBisquare = largestNumber * largestNumber * 2;
+    vector&lt;bool&gt; LUT(maxBisquare + 1, false);
+    int cnt = 0;
+    for (int i = 0; i &lt;= largestNumber; i++)
+    {
+        for (int j = i; j &lt;= largestNumber; j++)
+        {
+            int bisquare = i * i + j * j;
+            //bisquares[cnt] = bisquare;
+            LUT[bisquare] = true;
+            cnt++;
+        }
+    }
+
+    //sort(bisquares.begin(),bisquares.end());
+
+    // iterate bi-squares
+    for (int i = 0; i &lt; LUT.size(); i++)
+    {
+        if (LUT[i] == true)
+        {
+            int bis = i;
+            int maxDiff = ceil((maxBisquare - bis) / (seqLength - 1));
+            for (int diff = 1; diff &lt;= maxDiff; diff++)
+            {
+                bool seqFound = true;
+                for (int j = 1; j &lt; seqLength; j++)
+                {
+                    if (!LUT[bis + j * diff]) 
+                    {
+                        seqFound = false;
+                        break;
+                    }
+                }
+
+                if (seqFound)
+                {
+                    vector&lt;int&gt; ans(2);
+                    ans[0] = bis; ans[1] = diff;
+                    ansList.push_back(ans);
+                }
+            }
+        }
+    }
+    sort(ansList.begin(),ansList.end(),myfunction);
+}
+
+
+int main()
+{
+    ifstream fIn ("ariprog.in");
+    int largestNumber, seqLength;
+    fIn &gt;&gt; seqLength &gt;&gt; largestNumber;
+    fIn.close();
+    vector&lt;vector&lt;int&gt;&gt; ansList;
+    solvePuzzle(largestNumber, seqLength, ansList);
+    ofstream fOut ("ariprog.out");
+
+    if (ansList.size() == 0){
+        fOut &lt;&lt; "NONE" &lt;&lt; std::endl;
+    }
+    else{
+        for (auto ans: ansList)
+        {
+            fOut &lt;&lt; ans[0] &lt;&lt; " " &lt;&lt; ans[1] &lt;&lt; std::endl;
+        }
+    }
+    fOut.close();
+    return 0;
+}
+</code></pre>
+
+        </div>
+    </body>
+</html>

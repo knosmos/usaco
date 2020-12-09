@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Shell Game</h1>
+
+<h2>January 2019 Bronze</h2>
+
+<h3>shell</h3>
+
+<h2>Algorithm</h2>
+
+<p>See how many correct guesses Elsie makes if the pebble starts under
+shell A, then shell B, then shell C.</p>
+
+<h2>Python</h2>
+
+<pre><code>def run(swaps):
+    current = [1,2,3] # The current position of the shells
+    correct = [0,0,0] # If pebble starts at shell i
+    for swap in swaps:
+        current[swap[1]-1], current[swap[0]-1] = current[swap[0]-1], current[swap[1]-1]
+        correct[current[swap[2]-1]-1]+=1
+    print(correct)
+    return max(correct)
+
+with open('shell.in','r') as fIn:
+    n = int(fIn.readline())
+    swaps = []
+    for i in range(n):
+        swaps.append(list(map(int,fIn.readline().split())))
+with open('shell.out','w') as fOut:
+    fOut.write(str(run(swaps))+'\n')
+</code></pre>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>The Castle</h1>
+
+<h2>Algorithm</h2>
+
+<p>First, we find the rooms with recursive flood-fill. This gives us the largest room size and the
+number of rooms. Then, we check all possible pairs of rooms to see if they share a border wall.
+If they do, we add the border-wall to optimalWalls and take note of the size of the room created
+when the wall is removed. If a created room is larger than the previous record, we delete all walls
+previously stored in optimalWalls. We also check for some time-consuming edge cases and solve them
+without running the optimal-wall function.</p>
+
+<h2>Python</h2>
+
+<pre><code>def getWalls(num):
+    # Returns a four-item list where each item represents the
+    # south, east, north and west walls respectively. Each item
+    # is 1 if a wall exists, and 0 otherwise.
+    return list(map(int,list(bin(num)[2:].zfill(4))))
+
+def findRoom(start,matrix,visited):
+    # Calculates all modules in the same room as the start module.
+    # start: the point to start the flood-fill.
+    # matrix: 2D array containing the number of each module.
+    # visited: list of vertices that have already been visited.
+    if start in visited:
+        return []
+    res = set()
+    res.add(start)
+    walls = getWalls(matrix[start[0]][start[1]])
+    # Warning: dumb code ahead
+    if(not(walls[0])): res.update(findRoom((start[0]+1,start[1]),matrix,visited|res)) # south
+    if(not(walls[1])): res.update(findRoom((start[0],start[1]+1),matrix,visited|res)) # east
+    if(not(walls[2])): res.update(findRoom((start[0]-1,start[1]),matrix,visited|res)) # north
+    if(not(walls[3])): res.update(findRoom((start[0],start[1]-1),matrix,visited|res)) # west
+    return res
+
+def findAllRooms(matrix):
+    visited = set()
+    rooms = []
+    for y in range(len(matrix)):
+        for x in range(len(matrix[y])):
+            if (y,x) not in visited:
+                c = findRoom((y,x),matrix,visited)
+                rooms.append(c)
+                visited.update(c)
+    return rooms
+
+def areRoomsBordering(room1,room2):
+    borderWalls = []
+    for i in room1:
+        for x in [[-1,0],[0,1],[1,0],[0,-1]]:
+            n = (i[0]+x[0],i[1]+x[1])
+            if n in room2:
+                k = [i[0]+1,i[1]+1]
+                if x == [-1,0]: direction = 'N'
+                elif x == [0,1]: direction = 'E'
+                elif x == [1,0]:
+                    direction = 'N'
+                    k = [i[0]+2,i[1]+1]
+                elif x == [0,-1]:
+                    direction = 'E'
+                    k = [i[0]+1,i[1]]
+                borderWalls.append([k,direction]) # They start counting modules from 1
+    if len(borderWalls) == 0: return False
+    return borderWalls
+
+def findLargestRoom(rooms):
+    # Find the largest room creatable by removing one wall.
+    optimalWalls = []
+    largestRoomSize = 0
+    for r1 in range(len(rooms)):
+        room1 = rooms[r1]
+        for r2 in range(r1):
+            room2 = rooms[r2]
+            roomSize = len(room1) + len(room2)
+            if roomSize &gt;= largestRoomSize:
+                borderWalls = areRoomsBordering(room1,room2)
+                if borderWalls:
+                    if len(room1) + len(room2) &gt; largestRoomSize:
+                        largestRoomSize = roomSize
+                        optimalWalls = []
+                    optimalWalls += borderWalls
+    #print(optimalWalls)
+    return largestRoomSize, sorted(sorted(sorted(optimalWalls,key=lambda i:['N','E'].index(i[1])),key=lambda i:-i[0][0]),key=lambda i:i[0][1])[0]
+
+def parseInput(filename):
+    with open(filename,'r') as fIn:
+        lines = fIn.readlines()
+        m,n = map(int,lines[0].split())
+        matrix = [[None for _ in range(m)] for _ in range(n)]
+        for y in range(n):
+            for x in range(m):
+                matrix[y][x] = int(lines[y+1].split()[x])
+    return matrix
+
+def main():
+    matrix = parseInput('castle.in')
+    print('input parsed')
+    rooms = findAllRooms(matrix)
+    print('rooms found')
+    numRooms = len(rooms)
+    maxRoom = len(max(rooms, key=len))
+    print('largest room found')
+    if max(list(map(len,rooms))) == 1:
+        # If all the rooms are only one module in size, there's no need to run through all the rooms
+        if len(matrix) &gt; 1: d = 'N'
+        else: d = 'E'
+        wallRemoval = [2, [[len(matrix),1],d]]
+    else: wallRemoval = findLargestRoom(rooms)
+    print('wall found')
+    with open('castle.out','w') as fOut:
+        fOut.write(str(numRooms)+'\n')
+        fOut.write(str(maxRoom)+'\n')
+        fOut.write(str(wallRemoval[0])+'\n')
+        fOut.write('%d %d %s\n' %(wallRemoval[1][0][0], wallRemoval[1][0][1], wallRemoval[1][1]))
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

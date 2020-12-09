@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Teleportation</h1>
+
+<h2>February 2018 Bronze</h2>
+
+<h3>teleport</h3>
+
+<h2>Algorithm</h2>
+
+<p>We can move manure in two ways: a->b or a->x->y->b (where a&lt;=b and x&lt;=y).
+We calculate the distance by each path and return the smaller distance.</p>
+
+<h2>Python</h2>
+
+<pre><code>def run(a,b,x,y):
+    a,b=sorted([a,b])
+    x,y=sorted([x,y])
+    path1 = b-a
+    path2 = abs(a-x)+abs(b-y)
+    return min(path1,path2)
+
+def main():
+    with open('teleport.in','r') as fIn:
+        a,b,x,y = map(int,fIn.read().split())
+    res = run(a,b,x,y)
+    with open('teleport.out','w') as fOut:
+        fOut.write(str(res)+'\n')
+
+if __name__ == '__main__': main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Prime Cryptarithm</h1>
+
+<p>The numbers are small enough that we just brute-force the problem.</p>
+
+<pre><code>def isGoodNum(num,values):
+    for j in str(num):
+        if not(int(j) in values): return False
+    return True
+
+def iterate(values):
+    res = 0
+    for a in range(100,999):
+        if isGoodNum(a,values):
+            for b in range(10,99):
+                nums = [b,a*b,a*(b//10),a*(b%10)]
+                if nums[1] &lt; 10000 and nums[2] &lt; 1000 and nums[3] &lt; 1000:
+                    for i in nums:
+                        if not isGoodNum(i,values):
+                            break
+                    else:
+                        res += 1
+                        print(a,b)
+    return res
+
+def main():
+    with open('crypt1.in','r') as fIn:
+        values = list(map(int,fIn.read().split('\n')[1].split()))
+    with open('crypt1.out','w') as fOut:
+        fOut.write(str(iterate(values))+'\n')
+
+main()
+</code></pre>
+
+        </div>
+    </body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = container>
+            <h1>Zero Sum</h1>
+
+<h3>zerosum</h3>
+
+<h2>Algorithm</h2>
+
+<p>We generate all possible combinations of "+","-" and " ", then test if the sum is zero.</p>
+
+<h2>Python</h2>
+
+<pre><code># Evaluate strings
+def calc(s):
+    prev = 0
+    lastOp = 1
+    res = 0
+    for i in range(len(s)):
+        if s[i] in ['+','-']:
+            res += lastOp*int(s[prev:i])
+            if s[i] == '+': lastOp = 1
+            if s[i] == '-': lastOp = -1
+            prev = i+1
+    res += lastOp*int(s[prev:])
+    return res
+
+# Recursive function that generates combos of +,-,' '
+def gen(n):
+    if n == 1: return [[]]
+    res = []
+    for i in ['+','-',' ']:
+        res += [[i]+j for j in gen(n-1)]
+    return res
+
+# Test each combination
+def test(c):
+    res = []
+    for i in c:
+        # Generate exp
+        s = ''.join(['1']+[i[j]+str(j+2) for j in range(len(i))])
+        # Zero sum?
+        if calc(s.replace(' ','')) == 0: # Remove spaces
+            res.append(s)
+    return sorted(res)
+
+def main():
+    with open('zerosum.in','r') as fIn:
+        n = int(fIn.read())
+    with open('zerosum.out','w') as fOut:
+        fOut.write('\n'.join(test(gen(n)))+'\n')
+
+if __name__ == '__main__': main()
+</code></pre>
+
+        </div>
+    </body>
+</html>
