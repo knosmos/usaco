@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = "container wrapper">
+            <h1>Do You Know Your ABCs?</h1>
+
+<h2>Algorithm</h2>
+
+<p>There are only 7! = 5040 ways to arrange the numbers, so just try all combinations.</p>
+
+<p>I know there is a much easier way to solve this (the smallest is A, the second smallest is B
+and C is the largest minus A and B), but this was the solution I came up with during the contest.</p>
+
+<h2>Python</h2>
+
+<pre><code>def perm(l):
+    res = []
+    if len(l) == 0: return [[]]
+    for i in range(len(l)):
+        c = list(l)
+        c.pop(i)
+        res += [[l[i]]+j for j in perm(c)]
+    return res
+
+def check(nums):
+    # A, B, C, A+B, B+C, C+A, and A+B+C
+    a,b,c = nums[:3]
+    if a&lt;=b&lt;=c:
+        if a+b == nums[3]:
+            if b+c == nums[4]:
+                if c+a == nums[5]:
+                    if a+b+c == nums[6]:
+                        return True
+    return False
+
+perms = perm(list(map(int,input().split())))
+for p in perms:
+    if check(p):
+        print(" ".join(map(str,p[:3])))
+        break
+</code></pre>
+
+        </div>
+        <br><br>
+        <div class=container style='background-color:rgb(240,240,240);text-align:center;height:70px;'><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+            </div>
+    </body>
+</html>

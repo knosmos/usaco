@@ -8,26 +8,26 @@
             <a href='../index.html'>USACO Solutions</a>
         </nav>
         <div class = "container wrapper">
-            <h1>Your Ride Is Here</h1>
+            <h1>Daisy Chains</h1>
 
-<p>Convert letters to numbers, calculate the product mod 47 and compare them.</p>
+<h2>Algorithm</h2>
 
-<pre><code>a = 'zABCDEFGHIJKLMNOPQRSTUVWXYZ'
-with open('ride.in','r') as fin:
-    ln1,ln2,_ = fin.read().split('\n')
-def c(chars):
-    t = 1
-    for i in chars:
-        t*=a.index(i)
-    print t
-    return t
-if c(ln1)%47 == c(ln2)%47:
-    res = 'GO\n'
-else:
-    res = 'STAY\n'
-print res
-with open('ride.out','w') as fout:
-    fout.write(res)
+<p>Brute force - just look at all n^2 pictures taken and find if they have an average flower.</p>
+
+<h2>Python</h2>
+
+<pre><code>def check(flowers):
+    # Is there an average flower?
+    avg = sum(flowers)/len(flowers)
+    return (avg in flowers)
+n = int(input())
+flowers = list(map(int,input().split()))
+num = 0
+for i in range(n+1):
+    for j in range(i):
+        if check(flowers[j:i]):
+            num += 1
+print(num)
 </code></pre>
 
         </div>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = "container wrapper">
+            <h1>Stuck in a Rut</h1>
+
+<h2>Algorithm</h2>
+
+<p>We look for all the intersection points:</p>
+
+<pre><code>For every pair of points:
+- if one cow is north and one cow is east
+    - if the east cow's x &lt;= north cow's x and east cow's y &gt;= north cow's y:
+        - intersection at east cow's y and north cow's x.
+</code></pre>
+
+<p>And then determine the distance at which each cow "dies".</p>
+
+<pre><code>Initialize distance of all cows to Infinity.
+For every intersection point:
+- if both cows are alive at time of intersection:
+    - find the distance from each of the cows to that point.
+    - the cow that has a greater distance would "die", if it has not already.
+    - if they are of equal distance from the point, ignore the point.
+</code></pre>
+
+<h2>Python</h2>
+
+<pre><code># Read input
+n = int(input())
+cows = []
+dist = []
+for _ in range(n):
+    c = input().split()
+    c[1] = int(c[1])
+    c[2] = int(c[2])
+    cows.append(c)
+    dist.append(float("inf"))
+
+# Find intersections
+intersections = [] # [time,d_j,d_i,i,j]
+for i in range(n):
+    for j in range(i):
+        if cows[i][0] == 'N' and cows[j][0] == 'E':
+            if cows[j][1] &lt;= cows[i][1] and cows[j][2] &gt;= cows[i][2]:
+                d_j = cows[i][1]-cows[j][1]
+                d_i = cows[j][2]-cows[i][2]
+                intersections.append([min(d_j,d_i),d_j,d_i,i,j])
+
+        if cows[i][0] == 'E' and cows[j][0] == 'N':
+            if cows[i][1] &lt;= cows[j][1] and cows[i][2] &gt;= cows[j][2]:
+                d_i = cows[j][1]-cows[i][1]
+                d_j = cows[i][2]-cows[j][2]
+                intersections.append([min(d_j,d_i),d_j,d_i,i,j])
+
+intersections.sort(key=lambda i:i[0])
+for intersection in intersections:
+    _,d_j,d_i,i,j = intersection
+    if d_j &lt;= dist[j] and d_i &lt;= dist[i]: # Ensure that both cows are alive at intersection time
+        if d_j &gt; d_i:
+            dist[j] = min(d_j,dist[j])
+        if d_i &gt; d_j:
+            dist[i] = min(d_i,dist[i])
+
+print("\n".join(map(str,dist)).replace("inf","Infinity"))
+</code></pre>
+
+        </div>
+        <br><br>
+        <div class=container style='background-color:rgb(240,240,240);text-align:center;height:70px;'><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+            </div>
+    </body>
+</html>

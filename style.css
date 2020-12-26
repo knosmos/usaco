@@ -35,6 +35,10 @@ nav a{
     padding-left:20%;
     padding-right:20%;
 }
+.wrapper{
+    min-height:100%;
+    margin-bottom:70px;
+}
 
 @media screen and (max-width:1000px){
     .container{

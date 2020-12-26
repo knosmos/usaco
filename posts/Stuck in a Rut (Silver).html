@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = "container wrapper">
+            <h1>Stuck in a Rut</h1>
+
+<h2>Algorithm</h2>
+
+<p>This problem is quite similar to the Bronze version, except we maintain a
+list <code>stopped_by</code> such that cow_i was stopped by <code>stopped_by[i]</code>.
+We then use a recursive method to apply the transitive stops.</p>
+
+<h2>Python</h2>
+
+<pre><code># Read input
+n = int(input())
+cows = []
+dist = []
+for _ in range(n):
+    c = input().split()
+    c[1] = int(c[1])
+    c[2] = int(c[2])
+    cows.append(c)
+    dist.append(float("inf"))
+
+stops = [[] for _ in range(n)] # which cows each cow stopped
+stopped_by = [-1]*n
+
+# Find intersections
+intersections = [] # [time,d_j,d_i,i,j]
+for i in range(n):
+    for j in range(i):
+        if cows[i][0] == 'N' and cows[j][0] == 'E':
+            if cows[j][1] &lt;= cows[i][1] and cows[j][2] &gt;= cows[i][2]:
+                d_j = cows[i][1]-cows[j][1]
+                d_i = cows[j][2]-cows[i][2]
+                intersections.append([min(d_j,d_i),d_j,d_i,i,j])
+
+        if cows[i][0] == 'E' and cows[j][0] == 'N':
+            if cows[i][1] &lt;= cows[j][1] and cows[i][2] &gt;= cows[j][2]:
+                d_i = cows[j][1]-cows[i][1]
+                d_j = cows[i][2]-cows[j][2]
+                intersections.append([min(d_j,d_i),d_j,d_i,i,j])
+
+intersections.sort(key=lambda i:i[0])
+for intersection in intersections:
+    _,d_j,d_i,i,j = intersection
+    if d_j &lt;= dist[j] and d_i &lt;= dist[i]: # Ensure that both cows are alive at intersection time
+        if d_j &gt; d_i:
+            if dist[j] &gt; d_j:
+                stopped_by[j] = i
+                dist[j] = d_j
+        if d_i &gt; d_j:
+            if dist[i] &gt; d_i:
+                stopped_by[i] = j
+                dist[i] = d_i
+for cow in range(n):
+    if stopped_by[cow] != -1:
+        stops[stopped_by[cow]].append(cow)
+
+# Assign transitive stops
+visited = [0]*n
+stop_num = list(map(len,stops))
+def blame(i):
+    if visited[i]: return stop_num[i]
+    for j in stops[i]:
+        stop_num[i] += blame(j)
+    visited[i] = 1
+    return stop_num[i]
+
+for i in range(n):
+    blame(i)
+
+# Print result
+print("\n".join(map(str,stop_num)))
+</code></pre>
+
+        </div>
+        <br><br>
+        <div class=container style='background-color:rgb(240,240,240);text-align:center;height:70px;'><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+            </div>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <nav class = container>
+            <a href='../index.html'>USACO Solutions</a>
+        </nav>
+        <div class = "container wrapper">
+            <h1>Cowntagion</h1>
+
+<h2>Algorithm</h2>
+
+<p>Starting at the first infected farm, duplicate until there are enough infected cows to infect
+all neighboring uninfected farms, and repeat until there are no more uninfected cows.</p>
+
+<h2>Pseudocode</h2>
+
+<pre><code>While there are uninfected farms:
+    For each infected farm:
+        Double until there are enough cows to infect all neighboring uninfected farms.
+        Send a cow to each of those farms to infect them.
+</code></pre>
+
+<h2>Python</h2>
+
+<pre><code>n = int(input())
+cows = [0]*n # infected cows in each farm
+cows[0] = 1 # Infect first cow
+newInfected = [0] # Newly infected farms
+adj = [[] for _ in range(n)] # Adjacency List
+moves = 0
+for _ in range(n-1):
+    road = list(map(int,input().split()))
+    adj[road[0]-1].append(road[1]-1)
+    adj[road[1]-1].append(road[0]-1)
+while 0 in cows:
+    justInfected = []
+    for farm in newInfected:
+        canInfect = 0
+        for neighbor in adj[farm]:
+            if cows[neighbor] == 0:
+                canInfect += 1
+                moves += 1 # Cost to move infected cow to farm
+                cows[neighbor] += 1
+                justInfected.append(neighbor)
+        while cows[farm] &lt;= canInfect:
+            cows[farm] *= 2
+            moves += 1
+        cows[farm] -= canInfect
+    newInfected = list(justInfected)
+print(moves)
+</code></pre>
+
+        </div>
+        <br><br>
+        <div class=container style='background-color:rgb(240,240,240);text-align:center;height:70px;'><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+            </div>
+    </body>
+</html>
