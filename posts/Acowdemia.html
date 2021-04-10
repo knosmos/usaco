@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+        <title>USACO Solutions</title>
+        <link rel=icon href=../logo.png type=image/png>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <div class = "content-body">
+            <nav class = container>
+                <a href='../index.html'>USACO Solutions</a>
+            </nav>
+            <div class = "container wrapper">
+                <h1>Acowdemia</h1>
+
+<h2>Algorithm</h2>
+
+<p>Binary search on the <em>h</em>-index. For each candidate <em>h</em>, try to add citations to the top
+<em>h</em> papers. If we have to add more than <em>k</em> citations to a paper, then the <em>h</em>-index is
+unattainable. If we have to add more than <em>kl</em> citations in total, then the <em>h</em>-index is
+also unattainable.</p>
+
+<h2>Python</h2>
+
+<pre><code>def find(h,papers,k,l):
+    total_citations = k*l
+    papers.sort(reverse=True)
+    s = 0
+    for i in range(len(papers)):
+        if papers[i] &lt;= h:
+            s = i
+            break
+    #print(papers,s)
+    for i in range(h-s):
+        diff = h-papers[i+s]
+        if diff &gt; k:
+            return False
+        total_citations -= diff
+        if total_citations &lt; 0:
+            return False
+    return True
+
+# binary search
+n,k,l = map(int,input().split())
+papers = list(map(int,input().split()))
+
+low = min(papers)
+high = max(papers)+k
+mid = 0
+
+while low &lt;= high:
+    mid = (high + low) // 2
+    x = find(mid,papers,k,l)
+    if x:
+        low = mid + 1
+    else:
+        high = mid - 1
+print(min(low,high))
+</code></pre>
+
+            </div>            
+        </div>
+        <div class="container footer"><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+        </div>
+    </body>
+</html>

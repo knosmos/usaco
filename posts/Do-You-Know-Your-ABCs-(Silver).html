@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+        <title>USACO Solutions</title>
+        <link rel=icon href=../logo.png type=image/png>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <div class = "content-body">
+            <nav class = container>
+                <a href='../index.html'>USACO Solutions</a>
+            </nav>
+            <div class = "container wrapper">
+                <h1>Do You Know Your ABCs?</h1>
+
+<h2>Algorithm</h2>
+
+<p>Iterate through each possible arrangement of A, B, C, A+B, A+C, B+C, and A+B+C.
+If A, B, or C is missing, find them using the other provided values. For example,
+A can be found with (A+B+C)-(B+C), (A+C)-(C), or (A+B)-(B). Because there are three
+ways to find each of the three numbers, and there are at most three missing numbers,
+this is always possible. Then, use the values of A, B and C to find whether the other values make sense.</p>
+
+<h2>Python</h2>
+
+<pre><code>def permute(vals,missing):
+    res = []
+    if len(vals) == 0:
+        return [[-1]*missing]
+    if missing == 0:
+        return [vals]
+    res += [[-1]+i for i in permute(vals,missing-1)]
+    res += [[vals[0]]+i for i in permute(vals[1:],missing)]
+    return res
+
+def addSwaps(perms):
+    res = perms.copy()
+    for i in perms:
+        if i[2] != i[3]:
+            j = i.copy()
+            j[2] = i[3]
+            j[3] = i[2]
+            res.append(j)
+    return res
+
+def getABC(vals):
+    # expects 7 values:
+    # 0 1 2 3   4   5   6
+    # A,B,C,A+B,A+C,B+C,A+B+C
+    # replace unknowns with -1
+    # finds A,B,C
+    a = vals[0]
+    b = vals[1]
+    c = vals[2]
+    if a == -1:
+        if vals[6] != -1 and vals[5] != -1:
+            a = vals[6]-vals[5]
+        if vals[3] != -1 and b != -1:
+            a = vals[3]-b
+        if vals[4] != -1 and c != -1:
+            a = vals[4]-c
+    if b == -1:
+        if vals[6] != -1 and vals[4] != -1:
+            b = vals[6]-vals[4]
+        if vals[3] != -1 and a != -1:
+            b = vals[3]-a
+        if vals[5] != -1 and c != -1:
+            b = vals[5]-c
+    if c == -1:
+        if vals[6] != -1 and vals[3] != -1:
+            c = vals[6]-vals[3]
+        if vals[5] != -1 and b != -1:
+            c = vals[5]-b
+        if vals[4] != -1 and a != -1:
+            c = vals[4]-a
+    vals[0] = a
+    vals[1] = b
+    vals[2] = c
+    return vals
+
+def check(vals):
+    a = vals[0]
+    b = vals[1]
+    c = vals[2]
+    checks = [
+        a+b == vals[3] or vals[3] == -1,
+        a+c == vals[4] or vals[4] == -1,
+        b+c == vals[5] or vals[5] == -1,
+        a+b+c == vals[6] or vals[6] == -1
+    ]
+    return all(checks)
+
+def find(nums):
+    perms = permute(nums,7-len(nums))
+    perms = addSwaps(perms)
+    ct = 0
+    uniqueTriples = set()
+    for perm in perms:
+        perm = getABC(perm)
+        if perm[0] &lt;= perm[1] &lt;= perm[2]:
+            if check(perm):
+                uniqueTriples.add((perm[0],perm[1],perm[2]))
+    return len(uniqueTriples)
+
+def main():
+    n = int(input())
+    for i in range(n):
+        _ = input()
+        vals = sorted(list(map(int,input().split())))
+        print(find(vals))
+
+main()
+</code></pre>
+
+            </div>            
+        </div>
+        <div class="container footer"><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+        </div>
+    </body>
+</html>

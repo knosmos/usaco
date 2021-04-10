@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+        <title>USACO Solutions</title>
+        <link rel=icon href=../logo.png type=image/png>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <div class = "content-body">
+            <nav class = container>
+                <a href='../index.html'>USACO Solutions</a>
+            </nav>
+            <div class = "container wrapper">
+                <h1>Maze Tac Toe</h1>
+
+<h2>Pseudocode</h2>
+
+<p><em>Note: this algorithm is too slow; it only passes half of the test cases.</em></p>
+
+<pre><code>def Visit(location):
+    Find all the reachable tic-tac-toe locations on the maze with DFS.
+    For each reachable location x:
+        Mark the move on that location on a tic-tac-toe board.
+        If the board reaches a terminating state:
+            Store board in set of all unique terminating boards.
+        Otherwise:
+            Visit(x)
+
+startLocation = Bessie's starting location
+Visit(startLocation)
+</code></pre>
+
+<h2>Python</h2>
+
+<pre><code>import copy
+def parser(raw_grid):
+    grid = []
+    for line in raw_grid:
+        chunks = [line[i:i+3] for i in range(0, len(line), 3)]
+        grid.append(chunks)
+    return grid
+
+visited = set()
+def getReachable(grid,x,y):
+    # finds all reachable squares.
+    global visited
+    res = set()
+    visited.add((x,y))
+    if grid[x][y] != "...":
+        res.add((x,y))
+        return res
+    if grid[x+1][y] != "###" and not (x+1,y) in visited: res = res.union(getReachable(grid,x+1,y))
+    if grid[x-1][y] != "###" and not (x-1,y) in visited: res = res.union(getReachable(grid,x-1,y))
+    if grid[x][y+1] != "###" and not (x,y+1) in visited: res = res.union(getReachable(grid,x,y+1))
+    if grid[x][y-1] != "###" and not (x,y-1) in visited: res = res.union(getReachable(grid,x,y-1))
+    return res
+
+def checkBoard(b):
+    checks = [
+        # 00 10 20
+        # 01 11 21
+        # 02 12 22
+        b[0][0]+b[1][0]+b[2][0],
+        b[0][1]+b[1][1]+b[2][1],
+        b[0][2]+b[1][2]+b[2][2],
+
+        b[0][0]+b[0][1]+b[0][2],
+        b[1][0]+b[1][1]+b[1][2],
+        b[2][0]+b[2][1]+b[2][2],
+
+        b[0][0]+b[1][1]+b[2][2],
+        b[2][0]+b[1][1]+b[0][2]
+    ]
+    for i in checks:
+        if i == "MOO" or i == "OOM":
+            return True
+    return False
+
+ways = set()
+def walk(x,y,b):
+    global ways, visited, grid
+    visited = set((x,y))
+    val = grid[x][y]
+    grid[x][y] = "..."
+    r = getReachable(grid,x,y)
+    #print([grid[i[0]][i[1]] for i in r])
+    for i in r:
+        board = copy.deepcopy(b)
+        j = grid[i[0]][i[1]]
+        letter = j[0]
+        mx = int(j[1])-1
+        my = int(j[2])-1
+        #print(mx,my)
+        if board[mx][my] == '.':
+            board[mx][my] = letter
+        #print(board)
+        if not checkBoard(board):
+            walk(i[0],i[1],board)
+        else:
+            board = tuple([tuple(i) for i in board])
+            if not board in ways:
+                ways.add(board)
+    grid[x][y] = val
+    #print(b)
+
+n = int(input())
+grid = []
+for i in range(n):
+    grid.append(input())
+grid = parser(grid)
+#print(grid)
+for x in range(n):
+    for y in range(n):
+        if grid[x][y] == "BBB":
+            walk(x,y,[['.','.','.'],['.','.','.'],['.','.','.']])
+            break
+print(len(ways))
+</code></pre>
+
+            </div>            
+        </div>
+        <div class="container footer"><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+        </div>
+    </body>
+</html>

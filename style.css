@@ -67,7 +67,7 @@ code{
 }
 pre code{
     display: block;
-    overflow-x: scroll;
+    overflow-x: auto;
     padding: 10px;
     border-radius: 10px;
 }
@@ -99,42 +99,13 @@ a{
 a:hover{
     text-decoration: underline;
 }
-/*.section-box{
-    padding:40px 20px 40px 20px;
-    margin-bottom:30px;
-    background-color:rgb(231, 231, 231);
-}
-.link-blocks .section-box:nth-child(odd){
-    -webkit-clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
-    clip-path: polygon(0 0, 100% 10%, 100% 90%, 0 100%);
-}
-.link-blocks .section-box:nth-child(even){
-    -webkit-clip-path: polygon(0 10%, 100% 0%, 100% 100%, 0 90%);
-    clip-path: polygon(0 10%, 100% 0%, 100% 100%, 0 90%);
-}*/
 
-/* Style the button that is used to open and close the collapsible content */
-.collapsible {
-    background-color: #eee;
-    color: #444;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
-  }
-  
-  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-  .active, .collapsible:hover {
-    background-color: #ccc;
-  }
-  
-  /* Style the collapsible content. Note: hidden by default */
-  .content {
-    padding: 0 18px;
-    display: none;
-    overflow: hidden;
-    background-color: #f1f1f1;
-  }
+.content-body{
+    min-height:calc(100vh - 70px);
+}
+
+.footer{
+    background-color:rgb(240,240,240);
+    text-align:center;
+    height:70px;
+}
