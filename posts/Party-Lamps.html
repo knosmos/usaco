@@ -23,82 +23,82 @@ of the number of button presses to determine whether each pattern is possible.</
 
 <h2>Python</h2>
 
-<pre><code>buttonStates = [ # Easier to just list them all
-    [0,0,0,0],
-    [1,0,0,0],
-    [0,1,0,0],
-    [0,0,1,0],
-    [0,0,0,1],
-    [1,1,0,0],
-    [1,0,1,0],
-    [1,0,0,1],
-    [0,1,1,0],
-    [0,1,0,1],
-    [0,0,1,1],
-    [0,1,1,1],
-    [1,0,1,1],
-    [1,1,0,1],
-    [1,1,1,0],
-    [1,1,1,1]
-]
+<div class="codehilite"><pre><span></span><code><span class="n">buttonStates</span> <span class="o">=</span> <span class="p">[</span> <span class="c1"># Easier to just list them all</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">]</span>
 
-def getCombos(numLamps,counter):
-    global buttonStates
-    results = []
-    for combo in buttonStates:
-        if sum(combo) &gt; counter: return results
-        if sum(combo)%2 != counter%2: continue
-        final = [1]*numLamps
-        for i in range(len(combo)):
-            if combo[i]:
-                if i == 0:
-                    final = [int(not(j)) for j in final]
-                if i == 1:
-                    final = [int(not(final[j])) if j%2 == 1 else final[j] for j in range(len(final))]
-                if i == 2:
-                    final = [int(not(final[j])) if j%2 == 0 else final[j] for j in range(len(final))]
-                if i == 3:
-                    final = [int(not(final[j]))  if (j/3.0%1) == 0 else final[j] for j in range(len(final))]
-        results.append(final)
-    return results
+<span class="k">def</span> <span class="nf">getCombos</span><span class="p">(</span><span class="n">numLamps</span><span class="p">,</span><span class="n">counter</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">buttonStates</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">combo</span> <span class="ow">in</span> <span class="n">buttonStates</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">combo</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">counter</span><span class="p">:</span> <span class="k">return</span> <span class="n">results</span>
+        <span class="k">if</span> <span class="nb">sum</span><span class="p">(</span><span class="n">combo</span><span class="p">)</span><span class="o">%</span><span class="mi">2</span> <span class="o">!=</span> <span class="n">counter</span><span class="o">%</span><span class="mi">2</span><span class="p">:</span> <span class="k">continue</span>
+        <span class="n">final</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">numLamps</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">combo</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">combo</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">final</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="ow">not</span><span class="p">(</span><span class="n">j</span><span class="p">))</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">final</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">final</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="ow">not</span><span class="p">(</span><span class="n">final</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span> <span class="k">if</span> <span class="n">j</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">final</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">final</span><span class="p">))]</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                    <span class="n">final</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="ow">not</span><span class="p">(</span><span class="n">final</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span> <span class="k">if</span> <span class="n">j</span><span class="o">%</span><span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">final</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">final</span><span class="p">))]</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                    <span class="n">final</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="ow">not</span><span class="p">(</span><span class="n">final</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>  <span class="k">if</span> <span class="p">(</span><span class="n">j</span><span class="o">/</span><span class="mf">3.0</span><span class="o">%</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">final</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">final</span><span class="p">))]</span>
+        <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">final</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">results</span>
 
-def validate(results,on,off):
-    newResults = []
-    for i in results:
-        valid = True
-        for j in on:
-            if not i[j-1]: valid = False
-        for j in off:
-            if i[j-1]: valid = False
-        if valid:
-            newResults.append(i)
-    return newResults
+<span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="n">results</span><span class="p">,</span><span class="n">on</span><span class="p">,</span><span class="n">off</span><span class="p">):</span>
+    <span class="n">newResults</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">on</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">i</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">off</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span> <span class="n">valid</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">valid</span><span class="p">:</span>
+            <span class="n">newResults</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">newResults</span>
 
-def main():
-    # Get data
-    with open('lamps.in','r') as fIn:
-        numLamps, counter, on, off, _ = fIn.read().split('\n')
-    numLamps = int(numLamps)
-    counter = int(counter)
-    on = list(map(int,on.split()))[:-1]
-    off = list(map(int,off.split()))[:-1]
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># Get data</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;lamps.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">numLamps</span><span class="p">,</span> <span class="n">counter</span><span class="p">,</span> <span class="n">on</span><span class="p">,</span> <span class="n">off</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">numLamps</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">numLamps</span><span class="p">)</span>
+    <span class="n">counter</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">counter</span><span class="p">)</span>
+    <span class="n">on</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">on</span><span class="o">.</span><span class="n">split</span><span class="p">()))[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">off</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">off</span><span class="o">.</span><span class="n">split</span><span class="p">()))[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
 
-    # Get answer
-    results = validate(getCombos(numLamps,counter),on,off)
-    results = [''.join(map(str,i)) for i in results]
+    <span class="c1"># Get answer</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span><span class="n">getCombos</span><span class="p">(</span><span class="n">numLamps</span><span class="p">,</span><span class="n">counter</span><span class="p">),</span><span class="n">on</span><span class="p">,</span><span class="n">off</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
 
-    # Sort by binary
-    results.sort(key=lambda i:int(i,2))
+    <span class="c1"># Sort by binary</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
 
-    with open('lamps.out','w') as fOut:
-        if len(results) == 0:
-            fOut.write('IMPOSSIBLE\n')
-        else:
-            fOut.write('\n'.join(results)+'\n')
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;lamps.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;IMPOSSIBLE</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

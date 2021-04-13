@@ -23,60 +23,60 @@ positions, we return 0.</p>
 
 <h2>Python</h2>
 
-<pre><code>def move(pos,d,grid):
-    dirchange = {(-1,0):(0,1), # Rotations clockwise
-                (0,1):(1,0),
-                (1,0):(0,-1),
-                (0,-1):(-1,0)}
-    npos = [pos[0]+d[0],pos[1]+d[1]]
-    if not(0 &lt;= npos[0] &lt; 10 and 0 &lt;= npos[1] &lt; 10): # Hit borders
-        return pos,dirchange[d]
-    if grid[npos[0]][npos[1]] == 1: # Obstacle in the way
-        return pos,dirchange[d] # Rotate
-    return npos,d # Everything is fine
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span><span class="n">d</span><span class="p">,</span><span class="n">grid</span><span class="p">):</span>
+    <span class="n">dirchange</span> <span class="o">=</span> <span class="p">{(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">):(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="c1"># Rotations clockwise</span>
+                <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">):(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span>
+                <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">):(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+                <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)}</span>
+    <span class="n">npos</span> <span class="o">=</span> <span class="p">[</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">npos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">npos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">):</span> <span class="c1"># Hit borders</span>
+        <span class="k">return</span> <span class="n">pos</span><span class="p">,</span><span class="n">dirchange</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">npos</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">npos</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># Obstacle in the way</span>
+        <span class="k">return</span> <span class="n">pos</span><span class="p">,</span><span class="n">dirchange</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="c1"># Rotate</span>
+    <span class="k">return</span> <span class="n">npos</span><span class="p">,</span><span class="n">d</span> <span class="c1"># Everything is fine</span>
 
-def run(grid,cow,john):
-    cowdir = (-1,0) # North
-    johndir = (-1,0) # John Deere
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span><span class="n">cow</span><span class="p">,</span><span class="n">john</span><span class="p">):</span>
+    <span class="n">cowdir</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># North</span>
+    <span class="n">johndir</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># John Deere</span>
 
-    initcow = cow.copy() # Initial position of cow
-    initjohn = john.copy()
-    moves = 0
-    while True:
-        # move cow
-        cow, cowdir = move(cow,cowdir,grid)
-        # move john
-        john, johndir = move(john,johndir,grid)
-        moves += 1
-        if moves &gt;= 160000: return 0 # Timeout
-        if cow == john: # They meet!
-            return moves
-        if cow == initcow and john == initjohn and cowdir == johndir == (-1,0): # That's a loop!
-            return 0
+    <span class="n">initcow</span> <span class="o">=</span> <span class="n">cow</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span> <span class="c1"># Initial position of cow</span>
+    <span class="n">initjohn</span> <span class="o">=</span> <span class="n">john</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">moves</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="c1"># move cow</span>
+        <span class="n">cow</span><span class="p">,</span> <span class="n">cowdir</span> <span class="o">=</span> <span class="n">move</span><span class="p">(</span><span class="n">cow</span><span class="p">,</span><span class="n">cowdir</span><span class="p">,</span><span class="n">grid</span><span class="p">)</span>
+        <span class="c1"># move john</span>
+        <span class="n">john</span><span class="p">,</span> <span class="n">johndir</span> <span class="o">=</span> <span class="n">move</span><span class="p">(</span><span class="n">john</span><span class="p">,</span><span class="n">johndir</span><span class="p">,</span><span class="n">grid</span><span class="p">)</span>
+        <span class="n">moves</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">moves</span> <span class="o">&gt;=</span> <span class="mi">160000</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span> <span class="c1"># Timeout</span>
+        <span class="k">if</span> <span class="n">cow</span> <span class="o">==</span> <span class="n">john</span><span class="p">:</span> <span class="c1"># They meet!</span>
+            <span class="k">return</span> <span class="n">moves</span>
+        <span class="k">if</span> <span class="n">cow</span> <span class="o">==</span> <span class="n">initcow</span> <span class="ow">and</span> <span class="n">john</span> <span class="o">==</span> <span class="n">initjohn</span> <span class="ow">and</span> <span class="n">cowdir</span> <span class="o">==</span> <span class="n">johndir</span> <span class="o">==</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">):</span> <span class="c1"># That&#39;s a loop!</span>
+            <span class="k">return</span> <span class="mi">0</span>
 
-def main():
-    grid = [[0]*10 for _ in range(10)] # 0 = empty, 1 = obstacle
-    cow = [0,0]
-    john = [0,0]
-    with open('ttwo.in','r') as fIn:
-        f = fIn.read().split('\n')
-        print(f)
-        for row in range(10):
-            for col in range(10):
-                if f[row][col] != '.':
-                    if f[row][col] == '*':
-                        grid[row][col] = 1
-                    elif f[row][col] == 'F':
-                        john = [row,col]
-                    elif f[row][col] == 'C':
-                        cow = [row,col]
-    res = run(grid,cow,john)
-    with open('ttwo.out','w') as fOut:
-        fOut.write(str(res)+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">10</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span> <span class="c1"># 0 = empty, 1 = obstacle</span>
+    <span class="n">cow</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">john</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ttwo.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;.&#39;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">f</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+                        <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="k">elif</span> <span class="n">f</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;F&#39;</span><span class="p">:</span>
+                        <span class="n">john</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span>
+                    <span class="k">elif</span> <span class="n">f</span><span class="p">[</span><span class="n">row</span><span class="p">][</span><span class="n">col</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span>
+                        <span class="n">cow</span> <span class="o">=</span> <span class="p">[</span><span class="n">row</span><span class="p">,</span><span class="n">col</span><span class="p">]</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span><span class="n">cow</span><span class="p">,</span><span class="n">john</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ttwo.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

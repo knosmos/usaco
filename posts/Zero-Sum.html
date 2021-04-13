@@ -21,47 +21,47 @@
 
 <h2>Python</h2>
 
-<pre><code># Evaluate strings
-def calc(s):
-    prev = 0
-    lastOp = 1
-    res = 0
-    for i in range(len(s)):
-        if s[i] in ['+','-']:
-            res += lastOp*int(s[prev:i])
-            if s[i] == '+': lastOp = 1
-            if s[i] == '-': lastOp = -1
-            prev = i+1
-    res += lastOp*int(s[prev:])
-    return res
+<div class="codehilite"><pre><span></span><code><span class="c1"># Evaluate strings</span>
+<span class="k">def</span> <span class="nf">calc</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">lastOp</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">]:</span>
+            <span class="n">res</span> <span class="o">+=</span> <span class="n">lastOp</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">prev</span><span class="p">:</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span> <span class="n">lastOp</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span> <span class="n">lastOp</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">prev</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">res</span> <span class="o">+=</span> <span class="n">lastOp</span><span class="o">*</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">prev</span><span class="p">:])</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-# Recursive function that generates combos of +,-,' '
-def gen(n):
-    if n == 1: return [[]]
-    res = []
-    for i in ['+','-',' ']:
-        res += [[i]+j for j in gen(n-1)]
-    return res
+<span class="c1"># Recursive function that generates combos of +,-,&#39; &#39;</span>
+<span class="k">def</span> <span class="nf">gen</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="p">[[]]</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;+&#39;</span><span class="p">,</span><span class="s1">&#39;-&#39;</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">]:</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="p">[[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">j</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">gen</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-# Test each combination
-def test(c):
-    res = []
-    for i in c:
-        # Generate exp
-        s = ''.join(['1']+[i[j]+str(j+2) for j in range(len(i))])
-        # Zero sum?
-        if calc(s.replace(' ','')) == 0: # Remove spaces
-            res.append(s)
-    return sorted(res)
+<span class="c1"># Test each combination</span>
+<span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">c</span><span class="p">:</span>
+        <span class="c1"># Generate exp</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;1&#39;</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">j</span><span class="o">+</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">))])</span>
+        <span class="c1"># Zero sum?</span>
+        <span class="k">if</span> <span class="n">calc</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">))</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># Remove spaces</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
 
-def main():
-    with open('zerosum.in','r') as fIn:
-        n = int(fIn.read())
-    with open('zerosum.out','w') as fOut:
-        fOut.write('\n'.join(test(gen(n)))+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;zerosum.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;zerosum.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">test</span><span class="p">(</span><span class="n">gen</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__': main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span> <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

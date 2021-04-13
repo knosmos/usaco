@@ -15,46 +15,46 @@
 
 <p>Keep a list of how many times the 13th lands on each day. Keep a list of the number of days in each month; change the value for February if it is a leap year. Record which day each year ends on the determine which day to start on for the next year. After all years have been processed, return the list of where the 13th lands.</p>
 
-<pre><code>with open('friday.in','r') as f:
-    endYear = int(f.read())
+<div class="codehilite"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;friday.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">endYear</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
 
-def getYear(year,start):
-    '''
-    Year: the year to calculate fridays for.
-    Start: which day the year starts on.
-    Outputs:
-    - a list of len 7, with the number of 13ths that fall on each day of the week
-    - the day of the week that the year ends.
-    '''
-    months = [31,28,31,30,31,30,31,31,30,31,30,31]
-    if year%4 == 0: # Leap years
-        months[1] = 29
-    if year%100 == 0 and year%400!=0: # Century years
-        months[1] = 28
-    fridays = [0]*7
-    for i in months:
-        fridays[(start+13)%7] += 1
-        start = (start+i)%7
-    return fridays, start
+<span class="k">def</span> <span class="nf">getYear</span><span class="p">(</span><span class="n">year</span><span class="p">,</span><span class="n">start</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Year: the year to calculate fridays for.</span>
+<span class="sd">    Start: which day the year starts on.</span>
+<span class="sd">    Outputs:</span>
+<span class="sd">    - a list of len 7, with the number of 13ths that fall on each day of the week</span>
+<span class="sd">    - the day of the week that the year ends.</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">months</span> <span class="o">=</span> <span class="p">[</span><span class="mi">31</span><span class="p">,</span><span class="mi">28</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">31</span><span class="p">,</span><span class="mi">30</span><span class="p">,</span><span class="mi">31</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">year</span><span class="o">%</span><span class="mi">4</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># Leap years</span>
+        <span class="n">months</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">29</span>
+    <span class="k">if</span> <span class="n">year</span><span class="o">%</span><span class="mi">100</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">year</span><span class="o">%</span><span class="mi">400</span><span class="o">!=</span><span class="mi">0</span><span class="p">:</span> <span class="c1"># Century years</span>
+        <span class="n">months</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">28</span>
+    <span class="n">fridays</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">7</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">months</span><span class="p">:</span>
+        <span class="n">fridays</span><span class="p">[(</span><span class="n">start</span><span class="o">+</span><span class="mi">13</span><span class="p">)</span><span class="o">%</span><span class="mi">7</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">start</span> <span class="o">=</span> <span class="p">(</span><span class="n">start</span><span class="o">+</span><span class="n">i</span><span class="p">)</span><span class="o">%</span><span class="mi">7</span>
+    <span class="k">return</span> <span class="n">fridays</span><span class="p">,</span> <span class="n">start</span>
 
-start = 1
-fridays = [0]*7
-for j in range(1900,1900+endYear):
-    f,start = getYear(j,start)
-    for i in range(len(f)):
-        fridays[i] += f[i]
+<span class="n">start</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">fridays</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">7</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1900</span><span class="p">,</span><span class="mi">1900</span><span class="o">+</span><span class="n">endYear</span><span class="p">):</span>
+    <span class="n">f</span><span class="p">,</span><span class="n">start</span> <span class="o">=</span> <span class="n">getYear</span><span class="p">(</span><span class="n">j</span><span class="p">,</span><span class="n">start</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)):</span>
+        <span class="n">fridays</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">f</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-res = ''
-for i in range(len(fridays)):
-    res += str(fridays[i])
-    if i != len(fridays)-1:
-        res += ' '
-    else:
-        res += '\n'
+<span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fridays</span><span class="p">)):</span>
+    <span class="n">res</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="n">fridays</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">fridays</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="s1">&#39; &#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
 
-with open('friday.out','w') as f:
-    f.write(res)
-</code></pre>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;friday.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</code></pre></div>
 
             </div>            
         </div>

@@ -21,68 +21,68 @@ We then use a recursive method to apply the transitive stops.</p>
 
 <h2>Python</h2>
 
-<pre><code># Read input
-n = int(input())
-cows = []
-dist = []
-for _ in range(n):
-    c = input().split()
-    c[1] = int(c[1])
-    c[2] = int(c[2])
-    cows.append(c)
-    dist.append(float("inf"))
+<div class="codehilite"><pre><span></span><code><span class="c1"># Read input</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">cows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="n">cows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="n">dist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">))</span>
 
-stops = [[] for _ in range(n)] # which cows each cow stopped
-stopped_by = [-1]*n
+<span class="n">stops</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span> <span class="c1"># which cows each cow stopped</span>
+<span class="n">stopped_by</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">n</span>
 
-# Find intersections
-intersections = [] # [time,d_j,d_i,i,j]
-for i in range(n):
-    for j in range(i):
-        if cows[i][0] == 'N' and cows[j][0] == 'E':
-            if cows[j][1] &lt;= cows[i][1] and cows[j][2] &gt;= cows[i][2]:
-                d_j = cows[i][1]-cows[j][1]
-                d_i = cows[j][2]-cows[i][2]
-                intersections.append([min(d_j,d_i),d_j,d_i,i,j])
+<span class="c1"># Find intersections</span>
+<span class="n">intersections</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># [time,d_j,d_i,i,j]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;N&#39;</span> <span class="ow">and</span> <span class="n">cows</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;E&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cows</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">cows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">cows</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">cows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]:</span>
+                <span class="n">d_j</span> <span class="o">=</span> <span class="n">cows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">cows</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">d_i</span> <span class="o">=</span> <span class="n">cows</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">cows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">intersections</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">d_j</span><span class="p">,</span><span class="n">d_i</span><span class="p">),</span><span class="n">d_j</span><span class="p">,</span><span class="n">d_i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
 
-        if cows[i][0] == 'E' and cows[j][0] == 'N':
-            if cows[i][1] &lt;= cows[j][1] and cows[i][2] &gt;= cows[j][2]:
-                d_i = cows[j][1]-cows[i][1]
-                d_j = cows[i][2]-cows[j][2]
-                intersections.append([min(d_j,d_i),d_j,d_i,i,j])
+        <span class="k">if</span> <span class="n">cows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;E&#39;</span> <span class="ow">and</span> <span class="n">cows</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;N&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">cows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">cows</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">cows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">cows</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">2</span><span class="p">]:</span>
+                <span class="n">d_i</span> <span class="o">=</span> <span class="n">cows</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">cows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">d_j</span> <span class="o">=</span> <span class="n">cows</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="n">cows</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+                <span class="n">intersections</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">min</span><span class="p">(</span><span class="n">d_j</span><span class="p">,</span><span class="n">d_i</span><span class="p">),</span><span class="n">d_j</span><span class="p">,</span><span class="n">d_i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">])</span>
 
-intersections.sort(key=lambda i:i[0])
-for intersection in intersections:
-    _,d_j,d_i,i,j = intersection
-    if d_j &lt;= dist[j] and d_i &lt;= dist[i]: # Ensure that both cows are alive at intersection time
-        if d_j &gt; d_i:
-            if dist[j] &gt; d_j:
-                stopped_by[j] = i
-                dist[j] = d_j
-        if d_i &gt; d_j:
-            if dist[i] &gt; d_i:
-                stopped_by[i] = j
-                dist[i] = d_i
-for cow in range(n):
-    if stopped_by[cow] != -1:
-        stops[stopped_by[cow]].append(cow)
+<span class="n">intersections</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">intersection</span> <span class="ow">in</span> <span class="n">intersections</span><span class="p">:</span>
+    <span class="n">_</span><span class="p">,</span><span class="n">d_j</span><span class="p">,</span><span class="n">d_i</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="o">=</span> <span class="n">intersection</span>
+    <span class="k">if</span> <span class="n">d_j</span> <span class="o">&lt;=</span> <span class="n">dist</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="ow">and</span> <span class="n">d_i</span> <span class="o">&lt;=</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="c1"># Ensure that both cows are alive at intersection time</span>
+        <span class="k">if</span> <span class="n">d_j</span> <span class="o">&gt;</span> <span class="n">d_i</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dist</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">d_j</span><span class="p">:</span>
+                <span class="n">stopped_by</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+                <span class="n">dist</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">d_j</span>
+        <span class="k">if</span> <span class="n">d_i</span> <span class="o">&gt;</span> <span class="n">d_j</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">d_i</span><span class="p">:</span>
+                <span class="n">stopped_by</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">j</span>
+                <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">d_i</span>
+<span class="k">for</span> <span class="n">cow</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">stopped_by</span><span class="p">[</span><span class="n">cow</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">stops</span><span class="p">[</span><span class="n">stopped_by</span><span class="p">[</span><span class="n">cow</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cow</span><span class="p">)</span>
 
-# Assign transitive stops
-visited = [0]*n
-stop_num = list(map(len,stops))
-def blame(i):
-    if visited[i]: return stop_num[i]
-    for j in stops[i]:
-        stop_num[i] += blame(j)
-    visited[i] = 1
-    return stop_num[i]
+<span class="c1"># Assign transitive stops</span>
+<span class="n">visited</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">n</span>
+<span class="n">stop_num</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span><span class="n">stops</span><span class="p">))</span>
+<span class="k">def</span> <span class="nf">blame</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span> <span class="k">return</span> <span class="n">stop_num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">stops</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+        <span class="n">stop_num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">blame</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="n">visited</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">stop_num</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
 
-for i in range(n):
-    blame(i)
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">blame</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
-# Print result
-print("\n".join(map(str,stop_num)))
-</code></pre>
+<span class="c1"># Print result</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">stop_num</span><span class="p">)))</span>
+</code></pre></div>
 
             </div>            
         </div>

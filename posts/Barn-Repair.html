@@ -29,49 +29,49 @@
 
 <p>4) Output the sum of the number of occupied stalls and the sum of the rest of the list.</p>
 
-<pre><code>def generateString(c,occupied):
-    res = [' ']*c
-    for i in occupied:
-        res[i-1] = '#'
-    print(''.join(i for i in res))
-    return res
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">generateString</span><span class="p">(</span><span class="n">c</span><span class="p">,</span><span class="n">occupied</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">]</span><span class="o">*</span><span class="n">c</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">occupied</span><span class="p">:</span>
+        <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;#&#39;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">res</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-def consecutiveEmpty(s):
-    new = []
-    lastSwitch = -1
-    firstStallIndex=s.index('#')
-    for i in range(firstStallIndex,len(s)-1):
-        if s[i] != s[i+1]:
-            if s[i] == ' ':
-                new.append(i-lastSwitch)
-            lastSwitch = i
-    return sorted(new)
+<span class="k">def</span> <span class="nf">consecutiveEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">new</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">lastSwitch</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">firstStallIndex</span><span class="o">=</span><span class="n">s</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="s1">&#39;#&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">firstStallIndex</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39; &#39;</span><span class="p">:</span>
+                <span class="n">new</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="n">lastSwitch</span><span class="p">)</span>
+            <span class="n">lastSwitch</span> <span class="o">=</span> <span class="n">i</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
 
-def parseInput(filename):
-    with open(filename,'r') as fIn:
-        i = fIn.read().split('\n')
-    maxBoards,numStalls,numOccupied = list(map(int,i[0].split()))
-    occupied = []
-    for line in i[1:-1]:
-        occupied.append(int(line))
-    return maxBoards,numStalls,occupied,numOccupied
+<span class="k">def</span> <span class="nf">parseInput</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">maxBoards</span><span class="p">,</span><span class="n">numStalls</span><span class="p">,</span><span class="n">numOccupied</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+    <span class="n">occupied</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">occupied</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">maxBoards</span><span class="p">,</span><span class="n">numStalls</span><span class="p">,</span><span class="n">occupied</span><span class="p">,</span><span class="n">numOccupied</span>
 
-def main():
-    maxBoards,numStalls,occupied,numOccupied = parseInput('barn1.in')
-    s = generateString(numStalls,occupied)
-    emptyStalls = consecutiveEmpty(s)
-    print(emptyStalls)
-    res = 0
-    print(emptyStalls[0:maxBoards])
-    for i in emptyStalls[0:len(emptyStalls)-maxBoards+1]:
-        res += i
-    print(res+numOccupied)
-    with open('barn1.out','w') as fOut:
-        fOut.write(str(res+numOccupied)+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">maxBoards</span><span class="p">,</span><span class="n">numStalls</span><span class="p">,</span><span class="n">occupied</span><span class="p">,</span><span class="n">numOccupied</span> <span class="o">=</span> <span class="n">parseInput</span><span class="p">(</span><span class="s1">&#39;barn1.in&#39;</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">generateString</span><span class="p">(</span><span class="n">numStalls</span><span class="p">,</span><span class="n">occupied</span><span class="p">)</span>
+    <span class="n">emptyStalls</span> <span class="o">=</span> <span class="n">consecutiveEmpty</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">emptyStalls</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">emptyStalls</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">maxBoards</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">emptyStalls</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">emptyStalls</span><span class="p">)</span><span class="o">-</span><span class="n">maxBoards</span><span class="o">+</span><span class="mi">1</span><span class="p">]:</span>
+        <span class="n">res</span> <span class="o">+=</span> <span class="n">i</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="o">+</span><span class="n">numOccupied</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;barn1.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="o">+</span><span class="n">numOccupied</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

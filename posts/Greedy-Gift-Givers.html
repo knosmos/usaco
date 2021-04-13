@@ -15,44 +15,44 @@
 
 <p>We keep a dictionary <code>data</code> which stores the gifts given by each person. Then, we loop over all items in <code>data</code>, updating each person's money value as we go.</p>
 
-<pre><code>with open('gift1.in','r') as fin:
-    n = fin.read().split('\n')
-n.pop(-1) #Remove last newline
-np = int(n[0])
-names = n[1:np+1]
-print names
+<div class="codehilite"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;gift1.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">fin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">n</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#Remove last newline</span>
+<span class="n">np</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">names</span> <span class="o">=</span> <span class="n">n</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">np</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span> <span class="n">names</span>
 
-data = {}
-currentLine = np+1
-while len(data) &lt; np:
-    money,numGifts = n[currentLine+1].split(' ')
-    money = int(money)
-    numGifts = int(numGifts)
-    personData = [money,numGifts,n[currentLine+2:currentLine+numGifts+2]]
-    data[n[currentLine]] = personData
-    currentLine += numGifts+2
+<span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">currentLine</span> <span class="o">=</span> <span class="n">np</span><span class="o">+</span><span class="mi">1</span>
+<span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">np</span><span class="p">:</span>
+    <span class="n">money</span><span class="p">,</span><span class="n">numGifts</span> <span class="o">=</span> <span class="n">n</span><span class="p">[</span><span class="n">currentLine</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+    <span class="n">money</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">money</span><span class="p">)</span>
+    <span class="n">numGifts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">numGifts</span><span class="p">)</span>
+    <span class="n">personData</span> <span class="o">=</span> <span class="p">[</span><span class="n">money</span><span class="p">,</span><span class="n">numGifts</span><span class="p">,</span><span class="n">n</span><span class="p">[</span><span class="n">currentLine</span><span class="o">+</span><span class="mi">2</span><span class="p">:</span><span class="n">currentLine</span><span class="o">+</span><span class="n">numGifts</span><span class="o">+</span><span class="mi">2</span><span class="p">]]</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">n</span><span class="p">[</span><span class="n">currentLine</span><span class="p">]]</span> <span class="o">=</span> <span class="n">personData</span>
+    <span class="n">currentLine</span> <span class="o">+=</span> <span class="n">numGifts</span><span class="o">+</span><span class="mi">2</span>
 
-results = []
-for i in names:
-    results.append([i,0])
-for name,values in data.items():
-    results[names.index(name)][1] -= values[0]
-    try:
-        share = int(values[0])/values[1] # [money, numGifts, recipients]
-        results[names.index(name)][1] += values[0]%values[1]
-    except:
-        print 'cheapskate!'
-    for i in values[2]:
-        results[names.index(i)][1] += share
+<span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+    <span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span><span class="n">values</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">results</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">name</span><span class="p">)][</span><span class="mi">1</span><span class="p">]</span> <span class="o">-=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">share</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># [money, numGifts, recipients]</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">name</span><span class="p">)][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">%</span><span class="n">values</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="s1">&#39;cheapskate!&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">values</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+        <span class="n">results</span><span class="p">[</span><span class="n">names</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">share</span>
 
-print results #Congrats, me!
+<span class="nb">print</span> <span class="n">results</span> <span class="c1">#Congrats, me!</span>
 
-final = ''
-for i in results:
-    final+='%s %d\n' %(i[0],i[1])
-with open('gift1.out','w') as fout:
-    fout.write(final)
-</code></pre>
+<span class="n">final</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="n">final</span><span class="o">+=</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;gift1.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+    <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">final</span><span class="p">)</span>
+</code></pre></div>
 
             </div>            
         </div>

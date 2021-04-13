@@ -21,38 +21,38 @@
 
 <h2>Python</h2>
 
-<pre><code>def uniqueDigits(num):
-    # Does it have unique digits?
-    s = str(num)
-    return len(s) == len(set(s))
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">uniqueDigits</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="c1"># Does it have unique digits?</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
 
-def runaround(num):
-    # Is it a runaround?
-    if not(uniqueDigits(num)): return False
-    s = str(num)
-    touched = [0]
-    index = 0
-    while len(touched) &lt; len(s)+1:
-        # Get the next digit
-        new = (index+int(s[index]))%len(s)
-        if len(touched) == len(s):
-            # Does it loop back to the beginning?
-            if new != 0: return False
-        # Has a digit been visited already?
-        elif new in touched: return False
-        touched.append(new)
-        index = new
-    return True
+<span class="k">def</span> <span class="nf">runaround</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="c1"># Is it a runaround?</span>
+    <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">uniqueDigits</span><span class="p">(</span><span class="n">num</span><span class="p">)):</span> <span class="k">return</span> <span class="kc">False</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="n">touched</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">touched</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># Get the next digit</span>
+        <span class="n">new</span> <span class="o">=</span> <span class="p">(</span><span class="n">index</span><span class="o">+</span><span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">index</span><span class="p">]))</span><span class="o">%</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">touched</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+            <span class="c1"># Does it loop back to the beginning?</span>
+            <span class="k">if</span> <span class="n">new</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+        <span class="c1"># Has a digit been visited already?</span>
+        <span class="k">elif</span> <span class="n">new</span> <span class="ow">in</span> <span class="n">touched</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">touched</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new</span><span class="p">)</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">new</span>
+    <span class="k">return</span> <span class="kc">True</span>
 
-def main():
-    with open('runround.in','r') as fIn: n = int(fIn.read())
-    n += 1
-    while not(runaround(n)): n += 1
-    with open('runround.out','w') as fOut: fOut.write(str(n)+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;runround.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span> <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">while</span> <span class="ow">not</span><span class="p">(</span><span class="n">runaround</span><span class="p">(</span><span class="n">n</span><span class="p">)):</span> <span class="n">n</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;runround.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span> <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

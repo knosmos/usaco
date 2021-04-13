@@ -15,72 +15,72 @@
 
 <p>Parse the inputs into matrices, apply transformations on the original matrix and test whether the transformation results in the new matrix to determine the transformation number.</p>
 
-<pre><code>with open('transform.in','r') as fin:
-    fin = fin.read().split('\n')
-    s = int(fin[0])
-    l = fin[1:s+1]
-    n = fin[s+1:2*s+1]
-    print(l)
-    print(n)
+<div class="codehilite"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;transform.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+    <span class="n">fin</span> <span class="o">=</span> <span class="n">fin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fin</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="n">fin</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">s</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">fin</span><span class="p">[</span><span class="n">s</span><span class="o">+</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="o">*</span><span class="n">s</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
-def rotate(l,s):
-    # rotates list by 90 deg.
-    # l = input list, s = list size
-    n = [] # result
-    for i in range(s):
-        j = []
-        for k in range(s-1,-1,-1):
-            j.append(l[k][i])
-        n.append(j)
-    return n
+<span class="k">def</span> <span class="nf">rotate</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
+    <span class="c1"># rotates list by 90 deg.</span>
+    <span class="c1"># l = input list, s = list size</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># result</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">s</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">j</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+        <span class="n">n</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">n</span>
 
-def reflect(l):
-    # reflects list over y-axis.
-    for i in l:
-        i.reverse()
-    return l
+<span class="k">def</span> <span class="nf">reflect</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="c1"># reflects list over y-axis.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+        <span class="n">i</span><span class="o">.</span><span class="n">reverse</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">l</span>
 
-def check(l,n,s):
-    # l = original, n = transformed, s = list size
-    rotated_list = list(l)
-    for i in range(3):
-        rotated_list = rotate(rotated_list,s)
-        if rotated_list == n:
-            return i+1
-    reflect(l)
-    if l == n:
-        return 4
-    for i in range(3):
-        l = rotate(l,s)
-        if l == n:
-            return 5
-        else:
-            print(display(l))
-    if l == n:
-        return 6
-    return 7
+<span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">n</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
+    <span class="c1"># l = original, n = transformed, s = list size</span>
+    <span class="n">rotated_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">rotated_list</span> <span class="o">=</span> <span class="n">rotate</span><span class="p">(</span><span class="n">rotated_list</span><span class="p">,</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rotated_list</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span>
+    <span class="n">reflect</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">4</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">rotate</span><span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">s</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">5</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">display</span><span class="p">(</span><span class="n">l</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">l</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">6</span>
+    <span class="k">return</span> <span class="mi">7</span>
 
-def listify(l):
-    res = []
-    for i in l:
-        res.append(list(i))
-    return res
+<span class="k">def</span> <span class="nf">listify</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-def display(l):
-    # l = input list
-    n = ''
-    for i in l:
-        for j in i:
-            n += j
-        n += '\n'
-    return n
+<span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+    <span class="c1"># l = input list</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">l</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">+=</span> <span class="n">j</span>
+        <span class="n">n</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+    <span class="k">return</span> <span class="n">n</span>
 
-ans = check(listify(l),listify(n),s)
-print(ans)
+<span class="n">ans</span> <span class="o">=</span> <span class="n">check</span><span class="p">(</span><span class="n">listify</span><span class="p">(</span><span class="n">l</span><span class="p">),</span><span class="n">listify</span><span class="p">(</span><span class="n">n</span><span class="p">),</span><span class="n">s</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span>
 
-with open('transform.out','w') as fout:
-    fout.write(str(ans)+'\n')
-</code></pre>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;transform.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+    <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">ans</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
 
             </div>            
         </div>

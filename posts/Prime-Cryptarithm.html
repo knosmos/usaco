@@ -15,34 +15,34 @@
 
 <p>The numbers are small enough that we just brute-force the problem.</p>
 
-<pre><code>def isGoodNum(num,values):
-    for j in str(num):
-        if not(int(j) in values): return False
-    return True
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">isGoodNum</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">values</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="ow">in</span> <span class="n">values</span><span class="p">):</span> <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
 
-def iterate(values):
-    res = 0
-    for a in range(100,999):
-        if isGoodNum(a,values):
-            for b in range(10,99):
-                nums = [b,a*b,a*(b//10),a*(b%10)]
-                if nums[1] &lt; 10000 and nums[2] &lt; 1000 and nums[3] &lt; 1000:
-                    for i in nums:
-                        if not isGoodNum(i,values):
-                            break
-                    else:
-                        res += 1
-                        print(a,b)
-    return res
+<span class="k">def</span> <span class="nf">iterate</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">999</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">isGoodNum</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">values</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">99</span><span class="p">):</span>
+                <span class="n">nums</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">*</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="o">//</span><span class="mi">10</span><span class="p">),</span><span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">b</span><span class="o">%</span><span class="mi">10</span><span class="p">)]</span>
+                <span class="k">if</span> <span class="n">nums</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">10000</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1000</span> <span class="ow">and</span> <span class="n">nums</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1000</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nums</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">isGoodNum</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">values</span><span class="p">):</span>
+                            <span class="k">break</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">res</span> <span class="o">+=</span> <span class="mi">1</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-def main():
-    with open('crypt1.in','r') as fIn:
-        values = list(map(int,fIn.read().split('\n')[1].split()))
-    with open('crypt1.out','w') as fOut:
-        fOut.write(str(iterate(values))+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;crypt1.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;crypt1.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">iterate</span><span class="p">(</span><span class="n">values</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-main()
-</code></pre>
+<span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

@@ -24,23 +24,23 @@ shell A, then shell B, then shell C.</p>
 
 <h2>Python</h2>
 
-<pre><code>def run(swaps):
-    current = [1,2,3] # The current position of the shells
-    correct = [0,0,0] # If pebble starts at shell i
-    for swap in swaps:
-        current[swap[1]-1], current[swap[0]-1] = current[swap[0]-1], current[swap[1]-1]
-        correct[current[swap[2]-1]-1]+=1
-    print(correct)
-    return max(correct)
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">swaps</span><span class="p">):</span>
+    <span class="n">current</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span> <span class="c1"># The current position of the shells</span>
+    <span class="n">correct</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># If pebble starts at shell i</span>
+    <span class="k">for</span> <span class="n">swap</span> <span class="ow">in</span> <span class="n">swaps</span><span class="p">:</span>
+        <span class="n">current</span><span class="p">[</span><span class="n">swap</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">current</span><span class="p">[</span><span class="n">swap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">current</span><span class="p">[</span><span class="n">swap</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">current</span><span class="p">[</span><span class="n">swap</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">correct</span><span class="p">[</span><span class="n">current</span><span class="p">[</span><span class="n">swap</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">+=</span><span class="mi">1</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">correct</span><span class="p">)</span>
 
-with open('shell.in','r') as fIn:
-    n = int(fIn.readline())
-    swaps = []
-    for i in range(n):
-        swaps.append(list(map(int,fIn.readline().split())))
-with open('shell.out','w') as fOut:
-    fOut.write(str(run(swaps))+'\n')
-</code></pre>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;shell.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fIn</span><span class="o">.</span><span class="n">readline</span><span class="p">())</span>
+    <span class="n">swaps</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="n">swaps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">fIn</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())))</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;shell.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+    <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">run</span><span class="p">(</span><span class="n">swaps</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
 
             </div>            
         </div>

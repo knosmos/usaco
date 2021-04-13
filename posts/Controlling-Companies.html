@@ -23,53 +23,53 @@ until no new controlled companies are found.</p>
 
 <h2>Python</h2>
 
-<pre><code>from collections import Counter
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 
-def getOwned(triples):
-    owned = {}
-    for t in triples:
-        if not(owned.setdefault(t[0],None)):
-            owned[t[0]] = {}
-        if not(owned[t[0]].setdefault(t[1],None)):
-            owned[t[0]][t[1]] = 0
-        owned[t[0]][t[1]] += t[2]
-    return owned
+<span class="k">def</span> <span class="nf">getOwned</span><span class="p">(</span><span class="n">triples</span><span class="p">):</span>
+    <span class="n">owned</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">triples</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">owned</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="kc">None</span><span class="p">)):</span>
+            <span class="n">owned</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">owned</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="kc">None</span><span class="p">)):</span>
+            <span class="n">owned</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">owned</span><span class="p">[</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+=</span> <span class="n">t</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">owned</span>
 
-def getControlled(owned):
-    controls = {}
-    for company in owned.keys():
-        totalShares = Counter(owned[company])
-        cont = True
-        controls[company] = []
-        while cont:
-            cont = False
-            newTotalShares = totalShares.copy()
-            for c,percent in totalShares.items():
-                if not(c in controls[company]):
-                    if percent &gt; 50:
-                        controls[company].append(c)
-                        if c in owned.keys():
-                            newTotalShares += Counter(owned[c])
-                        cont = True
-            totalShares = newTotalShares
-    return controls
+<span class="k">def</span> <span class="nf">getControlled</span><span class="p">(</span><span class="n">owned</span><span class="p">):</span>
+    <span class="n">controls</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">company</span> <span class="ow">in</span> <span class="n">owned</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">totalShares</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">owned</span><span class="p">[</span><span class="n">company</span><span class="p">])</span>
+        <span class="n">cont</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">controls</span><span class="p">[</span><span class="n">company</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">while</span> <span class="n">cont</span><span class="p">:</span>
+            <span class="n">cont</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">newTotalShares</span> <span class="o">=</span> <span class="n">totalShares</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">c</span><span class="p">,</span><span class="n">percent</span> <span class="ow">in</span> <span class="n">totalShares</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="ow">not</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">controls</span><span class="p">[</span><span class="n">company</span><span class="p">]):</span>
+                    <span class="k">if</span> <span class="n">percent</span> <span class="o">&gt;</span> <span class="mi">50</span><span class="p">:</span>
+                        <span class="n">controls</span><span class="p">[</span><span class="n">company</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">owned</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                            <span class="n">newTotalShares</span> <span class="o">+=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">owned</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
+                        <span class="n">cont</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="n">totalShares</span> <span class="o">=</span> <span class="n">newTotalShares</span>
+    <span class="k">return</span> <span class="n">controls</span>
 
-def main():
-    with open('concom.in','r') as fIn:
-        triples = list(map(lambda i:[int(j) for j in i.split()],fIn.read().split('\n')[1:-1]))
-    owned = getOwned(triples)
-    controls = getControlled(owned)
-    controls = {c:controls[c] for c in sorted(controls.keys())}
-    with open('concom.out','w') as fOut:
-        for company in controls:
-            ownedCompanies = sorted(controls[company])
-            for c in ownedCompanies:
-                if c != company:
-                    fOut.write('%d %d\n'%(company,c))
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;concom.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">triples</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:[</span><span class="nb">int</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">()],</span><span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">owned</span> <span class="o">=</span> <span class="n">getOwned</span><span class="p">(</span><span class="n">triples</span><span class="p">)</span>
+    <span class="n">controls</span> <span class="o">=</span> <span class="n">getControlled</span><span class="p">(</span><span class="n">owned</span><span class="p">)</span>
+    <span class="n">controls</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span><span class="n">controls</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">controls</span><span class="o">.</span><span class="n">keys</span><span class="p">())}</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;concom.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">company</span> <span class="ow">in</span> <span class="n">controls</span><span class="p">:</span>
+            <span class="n">ownedCompanies</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">controls</span><span class="p">[</span><span class="n">company</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ownedCompanies</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">company</span><span class="p">:</span>
+                    <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> </span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">company</span><span class="p">,</span><span class="n">c</span><span class="p">))</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

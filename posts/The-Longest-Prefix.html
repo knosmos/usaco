@@ -17,96 +17,96 @@
 
 <h2>C++</h2>
 
-<pre><code>#include &lt;string&gt;
-#include &lt;iostream&gt;
-#include &lt;fstream&gt;
-#include &lt;vector&gt;
-#include &lt;sstream&gt;
-#include &lt;algorithm&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;sstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
 
-using namespace std;
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-bool compstr(string &amp; str, string &amp; pattern, int start){
-    for (int i=0; i&lt;pattern.size(); ++i){
-        if (i+start &gt; str.size()-1){
-            return false;
-        }
-        if (str[i+start] != pattern[i]){
-            return false;
-        }
-    }
-    return true;
-}
+<span class="kt">bool</span> <span class="nf">compstr</span><span class="p">(</span><span class="n">string</span> <span class="o">&amp;</span> <span class="n">str</span><span class="p">,</span> <span class="n">string</span> <span class="o">&amp;</span> <span class="n">pattern</span><span class="p">,</span> <span class="kt">int</span> <span class="n">start</span><span class="p">){</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">pattern</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">start</span> <span class="o">&gt;</span> <span class="n">str</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="mi">-1</span><span class="p">){</span>
+            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">str</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">start</span><span class="p">]</span> <span class="o">!=</span> <span class="n">pattern</span><span class="p">[</span><span class="n">i</span><span class="p">]){</span>
+            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
 
-int run(vector&lt;string&gt; patterns, string str){
-    int strlen = str.size();
-    int lenpat = patterns.size();
-    bool cont = true;
-    vector&lt;int&gt; gen(lenpat,0);
-    vector&lt;int&gt; lens;
-    for (auto p:patterns){
-        lens.push_back(p.size());
-    }
-    while (cont == true){
-        vector&lt;int&gt; nextGen = gen;
-        bool found = false;
-        for (int p2 = 0; p2 &lt; lenpat; ++p2){
-            for (int p = 0; p &lt; lenpat; ++p){
-                int genp2 = gen[p2];
-                int genlen = genp2 + lens[p];
-                if (compstr(str, patterns[p], genp2)){
-                    if (nextGen[p] &lt; genlen){
-                        nextGen[p] = genlen;
-                        found = true;
-                        if (nextGen[p] &gt;= strlen){
-                            cont = false;
-                        }
-                    }
-                }
-            }
-        }
-        if (!found){
-            cont = false;
-        }
-        gen = nextGen;
-    }
-    return *max_element(gen.begin(),gen.end());
-}
+<span class="kt">int</span> <span class="nf">run</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">patterns</span><span class="p">,</span> <span class="n">string</span> <span class="n">str</span><span class="p">){</span>
+    <span class="kt">int</span> <span class="n">strlen</span> <span class="o">=</span> <span class="n">str</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="kt">int</span> <span class="n">lenpat</span> <span class="o">=</span> <span class="n">patterns</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+    <span class="kt">bool</span> <span class="n">cont</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">gen</span><span class="p">(</span><span class="n">lenpat</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">lens</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">p</span><span class="p">:</span><span class="n">patterns</span><span class="p">){</span>
+        <span class="n">lens</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+    <span class="p">}</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">cont</span> <span class="o">==</span> <span class="nb">true</span><span class="p">){</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">nextGen</span> <span class="o">=</span> <span class="n">gen</span><span class="p">;</span>
+        <span class="kt">bool</span> <span class="n">found</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">p2</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">p2</span> <span class="o">&lt;</span> <span class="n">lenpat</span><span class="p">;</span> <span class="o">++</span><span class="n">p2</span><span class="p">){</span>
+            <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">p</span> <span class="o">&lt;</span> <span class="n">lenpat</span><span class="p">;</span> <span class="o">++</span><span class="n">p</span><span class="p">){</span>
+                <span class="kt">int</span> <span class="n">genp2</span> <span class="o">=</span> <span class="n">gen</span><span class="p">[</span><span class="n">p2</span><span class="p">];</span>
+                <span class="kt">int</span> <span class="n">genlen</span> <span class="o">=</span> <span class="n">genp2</span> <span class="o">+</span> <span class="n">lens</span><span class="p">[</span><span class="n">p</span><span class="p">];</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">compstr</span><span class="p">(</span><span class="n">str</span><span class="p">,</span> <span class="n">patterns</span><span class="p">[</span><span class="n">p</span><span class="p">],</span> <span class="n">genp2</span><span class="p">)){</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">nextGen</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">genlen</span><span class="p">){</span>
+                        <span class="n">nextGen</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">genlen</span><span class="p">;</span>
+                        <span class="n">found</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">nextGen</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">strlen</span><span class="p">){</span>
+                            <span class="n">cont</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+                        <span class="p">}</span>
+                    <span class="p">}</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">found</span><span class="p">){</span>
+            <span class="n">cont</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">gen</span> <span class="o">=</span> <span class="n">nextGen</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="o">*</span><span class="n">max_element</span><span class="p">(</span><span class="n">gen</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">gen</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+<span class="p">}</span>
 
-int main(){
-    ifstream fIn;
-    fIn.open("prefix.in");
-    string p;
-    vector&lt;string&gt; patterns;
-    string s;
-    while (true){
-        fIn &gt;&gt; p;
-        if (p == ".") {
-            break;
-        }
-        patterns.push_back(p);
-    }
-    stringstream ss;
-    while(!fIn.eof()) {
-        string s1;
-        fIn &gt;&gt; s1;
-        ss &lt;&lt; s1;
-    }
-    s = ss.str();
-    fIn.close();
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="n">ifstream</span> <span class="n">fIn</span><span class="p">;</span>
+    <span class="n">fIn</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;prefix.in&quot;</span><span class="p">);</span>
+    <span class="n">string</span> <span class="n">p</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">patterns</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">s</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">){</span>
+        <span class="n">fIn</span> <span class="o">&gt;&gt;</span> <span class="n">p</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="s">&quot;.&quot;</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">patterns</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">stringstream</span> <span class="n">ss</span><span class="p">;</span>
+    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">fIn</span><span class="p">.</span><span class="n">eof</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">string</span> <span class="n">s1</span><span class="p">;</span>
+        <span class="n">fIn</span> <span class="o">&gt;&gt;</span> <span class="n">s1</span><span class="p">;</span>
+        <span class="n">ss</span> <span class="o">&lt;&lt;</span> <span class="n">s1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">ss</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
+    <span class="n">fIn</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
 
-    int res = run(patterns,s);
+    <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">patterns</span><span class="p">,</span><span class="n">s</span><span class="p">);</span>
 
-    ofstream fOut;
-    fOut.open("prefix.out");
-    fOut &lt;&lt; res &lt;&lt; endl;
-    fOut.close();
+    <span class="n">ofstream</span> <span class="n">fOut</span><span class="p">;</span>
+    <span class="n">fOut</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;prefix.out&quot;</span><span class="p">);</span>
+    <span class="n">fOut</span> <span class="o">&lt;&lt;</span> <span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">fOut</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
 
-    cout &lt;&lt; res &lt;&lt; endl;
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 
-    return 0;
-}
-</code></pre>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
             </div>            
         </div>

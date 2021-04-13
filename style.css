@@ -61,15 +61,20 @@ h2{
 }
 code{
     font-family: Consolas,"courier new";
-    background-color: #f7f7f7;
-    border-radius: 2px;
-    padding: 5px;
+    background-color: #fdfdfd;
+    font-style: italic;
+    border-radius: 5px;
+    padding: 2px;
+    border: 1px solid #ececec;
 }
 pre code{
     display: block;
     overflow-x: auto;
     padding: 10px;
     border-radius: 10px;
+    line-height: 1.5;
+    border: 2px solid #f7f7f7;
+    font-style: normal;
 }
 
 .header h1{
@@ -108,4 +113,56 @@ a:hover{
     background-color:rgb(240,240,240);
     text-align:center;
     height:70px;
+}
+
+/* CODE SYNTAX HIGHLIGHTING */
+code .k{
+    color: #D1345B;
+    font-style: italic;
+}
+code .nf{
+    color: #FEA82F;
+}
+code .p{
+    color: #062726;
+}
+code .n{
+    color: #247BA0;
+}
+code .o{
+    color: #1F271B;
+}
+code .kc{
+    color: #EF7B45;
+}
+code .mi{
+    color: #EF7B45;
+}
+code .ow{
+    color: #D1345B;
+}
+code .nb{
+    color: #FEA82F;
+}
+code .c1{
+    color: #7D9899;
+}
+code .kn{
+    color: #D1345B;
+}
+code .nn{
+    color: #FEA82F;
+}
+code .s2, code .s1, code .s, code .sd{ /* All of these are strings */
+    color: #5b9b54;
+}
+code .kt{
+    color: #df713f;
+    font-style: italic;
+}
+code .cp{
+    color: #c22c51;
+}
+code .cpf{
+    color: #FEA82F;
 }

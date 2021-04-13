@@ -15,23 +15,23 @@
 
 <p>Convert letters to numbers, calculate the product mod 47 and compare them.</p>
 
-<pre><code>a = 'zABCDEFGHIJKLMNOPQRSTUVWXYZ'
-with open('ride.in','r') as fin:
-    ln1,ln2,_ = fin.read().split('\n')
-def c(chars):
-    t = 1
-    for i in chars:
-        t*=a.index(i)
-    print t
-    return t
-if c(ln1)%47 == c(ln2)%47:
-    res = 'GO\n'
-else:
-    res = 'STAY\n'
-print res
-with open('ride.out','w') as fout:
-    fout.write(res)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">a</span> <span class="o">=</span> <span class="s1">&#39;zABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ride.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+    <span class="n">ln1</span><span class="p">,</span><span class="n">ln2</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">fin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">c</span><span class="p">(</span><span class="n">chars</span><span class="p">):</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">chars</span><span class="p">:</span>
+        <span class="n">t</span><span class="o">*=</span><span class="n">a</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="nb">print</span> <span class="n">t</span>
+    <span class="k">return</span> <span class="n">t</span>
+<span class="k">if</span> <span class="n">c</span><span class="p">(</span><span class="n">ln1</span><span class="p">)</span><span class="o">%</span><span class="mi">47</span> <span class="o">==</span> <span class="n">c</span><span class="p">(</span><span class="n">ln2</span><span class="p">)</span><span class="o">%</span><span class="mi">47</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;GO</span><span class="se">\n</span><span class="s1">&#39;</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="s1">&#39;STAY</span><span class="se">\n</span><span class="s1">&#39;</span>
+<span class="nb">print</span> <span class="n">res</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;ride.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+    <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</code></pre></div>
 
             </div>            
         </div>

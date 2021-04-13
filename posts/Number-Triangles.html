@@ -31,114 +31,114 @@ For each subsequent layer:
 
 <h2>Python</h2>
 
-<pre><code>def solve(rows):
-    parents = [rows[0][0]]
-    for row in rows[1:]:
-        newParents = []
-        ctr = 0
-        for i in range(len(row)):
-            # If node has one parent ...
-            if i == 0:
-                nodeParent = parents[0]
-            elif i == len(row)-1:
-                nodeParent = parents[-1] 
-            else:
-                nodeParent = max([parents[ctr],parents[ctr+1]])
-                ctr += 1
-            newParents.append(row[i] + nodeParent)
-        print(parents)
-        parents = newParents
-    return max(parents)
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+    <span class="n">parents</span> <span class="o">=</span> <span class="p">[</span><span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">rows</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="n">newParents</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ctr</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)):</span>
+            <span class="c1"># If node has one parent ...</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">nodeParent</span> <span class="o">=</span> <span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">nodeParent</span> <span class="o">=</span> <span class="n">parents</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> 
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">nodeParent</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">parents</span><span class="p">[</span><span class="n">ctr</span><span class="p">],</span><span class="n">parents</span><span class="p">[</span><span class="n">ctr</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span>
+                <span class="n">ctr</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">newParents</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">nodeParent</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">parents</span><span class="p">)</span>
+        <span class="n">parents</span> <span class="o">=</span> <span class="n">newParents</span>
+    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">parents</span><span class="p">)</span>
 
 
-def main():
-    with open('numtri.in','r') as fIn:
-        data = fIn.readlines()
-        tree = [None] * int(data[0])
-        print(data)
-        for i in range(1,len(data[1:])+1):
-            tree[i-1] = list(map(int,data[i].split()))
-        print(tree)
-    res = solve(tree)
-    with open('numtri.out','w') as fOut:
-        fOut.write(str(res)+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;numtri.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">fIn</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="n">tree</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">tree</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;numtri.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
 <h2>C++</h2>
 
-<pre><code>#include &lt;iostream&gt;
-#include &lt;vector&gt;
-#include &lt;fstream&gt;
-#include &lt;string&gt;
-#include &lt;algorithm&gt;
-#include &lt;iterator&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iterator&gt;</span><span class="cp"></span>
 
-using namespace std;
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-void solve(vector&lt;vector&lt;int&gt;&gt; rows, int &amp; ans){
-    vector&lt;int&gt; parents(1);
-    parents[0] = rows[0][0];
-    rows.erase(rows.begin());
-    for(auto row:rows){
-        vector&lt;int&gt; newParents(row.size());
-        int ctr = 0;
-        for(int i=0; i&lt;row.size(); ++i){
-            int nodeParent;
-            if(i==0){
-                nodeParent = parents[0];
-            }
-            else if(i==row.size()-1){
-                nodeParent = parents[parents.size()-1];
-            }
-            else{
-                int a = parents[ctr];
-                int b = parents[ctr+1];
-                ctr ++;
-                if(a&gt;b){
-                    nodeParent = a;
-                }
-                else{
-                    nodeParent = b;
-                }
-            }
-            newParents[i] = row[i] + nodeParent;
-        }
-        parents = newParents;
-        for(auto i:parents){
-            cout &lt;&lt; i &lt;&lt; " ";
-        }
-        cout &lt;&lt; endl;
-    }
-    sort(parents.begin(),parents.end());
-    ans = parents.back();
-}
+<span class="kt">void</span> <span class="nf">solve</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">rows</span><span class="p">,</span> <span class="kt">int</span> <span class="o">&amp;</span> <span class="n">ans</span><span class="p">){</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">parents</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">];</span>
+    <span class="n">rows</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">rows</span><span class="p">.</span><span class="n">begin</span><span class="p">());</span>
+    <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">row</span><span class="p">:</span><span class="n">rows</span><span class="p">){</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">newParents</span><span class="p">(</span><span class="n">row</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+        <span class="kt">int</span> <span class="n">ctr</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">row</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="kt">int</span> <span class="n">nodeParent</span><span class="p">;</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">){</span>
+                <span class="n">nodeParent</span> <span class="o">=</span> <span class="n">parents</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+            <span class="p">}</span>
+            <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">i</span><span class="o">==</span><span class="n">row</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="mi">-1</span><span class="p">){</span>
+                <span class="n">nodeParent</span> <span class="o">=</span> <span class="n">parents</span><span class="p">[</span><span class="n">parents</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="mi">-1</span><span class="p">];</span>
+            <span class="p">}</span>
+            <span class="k">else</span><span class="p">{</span>
+                <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="n">parents</span><span class="p">[</span><span class="n">ctr</span><span class="p">];</span>
+                <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">parents</span><span class="p">[</span><span class="n">ctr</span><span class="o">+</span><span class="mi">1</span><span class="p">];</span>
+                <span class="n">ctr</span> <span class="o">++</span><span class="p">;</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">a</span><span class="o">&gt;</span><span class="n">b</span><span class="p">){</span>
+                    <span class="n">nodeParent</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span><span class="p">{</span>
+                    <span class="n">nodeParent</span> <span class="o">=</span> <span class="n">b</span><span class="p">;</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="n">newParents</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">nodeParent</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">parents</span> <span class="o">=</span> <span class="n">newParents</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="k">auto</span> <span class="nl">i</span><span class="p">:</span><span class="n">parents</span><span class="p">){</span>
+            <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">parents</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">parents</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+    <span class="n">ans</span> <span class="o">=</span> <span class="n">parents</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+<span class="p">}</span>
 
-int main(){
-    ifstream fIn ("numtri.in");
-    string str;
-    int numRows = 0;
-    fIn &gt;&gt; numRows;
-    vector&lt;vector&lt;int&gt;&gt; rowValues(numRows);
-    for (int i = 0; i &lt; numRows; ++i)
-    {
-        rowValues[i].resize(i + 1);
-        for (int j = 0; j &lt; i + 1; ++j)
-        {
-            fIn &gt;&gt; rowValues[i][j]; 
-        }
-    }
-    fIn.close();
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="n">ifstream</span> <span class="n">fIn</span> <span class="p">(</span><span class="s">&quot;numtri.in&quot;</span><span class="p">);</span>
+    <span class="n">string</span> <span class="n">str</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">numRows</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">fIn</span> <span class="o">&gt;&gt;</span> <span class="n">numRows</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">rowValues</span><span class="p">(</span><span class="n">numRows</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numRows</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">rowValues</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">resize</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">fIn</span> <span class="o">&gt;&gt;</span> <span class="n">rowValues</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">];</span> 
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">fIn</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
 
-    int ans;
-    solve(rowValues,ans);
-    ofstream fOut ("numtri.out");
-    fOut &lt;&lt; ans &lt;&lt; endl;
-    fOut.close();
-}
-</code></pre>
+    <span class="kt">int</span> <span class="n">ans</span><span class="p">;</span>
+    <span class="n">solve</span><span class="p">(</span><span class="n">rowValues</span><span class="p">,</span><span class="n">ans</span><span class="p">);</span>
+    <span class="n">ofstream</span> <span class="n">fOut</span> <span class="p">(</span><span class="s">&quot;numtri.out&quot;</span><span class="p">);</span>
+    <span class="n">fOut</span> <span class="o">&lt;&lt;</span> <span class="n">ans</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="n">fOut</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
 
             </div>            
         </div>

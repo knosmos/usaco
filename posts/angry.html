@@ -23,46 +23,46 @@
 
 <h2>Python</h2>
 
-<pre><code>def simulateStep(bales,new,radius):
-    # Simulates one step of the chain reaction with 'bales'; each of the 'new'ly exploded
-    # bales explodes all the ones in the blast 'radius'.
-    reactionStep = set() # Make sure that bales aren't exploded twice
-    for exp in new:
-        for bale in bales:
-            if abs(bale-exp) &lt;= radius:
-                reactionStep.add(bale)
-    for bale in reactionStep:
-        bales.remove(bale)
-    return list(reactionStep), bales
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">simulateStep</span><span class="p">(</span><span class="n">bales</span><span class="p">,</span><span class="n">new</span><span class="p">,</span><span class="n">radius</span><span class="p">):</span>
+    <span class="c1"># Simulates one step of the chain reaction with &#39;bales&#39;; each of the &#39;new&#39;ly exploded</span>
+    <span class="c1"># bales explodes all the ones in the blast &#39;radius&#39;.</span>
+    <span class="n">reactionStep</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span> <span class="c1"># Make sure that bales aren&#39;t exploded twice</span>
+    <span class="k">for</span> <span class="n">exp</span> <span class="ow">in</span> <span class="n">new</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">bale</span> <span class="ow">in</span> <span class="n">bales</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">bale</span><span class="o">-</span><span class="n">exp</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">radius</span><span class="p">:</span>
+                <span class="n">reactionStep</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">bale</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">bale</span> <span class="ow">in</span> <span class="n">reactionStep</span><span class="p">:</span>
+        <span class="n">bales</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">bale</span><span class="p">)</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="n">reactionStep</span><span class="p">),</span> <span class="n">bales</span>
 
-def testBale(bales,start):
-    radius = 1
-    bales.remove(start)
-    reactionStep, bales = simulateStep(bales,[start],radius)
-    total = len(reactionStep)+1
-    while reactionStep:
-        radius += 1
-        reactionStep, bales = simulateStep(bales,reactionStep,radius)
-        total += len(reactionStep)
-    return total
+<span class="k">def</span> <span class="nf">testBale</span><span class="p">(</span><span class="n">bales</span><span class="p">,</span><span class="n">start</span><span class="p">):</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">bales</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+    <span class="n">reactionStep</span><span class="p">,</span> <span class="n">bales</span> <span class="o">=</span> <span class="n">simulateStep</span><span class="p">(</span><span class="n">bales</span><span class="p">,[</span><span class="n">start</span><span class="p">],</span><span class="n">radius</span><span class="p">)</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reactionStep</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">while</span> <span class="n">reactionStep</span><span class="p">:</span>
+        <span class="n">radius</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">reactionStep</span><span class="p">,</span> <span class="n">bales</span> <span class="o">=</span> <span class="n">simulateStep</span><span class="p">(</span><span class="n">bales</span><span class="p">,</span><span class="n">reactionStep</span><span class="p">,</span><span class="n">radius</span><span class="p">)</span>
+        <span class="n">total</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">reactionStep</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">total</span>
 
-def testAllHaybales(bales):
-    record = 0
-    for start in bales:
-        exp = testBale(bales.copy(),start) 
-        record = max(record,exp)
-    return record
+<span class="k">def</span> <span class="nf">testAllHaybales</span><span class="p">(</span><span class="n">bales</span><span class="p">):</span>
+    <span class="n">record</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">start</span> <span class="ow">in</span> <span class="n">bales</span><span class="p">:</span>
+        <span class="n">exp</span> <span class="o">=</span> <span class="n">testBale</span><span class="p">(</span><span class="n">bales</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span><span class="n">start</span><span class="p">)</span> 
+        <span class="n">record</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">record</span><span class="p">,</span><span class="n">exp</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">record</span>
 
-def main():
-    with open('angry.in','r') as fIn:
-        bales = list(map(int,fIn.read().split()[1:]))
-    res = testAllHaybales(bales)
-    print(res)
-    with open('angry.out','w') as fOut:
-        fOut.write(str(res)+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;angry.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">bales</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">testAllHaybales</span><span class="p">(</span><span class="n">bales</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;angry.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__': main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span> <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

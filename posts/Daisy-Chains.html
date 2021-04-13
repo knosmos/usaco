@@ -19,19 +19,19 @@
 
 <h2>Python</h2>
 
-<pre><code>def check(flowers):
-    # Is there an average flower?
-    avg = sum(flowers)/len(flowers)
-    return (avg in flowers)
-n = int(input())
-flowers = list(map(int,input().split()))
-num = 0
-for i in range(n+1):
-    for j in range(i):
-        if check(flowers[j:i]):
-            num += 1
-print(num)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">check</span><span class="p">(</span><span class="n">flowers</span><span class="p">):</span>
+    <span class="c1"># Is there an average flower?</span>
+    <span class="n">avg</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">flowers</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">flowers</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">avg</span> <span class="ow">in</span> <span class="n">flowers</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">flowers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="n">num</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">check</span><span class="p">(</span><span class="n">flowers</span><span class="p">[</span><span class="n">j</span><span class="p">:</span><span class="n">i</span><span class="p">]):</span>
+            <span class="n">num</span> <span class="o">+=</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+</code></pre></div>
 
             </div>            
         </div>

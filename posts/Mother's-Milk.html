@@ -52,45 +52,45 @@ only three buckets, so if Bucket A is empty, the value of Bucket C is unique.</p
 
 <h2>Python</h2>
 
-<pre><code>import copy
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">copy</span>
 
-visited = []
-capacities = []
-res = []
+<span class="n">visited</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">capacities</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
 
-def scan(node):
-    global visited, capacities, res
-    if node in visited:
-        return
-    visited.append(node)
-    if node[0] == 0:
-        res.append(node[2])
-    for i in range(len(node)):
-        if node[i] != 0:
-            for j in range(len(node)):
-                if i != j:
-                    if capacities[j] &gt; node[j]:
-                        newNode = copy.deepcopy(node)
-                        if capacities[j]-node[j] &gt;= node[i]:
-                            newNode[j] += node[i]
-                            newNode[i] = 0
-                        else:
-                            newNode[i] -= capacities[j]-node[j]
-                            newNode[j] = capacities[j]
-                        scan(newNode)
+<span class="k">def</span> <span class="nf">scan</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">visited</span><span class="p">,</span> <span class="n">capacities</span><span class="p">,</span> <span class="n">res</span>
+    <span class="k">if</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+        <span class="k">return</span>
+    <span class="n">visited</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">node</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">node</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">capacities</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">node</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                        <span class="n">newNode</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">capacities</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="n">node</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">node</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+                            <span class="n">newNode</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">node</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                            <span class="n">newNode</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="n">newNode</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="n">capacities</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">-</span><span class="n">node</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                            <span class="n">newNode</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">capacities</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                        <span class="n">scan</span><span class="p">(</span><span class="n">newNode</span><span class="p">)</span>
 
-def main():
-    global capacities, res
-    with open('milk3.in','r') as fIn:
-        capacities = list(map(int,fIn.read().split()))
-    scan([0,0,capacities[2]])
-    print(res)
-    with open('milk3.out','w') as fOut:
-        fOut.write(' '.join(list(map(str,sorted(res))))+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">capacities</span><span class="p">,</span> <span class="n">res</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;milk3.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">capacities</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+    <span class="n">scan</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">capacities</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;milk3.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="nb">sorted</span><span class="p">(</span><span class="n">res</span><span class="p">))))</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

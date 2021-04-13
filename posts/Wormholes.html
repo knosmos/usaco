@@ -13,71 +13,72 @@
             <div class = "container wrapper">
                 <h1>Wormholes</h1>
 
-<p>import itertools</p>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">itertools</span>
 
-<p>def getGroups(points):
-      if len(points) == 2:
-         return [[[points[0],points[1]]]]
-      res = []
-      for i in range(1,len(points)):
-         perm = [[points[0],points[i]]]
-         l = getGroups(points[1:i]+points[i+1:])
-         [res.append(perm+g) for g in l]
-      return res</p>
+<span class="k">def</span> <span class="nf">getGroups</span><span class="p">(</span><span class="n">points</span><span class="p">):</span>
+   <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+      <span class="k">return</span> <span class="p">[[[</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">]]]]</span>
+   <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)):</span>
+      <span class="n">perm</span> <span class="o">=</span> <span class="p">[[</span><span class="n">points</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="p">]]]</span>
+      <span class="n">l</span> <span class="o">=</span> <span class="n">getGroups</span><span class="p">(</span><span class="n">points</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">points</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span>
+      <span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">perm</span><span class="o">+</span><span class="n">g</span><span class="p">)</span> <span class="k">for</span> <span class="n">g</span> <span class="ow">in</span> <span class="n">l</span><span class="p">]</span>
+   <span class="k">return</span> <span class="n">res</span>
 
-<p>def isCycle(uniqueGroups, numPoints):
-      cycles = 0
-      for arrangement in uniqueGroups:
-         arrangementIsCycle = False
-         for wormhole in arrangement:
-               if arrangementIsCycle:
-                  break
-               for startPos in range(2):
-                  cowPos = wormhole[startPos]
-                  if arrangementIsCycle:
-                     break
-                  for _ in range(numPoints):
-                     minDistance = float('inf')
-                     nextPosition = False
-                     for possibleNext in arrangement:
-                           if possibleNext[0][1] == cowPos[1] and possibleNext[0][0] &gt; cowPos[0]:
-                              if possibleNext[0][0] - cowPos[0] &lt; minDistance:
-                                 minDistance = possibleNext[0][0] - cowPos[0]
-                                 nextPosition = possibleNext[1]
-                           if possibleNext[1][1] == cowPos[1] and possibleNext[1][0] &gt; cowPos[0]:
-                              if possibleNext[1][0] - cowPos[0] &lt; minDistance:
-                                 minDistance = possibleNext[1][0] - cowPos[0]
-                                 nextPosition = possibleNext[0]
-                     if nextPosition:
-                           cowPos = nextPosition
-                     else:
-                           break
-                     if wormhole[startPos] == cowPos:
-                           arrangementIsCycle = True
-                           break
-         if arrangementIsCycle:
-               cycles += 1
-      return cycles</p>
+<span class="k">def</span> <span class="nf">isCycle</span><span class="p">(</span><span class="n">uniqueGroups</span><span class="p">,</span> <span class="n">numPoints</span><span class="p">):</span>
+   <span class="n">cycles</span> <span class="o">=</span> <span class="mi">0</span>
+   <span class="k">for</span> <span class="n">arrangement</span> <span class="ow">in</span> <span class="n">uniqueGroups</span><span class="p">:</span>
+      <span class="n">arrangementIsCycle</span> <span class="o">=</span> <span class="kc">False</span>
+      <span class="k">for</span> <span class="n">wormhole</span> <span class="ow">in</span> <span class="n">arrangement</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">arrangementIsCycle</span><span class="p">:</span>
+               <span class="k">break</span>
+            <span class="k">for</span> <span class="n">startPos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+               <span class="n">cowPos</span> <span class="o">=</span> <span class="n">wormhole</span><span class="p">[</span><span class="n">startPos</span><span class="p">]</span>
+               <span class="k">if</span> <span class="n">arrangementIsCycle</span><span class="p">:</span>
+                  <span class="k">break</span>
+               <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numPoints</span><span class="p">):</span>
+                  <span class="n">minDistance</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+                  <span class="n">nextPosition</span> <span class="o">=</span> <span class="kc">False</span>
+                  <span class="k">for</span> <span class="n">possibleNext</span> <span class="ow">in</span> <span class="n">arrangement</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="n">possibleNext</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">cowPos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">possibleNext</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">cowPos</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                           <span class="k">if</span> <span class="n">possibleNext</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">cowPos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">minDistance</span><span class="p">:</span>
+                              <span class="n">minDistance</span> <span class="o">=</span> <span class="n">possibleNext</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">cowPos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                              <span class="n">nextPosition</span> <span class="o">=</span> <span class="n">possibleNext</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="k">if</span> <span class="n">possibleNext</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">cowPos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">possibleNext</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">cowPos</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                           <span class="k">if</span> <span class="n">possibleNext</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">cowPos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">minDistance</span><span class="p">:</span>
+                              <span class="n">minDistance</span> <span class="o">=</span> <span class="n">possibleNext</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">cowPos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                              <span class="n">nextPosition</span> <span class="o">=</span> <span class="n">possibleNext</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                  <span class="k">if</span> <span class="n">nextPosition</span><span class="p">:</span>
+                        <span class="n">cowPos</span> <span class="o">=</span> <span class="n">nextPosition</span>
+                  <span class="k">else</span><span class="p">:</span>
+                        <span class="k">break</span>
+                  <span class="k">if</span> <span class="n">wormhole</span><span class="p">[</span><span class="n">startPos</span><span class="p">]</span> <span class="o">==</span> <span class="n">cowPos</span><span class="p">:</span>
+                        <span class="n">arrangementIsCycle</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="k">break</span>
+      <span class="k">if</span> <span class="n">arrangementIsCycle</span><span class="p">:</span>
+            <span class="n">cycles</span> <span class="o">+=</span> <span class="mi">1</span>
+   <span class="k">return</span> <span class="n">cycles</span>
 
-<p>def parseInput(filename):
-      wormholes = []
-      with open(filename,'r') as fIn:
-         for i in fIn.readlines()[1:]:
-               wormholes.append(list(map(int,i.split())))
-      return wormholes</p>
+<span class="k">def</span> <span class="nf">parseInput</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+   <span class="n">wormholes</span> <span class="o">=</span> <span class="p">[]</span>
+   <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+      <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fIn</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="n">wormholes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">())))</span>
+   <span class="k">return</span> <span class="n">wormholes</span>
 
-<p>def main():
-      points = parseInput('wormhole.in')
-      numPoints = len(points)
-      uniqueGroups = getGroups(points)
-      print(len(uniqueGroups))
-      res = isCycle(uniqueGroups,numPoints)
-      print(res)
-      with open('wormhole.out','w') as fOut:
-         fOut.write(str(res)+'\n')</p>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+   <span class="n">points</span> <span class="o">=</span> <span class="n">parseInput</span><span class="p">(</span><span class="s1">&#39;wormhole.in&#39;</span><span class="p">)</span>
+   <span class="n">numPoints</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+   <span class="n">uniqueGroups</span> <span class="o">=</span> <span class="n">getGroups</span><span class="p">(</span><span class="n">points</span><span class="p">)</span>
+   <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">uniqueGroups</span><span class="p">))</span>
+   <span class="n">res</span> <span class="o">=</span> <span class="n">isCycle</span><span class="p">(</span><span class="n">uniqueGroups</span><span class="p">,</span><span class="n">numPoints</span><span class="p">)</span>
+   <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+   <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;wormhole.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+      <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-<p>if <strong>name</strong> == '<strong>main</strong>':
-      main()</p>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+   <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

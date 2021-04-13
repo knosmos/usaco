@@ -23,43 +23,43 @@
 
 <h2>Python</h2>
 
-<pre><code>def pour(amount1,amount2,capacity):
-    # Returns the amount of milk left in the first bucket
-    # after pouring as much of it as possible into the
-    # second bucket.
-    # amount1: amount of milk in the first bucket
-    # amount2: amount of milk in the second bucket
-    # capacity: capacity of the second bucket
-    left = capacity-amount2 # how much more milk can the second bucket hold?
-    shift = min(left,amount1) # how much milk is poured?
-    return amount1-shift,amount2+shift
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">pour</span><span class="p">(</span><span class="n">amount1</span><span class="p">,</span><span class="n">amount2</span><span class="p">,</span><span class="n">capacity</span><span class="p">):</span>
+    <span class="c1"># Returns the amount of milk left in the first bucket</span>
+    <span class="c1"># after pouring as much of it as possible into the</span>
+    <span class="c1"># second bucket.</span>
+    <span class="c1"># amount1: amount of milk in the first bucket</span>
+    <span class="c1"># amount2: amount of milk in the second bucket</span>
+    <span class="c1"># capacity: capacity of the second bucket</span>
+    <span class="n">left</span> <span class="o">=</span> <span class="n">capacity</span><span class="o">-</span><span class="n">amount2</span> <span class="c1"># how much more milk can the second bucket hold?</span>
+    <span class="n">shift</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="n">amount1</span><span class="p">)</span> <span class="c1"># how much milk is poured?</span>
+    <span class="k">return</span> <span class="n">amount1</span><span class="o">-</span><span class="n">shift</span><span class="p">,</span><span class="n">amount2</span><span class="o">+</span><span class="n">shift</span>
 
-def pourCycle(a1,a2,a3,cap1,cap2,cap3):
-    # pour a-&gt;b, b-&gt;c and c-&gt;a.
-    # a1, a2, a3: amount of milk in each bucket.
-    # cap1, cap2, cap3: capacity of each bucket.
-    a1,a2 = pour(a1,a2,cap2)
-    a2,a3 = pour(a2,a3,cap3)
-    a3,a1 = pour(a3,a1,cap1)
-    return a1,a2,a3
+<span class="k">def</span> <span class="nf">pourCycle</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span><span class="p">,</span><span class="n">cap1</span><span class="p">,</span><span class="n">cap2</span><span class="p">,</span><span class="n">cap3</span><span class="p">):</span>
+    <span class="c1"># pour a-&gt;b, b-&gt;c and c-&gt;a.</span>
+    <span class="c1"># a1, a2, a3: amount of milk in each bucket.</span>
+    <span class="c1"># cap1, cap2, cap3: capacity of each bucket.</span>
+    <span class="n">a1</span><span class="p">,</span><span class="n">a2</span> <span class="o">=</span> <span class="n">pour</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">cap2</span><span class="p">)</span>
+    <span class="n">a2</span><span class="p">,</span><span class="n">a3</span> <span class="o">=</span> <span class="n">pour</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span><span class="p">,</span><span class="n">cap3</span><span class="p">)</span>
+    <span class="n">a3</span><span class="p">,</span><span class="n">a1</span> <span class="o">=</span> <span class="n">pour</span><span class="p">(</span><span class="n">a3</span><span class="p">,</span><span class="n">a1</span><span class="p">,</span><span class="n">cap1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span>
 
-def main():
-    # read input
-    # a_i = amount of bucket i
-    # c_i = capacity of bucket i
-    with open('mixmilk.in','r') as fIn:
-        c1,a1 = map(int,fIn.readline().split())
-        c2,a2 = map(int,fIn.readline().split())
-        c3,a3 = map(int,fIn.readline().split())
-    for _ in range(33): # 33 pour operations = 99 pours
-        a1,a2,a3 = pourCycle(a1,a2,a3,c1,c2,c3)
-    a1,a2 = pour(a1,a2,c2) # 100th pour
-    print(a1,a2,a3)
-    with open('mixmilk.out','w') as fOut:
-        fOut.write('%d\n%d\n%d\n'%(a1,a2,a3))
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># read input</span>
+    <span class="c1"># a_i = amount of bucket i</span>
+    <span class="c1"># c_i = capacity of bucket i</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;mixmilk.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">c1</span><span class="p">,</span><span class="n">a1</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">fIn</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="n">c2</span><span class="p">,</span><span class="n">a2</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">fIn</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="n">c3</span><span class="p">,</span><span class="n">a3</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">fIn</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">33</span><span class="p">):</span> <span class="c1"># 33 pour operations = 99 pours</span>
+        <span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span> <span class="o">=</span> <span class="n">pourCycle</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span><span class="p">,</span><span class="n">c1</span><span class="p">,</span><span class="n">c2</span><span class="p">,</span><span class="n">c3</span><span class="p">)</span>
+    <span class="n">a1</span><span class="p">,</span><span class="n">a2</span> <span class="o">=</span> <span class="n">pour</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">c2</span><span class="p">)</span> <span class="c1"># 100th pour</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;mixmilk.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="se">\n</span><span class="si">%d</span><span class="se">\n</span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">a2</span><span class="p">,</span><span class="n">a3</span><span class="p">))</span>
 
-main()
-</code></pre>
+<span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

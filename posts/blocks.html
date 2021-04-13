@@ -23,80 +23,80 @@
 
 <h2>Python</h2>
 
-<pre><code>def run(pairs):
-    # For every pair of words, we find the maximum frequency of each letter.
-    maxFrequencies = [0]*26 # Each item is one letter
-    alphabet = 'abcdefghijklmnopqrstuvwxyz'
-    for pair in pairs:
-        for i in range(26):
-            letter = alphabet[i]
-            maxFrequencies[i] += max(pair[0].count(letter),pair[1].count(letter))
-    return maxFrequencies
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">pairs</span><span class="p">):</span>
+    <span class="c1"># For every pair of words, we find the maximum frequency of each letter.</span>
+    <span class="n">maxFrequencies</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">26</span> <span class="c1"># Each item is one letter</span>
+    <span class="n">alphabet</span> <span class="o">=</span> <span class="s1">&#39;abcdefghijklmnopqrstuvwxyz&#39;</span>
+    <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">26</span><span class="p">):</span>
+            <span class="n">letter</span> <span class="o">=</span> <span class="n">alphabet</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">maxFrequencies</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">max</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">letter</span><span class="p">),</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">letter</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">maxFrequencies</span>
 
-def main():
-    with open('blocks.in','r') as fIn:
-        pairs = list(map(lambda i:i.split(),fIn.read().split('\n')[1:-1]))
-    print(pairs)
-    maxFrequencies = run(pairs)
-    with open('blocks.out','w') as fOut:
-        fOut.write('\n'.join(map(str,maxFrequencies))+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;blocks.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">pairs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(),</span><span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
+    <span class="n">maxFrequencies</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">pairs</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;blocks.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">maxFrequencies</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-main()
-</code></pre>
+<span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
 <h2>C++</h2>
 
-<pre><code>#include &lt;vector&gt;
-#include &lt;iostream&gt;
-#include &lt;fstream&gt;
-#include &lt;string&gt;
-#include &lt;algorithm&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
 
-using namespace std;
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-void run(vector&lt;vector&lt;string&gt;&gt; &amp; pairs, vector&lt;int&gt; &amp; maxFreq){
-    string alphabet("abcdefghijklmnopqrstuvwxyz");
-    vector&lt;string&gt; pair;
-    for (int j=0; j&lt;pairs.size(); ++j){
-        pair = pairs[j];
-        for (int i=0; i&lt;26; ++i){
-            char letter = alphabet.at(i);
-            maxFreq[i] += max(
-                count(pair[0].begin(),pair[0].end(),letter),
-                count(pair[1].begin(),pair[1].end(),letter)
-            );
-        }
-    }
-}
+<span class="kt">void</span> <span class="nf">run</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="o">&amp;</span> <span class="n">pairs</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">maxFreq</span><span class="p">){</span>
+    <span class="n">string</span> <span class="n">alphabet</span><span class="p">(</span><span class="s">&quot;abcdefghijklmnopqrstuvwxyz&quot;</span><span class="p">);</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">pair</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">pairs</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">j</span><span class="p">){</span>
+        <span class="n">pair</span> <span class="o">=</span> <span class="n">pairs</span><span class="p">[</span><span class="n">j</span><span class="p">];</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">26</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+            <span class="kt">char</span> <span class="n">letter</span> <span class="o">=</span> <span class="n">alphabet</span><span class="p">.</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+            <span class="n">maxFreq</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">+=</span> <span class="n">max</span><span class="p">(</span>
+                <span class="n">count</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">begin</span><span class="p">(),</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">end</span><span class="p">(),</span><span class="n">letter</span><span class="p">),</span>
+                <span class="n">count</span><span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">begin</span><span class="p">(),</span><span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">end</span><span class="p">(),</span><span class="n">letter</span><span class="p">)</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-int main(){
-    vector&lt;vector&lt;string&gt;&gt; pairs;
-    ifstream fIn;
-    fIn.open("blocks.in");
-    int n;
-    string pair0; string pair1;
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;&gt;</span> <span class="n">pairs</span><span class="p">;</span>
+    <span class="n">ifstream</span> <span class="n">fIn</span><span class="p">;</span>
+    <span class="n">fIn</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;blocks.in&quot;</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">string</span> <span class="n">pair0</span><span class="p">;</span> <span class="n">string</span> <span class="n">pair1</span><span class="p">;</span>
 
-    fIn &gt;&gt; n; 
-    for (int i=0; i&lt;n; ++i){
-        fIn &gt;&gt; pair0;
-        fIn &gt;&gt; pair1;
-        vector&lt;string&gt; pair;
-        pair.push_back(pair0);
-        pair.push_back(pair1);
-        pairs.push_back(pair);
-    }
-    vector&lt;int&gt; maxFreq(26,0);
-    run(pairs, maxFreq);
-    ofstream fOut;
-    fOut.open("blocks.out");
-    for (int i:maxFreq){
-        fOut &lt;&lt; i &lt;&lt; endl;
-    }
-    fIn.close();
-    fOut.close();
-    return 0;
-}
-</code></pre>
+    <span class="n">fIn</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span> 
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+        <span class="n">fIn</span> <span class="o">&gt;&gt;</span> <span class="n">pair0</span><span class="p">;</span>
+        <span class="n">fIn</span> <span class="o">&gt;&gt;</span> <span class="n">pair1</span><span class="p">;</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">pair</span><span class="p">;</span>
+        <span class="n">pair</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pair0</span><span class="p">);</span>
+        <span class="n">pair</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pair1</span><span class="p">);</span>
+        <span class="n">pairs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pair</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">maxFreq</span><span class="p">(</span><span class="mi">26</span><span class="p">,</span><span class="mi">0</span><span class="p">);</span>
+    <span class="n">run</span><span class="p">(</span><span class="n">pairs</span><span class="p">,</span> <span class="n">maxFreq</span><span class="p">);</span>
+    <span class="n">ofstream</span> <span class="n">fOut</span><span class="p">;</span>
+    <span class="n">fOut</span><span class="p">.</span><span class="n">open</span><span class="p">(</span><span class="s">&quot;blocks.out&quot;</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nl">i</span><span class="p">:</span><span class="n">maxFreq</span><span class="p">){</span>
+        <span class="n">fOut</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">fIn</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="n">fOut</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
 
             </div>            
         </div>

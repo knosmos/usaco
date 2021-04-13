@@ -18,61 +18,61 @@ We determine how many farmers are active at that time, and find the duration of 
 that the farmers have been active or the duration of time that the farmers have been idle,
 updating the variables "longestActive" and "longestIdle" if the duration exceeds the current record.</p>
 
-<pre><code>def returnFirstElement(item):
-    return item[0]
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">returnFirstElement</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
-def returnSecondElement(item):
-    return item[1]
+<span class="k">def</span> <span class="nf">returnSecondElement</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">item</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
 
-def sortList(events):
-    return sorted(sorted(events,key=returnSecondElement,reverse=True),key=returnFirstElement)
+<span class="k">def</span> <span class="nf">sortList</span><span class="p">(</span><span class="n">events</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">events</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="n">returnSecondElement</span><span class="p">,</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span><span class="n">key</span><span class="o">=</span><span class="n">returnFirstElement</span><span class="p">)</span>
 
-def walk(events):
-    # input format: [[time,type],[time,type]...]
-    print(events)
-    longestActive = 0
-    longestIdle = 0
-    active = 0 # How many farmers are currently active
-    start = events[0][0]
-    for event in events:
-        pActive = active
-        active += event[1] # 1 = start, -1 = stop
-        print(str(event[0])+' '+str(active))
-        if active == 0 and pActive &gt; 0:
-            duration = event[0] - start
-            if duration &gt; longestActive:
-                longestActive = duration
-            start = event[0]
-        if active != 0 and pActive == 0:
-            duration = event[0] - start
-            if duration &gt; longestIdle:
-                longestIdle = duration
-            start = event[0]
-    return longestActive, longestIdle
+<span class="k">def</span> <span class="nf">walk</span><span class="p">(</span><span class="n">events</span><span class="p">):</span>
+    <span class="c1"># input format: [[time,type],[time,type]...]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">events</span><span class="p">)</span>
+    <span class="n">longestActive</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">longestIdle</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">active</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># How many farmers are currently active</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">events</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+        <span class="n">pActive</span> <span class="o">=</span> <span class="n">active</span>
+        <span class="n">active</span> <span class="o">+=</span> <span class="n">event</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1"># 1 = start, -1 = stop</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">active</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">active</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">pActive</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">start</span>
+            <span class="k">if</span> <span class="n">duration</span> <span class="o">&gt;</span> <span class="n">longestActive</span><span class="p">:</span>
+                <span class="n">longestActive</span> <span class="o">=</span> <span class="n">duration</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">active</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">pActive</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">duration</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">start</span>
+            <span class="k">if</span> <span class="n">duration</span> <span class="o">&gt;</span> <span class="n">longestIdle</span><span class="p">:</span>
+                <span class="n">longestIdle</span> <span class="o">=</span> <span class="n">duration</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">longestActive</span><span class="p">,</span> <span class="n">longestIdle</span>
 
-def parseInput(filename):
-    with open(filename,'r') as fIn:
-        lines = fIn.read().split('\n')
-    lines.pop(0) # We don't need the first parameter
-    lines.pop(-1) # Pop last newline
-    events = []
-    for i in lines:
-        d = i.split(' ')
-        events.append([int(d[0]),1]) # Start time
-        events.append([int(d[1]),-1]) # End time
-    return events    
+<span class="k">def</span> <span class="nf">parseInput</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">lines</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># We don&#39;t need the first parameter</span>
+    <span class="n">lines</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Pop last newline</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lines</span><span class="p">:</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># Start time</span>
+        <span class="n">events</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1"># End time</span>
+    <span class="k">return</span> <span class="n">events</span>    
 
-def main():
-    events = parseInput('milk2.in')
-    events = sortList(events)
-    res = walk(events)
-    print(res)
-    with open('milk2.out','w') as fOut:
-        fOut.write(str(res[0])+' '+str(res[1])+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="n">parseInput</span><span class="p">(</span><span class="s1">&#39;milk2.in&#39;</span><span class="p">)</span>
+    <span class="n">events</span> <span class="o">=</span> <span class="n">sortList</span><span class="p">(</span><span class="n">events</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">walk</span><span class="p">(</span><span class="n">events</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;milk2.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

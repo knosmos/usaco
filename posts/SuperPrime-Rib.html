@@ -23,64 +23,64 @@
 
 <h2>C++</h2>
 
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;vector&gt;
-#include &lt;fstream&gt;
-#include &lt;math.h&gt;
-#include &lt;algorithm&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
 
-using namespace std;
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-bool isPrime(int num){
-    if(num == 0 || num == 1){ return false; }
-    bool k = true;
-    for(int f=2; f&lt;sqrt(num)+1; f++){
-        if(num % f == 0){
-            k = false;
-            break;
-        }
-    }
-    return k;
-}
+<span class="kt">bool</span> <span class="nf">isPrime</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">){</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">num</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">num</span> <span class="o">==</span> <span class="mi">1</span><span class="p">){</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kt">bool</span> <span class="n">k</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">f</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span> <span class="n">f</span><span class="o">&lt;</span><span class="n">sqrt</span><span class="p">(</span><span class="n">num</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span> <span class="n">f</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">num</span> <span class="o">%</span> <span class="n">f</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">k</span><span class="p">;</span>
+<span class="p">}</span>
 
-void search(int n, vector&lt;int&gt; &amp; res){
-    vector&lt;int&gt; primes = {2,3,5,7}; // initialize with one-digit primes
-    vector&lt;int&gt; newDigits = {1,3,7,9}; // the digits that we can add
-    for(int len = 2; len &lt;= n; len++){
-        vector&lt;int&gt; newPrimes;
-        for(int prime:primes){
-            for(int d:newDigits){
-                int newPrime = 10*prime+d;
-                if(isPrime(newPrime)){
-                    newPrimes.push_back(newPrime);
-                }
-            }
-        }
-        primes = newPrimes;
-    }
-    sort(primes.begin(),primes.end());
-    res = primes;
-}
+<span class="kt">void</span> <span class="nf">search</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">res</span><span class="p">){</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">primes</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">7</span><span class="p">};</span> <span class="c1">// initialize with one-digit primes</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">newDigits</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">9</span><span class="p">};</span> <span class="c1">// the digits that we can add</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">len</span> <span class="o">&lt;=</span> <span class="n">n</span><span class="p">;</span> <span class="n">len</span><span class="o">++</span><span class="p">){</span>
+        <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">newPrimes</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="nl">prime</span><span class="p">:</span><span class="n">primes</span><span class="p">){</span>
+            <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="nl">d</span><span class="p">:</span><span class="n">newDigits</span><span class="p">){</span>
+                <span class="kt">int</span> <span class="n">newPrime</span> <span class="o">=</span> <span class="mi">10</span><span class="o">*</span><span class="n">prime</span><span class="o">+</span><span class="n">d</span><span class="p">;</span>
+                <span class="k">if</span><span class="p">(</span><span class="n">isPrime</span><span class="p">(</span><span class="n">newPrime</span><span class="p">)){</span>
+                    <span class="n">newPrimes</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">newPrime</span><span class="p">);</span>
+                <span class="p">}</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">primes</span> <span class="o">=</span> <span class="n">newPrimes</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">primes</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">primes</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">primes</span><span class="p">;</span>
+<span class="p">}</span>
 
-int main(){
-    // Get the length of primes we want
-    ifstream fIn("sprime.in");
-    int n;
-    fIn &gt;&gt; n;
-    fIn.close();
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="c1">// Get the length of primes we want</span>
+    <span class="n">ifstream</span> <span class="n">fIn</span><span class="p">(</span><span class="s">&quot;sprime.in&quot;</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">fIn</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">fIn</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
 
-    // Get the superprimes
-    vector&lt;int&gt; res;
-    search(n,res);
+    <span class="c1">// Get the superprimes</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">;</span>
+    <span class="n">search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">res</span><span class="p">);</span>
 
-    // Write primes to file
-    ofstream fOut("sprime.out");
-    for(int p:res){
-        fOut &lt;&lt; p &lt;&lt; endl;
-    }
-    fOut.close();
-}
-</code></pre>
+    <span class="c1">// Write primes to file</span>
+    <span class="n">ofstream</span> <span class="n">fOut</span><span class="p">(</span><span class="s">&quot;sprime.out&quot;</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="nl">p</span><span class="p">:</span><span class="n">res</span><span class="p">){</span>
+        <span class="n">fOut</span> <span class="o">&lt;&lt;</span> <span class="n">p</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">fOut</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
 
             </div>            
         </div>

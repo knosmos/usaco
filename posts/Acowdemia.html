@@ -22,41 +22,41 @@ also unattainable.</p>
 
 <h2>Python</h2>
 
-<pre><code>def find(h,papers,k,l):
-    total_citations = k*l
-    papers.sort(reverse=True)
-    s = 0
-    for i in range(len(papers)):
-        if papers[i] &lt;= h:
-            s = i
-            break
-    #print(papers,s)
-    for i in range(h-s):
-        diff = h-papers[i+s]
-        if diff &gt; k:
-            return False
-        total_citations -= diff
-        if total_citations &lt; 0:
-            return False
-    return True
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">find</span><span class="p">(</span><span class="n">h</span><span class="p">,</span><span class="n">papers</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">):</span>
+    <span class="n">total_citations</span> <span class="o">=</span> <span class="n">k</span><span class="o">*</span><span class="n">l</span>
+    <span class="n">papers</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">papers</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">papers</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">h</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="k">break</span>
+    <span class="c1">#print(papers,s)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">h</span><span class="o">-</span><span class="n">s</span><span class="p">):</span>
+        <span class="n">diff</span> <span class="o">=</span> <span class="n">h</span><span class="o">-</span><span class="n">papers</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="n">s</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">diff</span> <span class="o">&gt;</span> <span class="n">k</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+        <span class="n">total_citations</span> <span class="o">-=</span> <span class="n">diff</span>
+        <span class="k">if</span> <span class="n">total_citations</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
 
-# binary search
-n,k,l = map(int,input().split())
-papers = list(map(int,input().split()))
+<span class="c1"># binary search</span>
+<span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">l</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">papers</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
 
-low = min(papers)
-high = max(papers)+k
-mid = 0
+<span class="n">low</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">papers</span><span class="p">)</span>
+<span class="n">high</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">papers</span><span class="p">)</span><span class="o">+</span><span class="n">k</span>
+<span class="n">mid</span> <span class="o">=</span> <span class="mi">0</span>
 
-while low &lt;= high:
-    mid = (high + low) // 2
-    x = find(mid,papers,k,l)
-    if x:
-        low = mid + 1
-    else:
-        high = mid - 1
-print(min(low,high))
-</code></pre>
+<span class="k">while</span> <span class="n">low</span> <span class="o">&lt;=</span> <span class="n">high</span><span class="p">:</span>
+    <span class="n">mid</span> <span class="o">=</span> <span class="p">(</span><span class="n">high</span> <span class="o">+</span> <span class="n">low</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">mid</span><span class="p">,</span><span class="n">papers</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">l</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">x</span><span class="p">:</span>
+        <span class="n">low</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">high</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">low</span><span class="p">,</span><span class="n">high</span><span class="p">))</span>
+</code></pre></div>
 
             </div>            
         </div>

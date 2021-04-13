@@ -15,82 +15,82 @@
 
 <h2>C++</h2>
 
-<pre><code>#include &lt;cstdio&gt;
-#include &lt;vector&gt;
-#include &lt;string&gt;
-#include &lt;math.h&gt;
-#include &lt;fstream&gt;
-#include &lt;algorithm&gt;
-#include &lt;iostream&gt;
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;cstdio&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;math.h&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;fstream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;algorithm&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
-using namespace std;
+<span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
 
-// Generate the palindromes
-void gen(int seed, int parity, int l, int h, vector&lt;int&gt; &amp; palindromes){
-    // Generates a single palindrome
-    // parity = 0: even length
-    // parity = 1: odd length
+<span class="c1">// Generate the palindromes</span>
+<span class="kt">void</span> <span class="nf">gen</span><span class="p">(</span><span class="kt">int</span> <span class="n">seed</span><span class="p">,</span> <span class="kt">int</span> <span class="n">parity</span><span class="p">,</span> <span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">h</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">palindromes</span><span class="p">){</span>
+    <span class="c1">// Generates a single palindrome</span>
+    <span class="c1">// parity = 0: even length</span>
+    <span class="c1">// parity = 1: odd length</span>
 
-    string str = to_string(seed);
-    string reversed = str.substr(0,str.length()-parity);
-    reverse(reversed.begin(),reversed.end());
+    <span class="n">string</span> <span class="n">str</span> <span class="o">=</span> <span class="n">to_string</span><span class="p">(</span><span class="n">seed</span><span class="p">);</span>
+    <span class="n">string</span> <span class="n">reversed</span> <span class="o">=</span> <span class="n">str</span><span class="p">.</span><span class="n">substr</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">str</span><span class="p">.</span><span class="n">length</span><span class="p">()</span><span class="o">-</span><span class="n">parity</span><span class="p">);</span>
+    <span class="n">reverse</span><span class="p">(</span><span class="n">reversed</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">reversed</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
 
-    int pal = stoi(str+reversed);
-    if(pal&gt;=l &amp;&amp; pal&lt;=h){
-        palindromes.push_back(pal);
-    }
-}
+    <span class="kt">int</span> <span class="n">pal</span> <span class="o">=</span> <span class="n">stoi</span><span class="p">(</span><span class="n">str</span><span class="o">+</span><span class="n">reversed</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pal</span><span class="o">&gt;=</span><span class="n">l</span> <span class="o">&amp;&amp;</span> <span class="n">pal</span><span class="o">&lt;=</span><span class="n">h</span><span class="p">){</span>
+        <span class="n">palindromes</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pal</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-void generate(int l, int h, vector&lt;int&gt; &amp; palindromes){
-    for(int j=0; j&lt;4; j++){
-        for(int i=pow(10,j); i&lt;pow(10,j+1); i++){
-            gen(i,0,l,h,palindromes);
-            gen(i,1,l,h,palindromes);
-        }
-    }
-}
+<span class="kt">void</span> <span class="nf">generate</span><span class="p">(</span><span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="kt">int</span> <span class="n">h</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">palindromes</span><span class="p">){</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="mi">4</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">){</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">j</span><span class="p">);</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">pow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">);</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span>
+            <span class="n">gen</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">palindromes</span><span class="p">);</span>
+            <span class="n">gen</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">h</span><span class="p">,</span><span class="n">palindromes</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-// Get the primes
-void getPrimes(vector&lt;int&gt; palindromes, vector&lt;int&gt; &amp; primes){
-    bool k;
-    for(int pal:palindromes){
-        k = true;
-        for(int fact=2;fact&lt;sqrt(pal)+1;fact++){
-            if(pal%fact == 0){
-                k=false;
-                break;
-            }
-        }
-        if(k==true){
-            primes.push_back(pal);
-        }
-    }
-}
+<span class="c1">// Get the primes</span>
+<span class="kt">void</span> <span class="nf">getPrimes</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">palindromes</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">primes</span><span class="p">){</span>
+    <span class="kt">bool</span> <span class="n">k</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="nl">pal</span><span class="p">:</span><span class="n">palindromes</span><span class="p">){</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">fact</span><span class="o">=</span><span class="mi">2</span><span class="p">;</span><span class="n">fact</span><span class="o">&lt;</span><span class="n">sqrt</span><span class="p">(</span><span class="n">pal</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span><span class="n">fact</span><span class="o">++</span><span class="p">){</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">pal</span><span class="o">%</span><span class="n">fact</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span>
+                <span class="n">k</span><span class="o">=</span><span class="nb">false</span><span class="p">;</span>
+                <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">k</span><span class="o">==</span><span class="nb">true</span><span class="p">){</span>
+            <span class="n">primes</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">pal</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 
-// Main, obviously
-int main(){
-    // Read the input file
-    ifstream fIn("pprime.in");
-    int l, h;
-    fIn &gt;&gt; l &gt;&gt; h;
-    fIn.close();
+<span class="c1">// Main, obviously</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+    <span class="c1">// Read the input file</span>
+    <span class="n">ifstream</span> <span class="n">fIn</span><span class="p">(</span><span class="s">&quot;pprime.in&quot;</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">l</span><span class="p">,</span> <span class="n">h</span><span class="p">;</span>
+    <span class="n">fIn</span> <span class="o">&gt;&gt;</span> <span class="n">l</span> <span class="o">&gt;&gt;</span> <span class="n">h</span><span class="p">;</span>
+    <span class="n">fIn</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
 
-    // Do the important things
-    vector&lt;int&gt; palindromes;
-    vector&lt;int&gt; primes;
-    generate(l, h, palindromes);
-    getPrimes(palindromes,primes);
-    sort(primes.begin(),primes.end());
+    <span class="c1">// Do the important things</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">palindromes</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">primes</span><span class="p">;</span>
+    <span class="n">generate</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">h</span><span class="p">,</span> <span class="n">palindromes</span><span class="p">);</span>
+    <span class="n">getPrimes</span><span class="p">(</span><span class="n">palindromes</span><span class="p">,</span><span class="n">primes</span><span class="p">);</span>
+    <span class="n">sort</span><span class="p">(</span><span class="n">primes</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">primes</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
 
-    // Write the output file
-    ofstream fOut("pprime.out");
-    for(int i:primes){
-        fOut &lt;&lt; i &lt;&lt; endl;
-    }
-    fOut.close();
-    return 0;   
-}
-</code></pre>
+    <span class="c1">// Write the output file</span>
+    <span class="n">ofstream</span> <span class="n">fOut</span><span class="p">(</span><span class="s">&quot;pprime.out&quot;</span><span class="p">);</span>
+    <span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="nl">i</span><span class="p">:</span><span class="n">primes</span><span class="p">){</span>
+        <span class="n">fOut</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">fOut</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>   
+<span class="p">}</span>
+</code></pre></div>
 
             </div>            
         </div>

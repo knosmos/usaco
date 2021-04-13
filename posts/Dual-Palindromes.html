@@ -15,40 +15,40 @@
 
 <p>Starting at <code>S+1</code>, we search for numbers that are palidromic in at least two bases, until we have found N numbers.</p>
 
-<pre><code>def convertBase(num,base):
-    chars = '0123456789'
-    if num &lt; base: return chars[num]
-    else: return convertBase(num//base,base)+chars[num%base]
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">convertBase</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">base</span><span class="p">):</span>
+    <span class="n">chars</span> <span class="o">=</span> <span class="s1">&#39;0123456789&#39;</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="n">base</span><span class="p">:</span> <span class="k">return</span> <span class="n">chars</span><span class="p">[</span><span class="n">num</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span> <span class="k">return</span> <span class="n">convertBase</span><span class="p">(</span><span class="n">num</span><span class="o">//</span><span class="n">base</span><span class="p">,</span><span class="n">base</span><span class="p">)</span><span class="o">+</span><span class="n">chars</span><span class="p">[</span><span class="n">num</span><span class="o">%</span><span class="n">base</span><span class="p">]</span>
 
-def isPalindrome(num):
-    for i in range(len(str(num))):
-        if str(num)[i] != str(num)[i*-1-1]:
-            return False
-    return True
+<span class="k">def</span> <span class="nf">isPalindrome</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">))):</span>
+        <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="nb">str</span><span class="p">(</span><span class="n">num</span><span class="p">)[</span><span class="n">i</span><span class="o">*-</span><span class="mi">1</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
 
-def search(n,s):
-    res = []
-    currentNum = s+1
-    while len(res) &lt; n:
-        palidromicBases = 0
-        for base in range(2,11):
-            if isPalindrome(convertBase(currentNum,base)):
-                palidromicBases += 1
-        if palidromicBases &gt;= 2:
-            res.append(currentNum)
-        currentNum += 1
-    return res
+<span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">s</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">currentNum</span> <span class="o">=</span> <span class="n">s</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">palidromicBases</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">base</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">11</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">isPalindrome</span><span class="p">(</span><span class="n">convertBase</span><span class="p">(</span><span class="n">currentNum</span><span class="p">,</span><span class="n">base</span><span class="p">)):</span>
+                <span class="n">palidromicBases</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">palidromicBases</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">currentNum</span><span class="p">)</span>
+        <span class="n">currentNum</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-def main():
-    with open('dualpal.in','r') as fIn:
-        n, s = [int(i) for i in fIn.read().split(' ')]
-    res = search(n, s)
-    with open('dualpal.out','w') as fOut:
-        fOut.write(''.join([str(i)+'\n' for i in res]))
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;dualpal.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">n</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">)]</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">search</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">s</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;dualpal.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">res</span><span class="p">]))</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

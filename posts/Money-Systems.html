@@ -19,31 +19,31 @@
 
 <h2>Python</h2>
 
-<pre><code>def count(coins,target):
-    # Table stores the number of ways to make each sum from 0 ... target
-    table = [1]+[0]*target
-    for coin in coins:
-        for j in range(coin,len(table)):
-            # Take each sum j above or equal to the coin value c. Let k be the
-            # difference between j and c. For each way to make k, if you add the c,
-            # you get j. So, we add k ways to the number of ways to make j.
-            k = j - coin
-            table[j] += table[k]
-    print('Ways to make target: '+str(table[target]))
-    return table[target]
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">count</span><span class="p">(</span><span class="n">coins</span><span class="p">,</span><span class="n">target</span><span class="p">):</span>
+    <span class="c1"># Table stores the number of ways to make each sum from 0 ... target</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">target</span>
+    <span class="k">for</span> <span class="n">coin</span> <span class="ow">in</span> <span class="n">coins</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">coin</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="p">)):</span>
+            <span class="c1"># Take each sum j above or equal to the coin value c. Let k be the</span>
+            <span class="c1"># difference between j and c. For each way to make k, if you add the c,</span>
+            <span class="c1"># you get j. So, we add k ways to the number of ways to make j.</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="n">coin</span>
+            <span class="n">table</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">+=</span> <span class="n">table</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ways to make target: &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">target</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">table</span><span class="p">[</span><span class="n">target</span><span class="p">]</span>
 
-def main():
-    with open('money.in','r') as fIn:
-        f = fIn.read().split('\n',1)
-        target = int(f[0].split()[1])
-        coins = list(map(int,f[1].replace('\n',' ').split()))
-        print(coins)
-    with open('money.out','w') as fOut:
-        fOut.write(str(count(coins,target))+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;money.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">coins</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span><span class="s1">&#39; &#39;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;money.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">count</span><span class="p">(</span><span class="n">coins</span><span class="p">,</span><span class="n">target</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

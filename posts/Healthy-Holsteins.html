@@ -21,49 +21,49 @@ return it immediately.</p>
 
 <h2>Python</h2>
 
-<pre><code># Firstly, we generate the combinations of scoops
-def genScoops(scoops): # The feedtype numbers, not the vitamin contents or the number of scoops
-    res = []
-    # If there is only one scoop type, you have two choices: include or exclude.
-    if len(scoops) == 1: return [[],[scoops[0]]]
-    r = genScoops(scoops[1:])
-    # Each scoop type can either be included or excluded.
-    res = r+[[scoops[0]]+i for i in r]
-    return sorted(sorted(res),key = lambda i:len(i))
+<div class="codehilite"><pre><span></span><code><span class="c1"># Firstly, we generate the combinations of scoops</span>
+<span class="k">def</span> <span class="nf">genScoops</span><span class="p">(</span><span class="n">scoops</span><span class="p">):</span> <span class="c1"># The feedtype numbers, not the vitamin contents or the number of scoops</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># If there is only one scoop type, you have two choices: include or exclude.</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">scoops</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="k">return</span> <span class="p">[[],[</span><span class="n">scoops</span><span class="p">[</span><span class="mi">0</span><span class="p">]]]</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">genScoops</span><span class="p">(</span><span class="n">scoops</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="c1"># Each scoop type can either be included or excluded.</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">r</span><span class="o">+</span><span class="p">[[</span><span class="n">scoops</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">+</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">r</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">res</span><span class="p">),</span><span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="nb">len</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
 
-# Check the vitamin content
-def checkVitamin(scoops, vitamins): # Feedtype combination
-    numVitamins = len(scoops[0])
-    scoopVit = [0]*numVitamins
-    for vit in range(numVitamins):
-        scoopVit[vit] = sum([i[vit] for i in scoops])
-    for vit in range(numVitamins):
-        if scoopVit[vit] &lt; vitamins[vit]:
-            return False
-    return True
+<span class="c1"># Check the vitamin content</span>
+<span class="k">def</span> <span class="nf">checkVitamin</span><span class="p">(</span><span class="n">scoops</span><span class="p">,</span> <span class="n">vitamins</span><span class="p">):</span> <span class="c1"># Feedtype combination</span>
+    <span class="n">numVitamins</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">scoops</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">scoopVit</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">numVitamins</span>
+    <span class="k">for</span> <span class="n">vit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numVitamins</span><span class="p">):</span>
+        <span class="n">scoopVit</span><span class="p">[</span><span class="n">vit</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="n">i</span><span class="p">[</span><span class="n">vit</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">scoops</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">vit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numVitamins</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">scoopVit</span><span class="p">[</span><span class="n">vit</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">vitamins</span><span class="p">[</span><span class="n">vit</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
 
-def parseInput(filename):
-    with open(filename,'r') as fIn:
-        fInRead = fIn.read().split('\n')
-        vitamins = list(map(int,fInRead[1].split()))
-        feeds = fInRead[3:-1]
-        for i in range(len(feeds)):
-            feeds[i] = list(map(int,feeds[i].split()))
-        return vitamins, feeds
+<span class="k">def</span> <span class="nf">parseInput</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">fInRead</span> <span class="o">=</span> <span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">vitamins</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">fInRead</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+        <span class="n">feeds</span> <span class="o">=</span> <span class="n">fInRead</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">feeds</span><span class="p">)):</span>
+            <span class="n">feeds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">feeds</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+        <span class="k">return</span> <span class="n">vitamins</span><span class="p">,</span> <span class="n">feeds</span>
 
-def main():
-    vitamins, feeds = parseInput('holstein.in')
-    feedCombos = genScoops(list(range(1,len(feeds)+1)))[1:]
-    for i in feedCombos:
-        if checkVitamin([feeds[j-1] for j in i],vitamins):
-            res = i
-            break
-    with open('holstein.out','w') as fOut:
-        fOut.write(' '.join(list(map(str,[len(res)]+res)))+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">vitamins</span><span class="p">,</span> <span class="n">feeds</span> <span class="o">=</span> <span class="n">parseInput</span><span class="p">(</span><span class="s1">&#39;holstein.in&#39;</span><span class="p">)</span>
+    <span class="n">feedCombos</span> <span class="o">=</span> <span class="n">genScoops</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">feeds</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)))[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">feedCombos</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">checkVitamin</span><span class="p">([</span><span class="n">feeds</span><span class="p">[</span><span class="n">j</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">i</span><span class="p">],</span><span class="n">vitamins</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="k">break</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;holstein.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,[</span><span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)]</span><span class="o">+</span><span class="n">res</span><span class="p">)))</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

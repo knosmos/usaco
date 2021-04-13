@@ -21,36 +21,36 @@
 
 <h2>Python</h2>
 
-<pre><code>numerals = ['I','V','X','L','C','D','M']
-lt = [[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']]
+<div class="codehilite"><pre><span></span><code><span class="n">numerals</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">]</span>
+<span class="n">lt</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1000</span><span class="p">,</span><span class="s1">&#39;M&#39;</span><span class="p">],[</span><span class="mi">900</span><span class="p">,</span><span class="s1">&#39;CM&#39;</span><span class="p">],[</span><span class="mi">500</span><span class="p">,</span><span class="s1">&#39;D&#39;</span><span class="p">],[</span><span class="mi">400</span><span class="p">,</span><span class="s1">&#39;CD&#39;</span><span class="p">],[</span><span class="mi">100</span><span class="p">,</span><span class="s1">&#39;C&#39;</span><span class="p">],[</span><span class="mi">90</span><span class="p">,</span><span class="s1">&#39;XC&#39;</span><span class="p">],[</span><span class="mi">50</span><span class="p">,</span><span class="s1">&#39;L&#39;</span><span class="p">],[</span><span class="mi">40</span><span class="p">,</span><span class="s1">&#39;XL&#39;</span><span class="p">],[</span><span class="mi">10</span><span class="p">,</span><span class="s1">&#39;X&#39;</span><span class="p">],[</span><span class="mi">9</span><span class="p">,</span><span class="s1">&#39;IX&#39;</span><span class="p">],[</span><span class="mi">5</span><span class="p">,</span><span class="s1">&#39;V&#39;</span><span class="p">],[</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39;IV&#39;</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;I&#39;</span><span class="p">]]</span>
 
-def conv(num):
-    global numerals, lt
-    s = ''
-    for i in lt:
-        s += i[1]*(num//i[0])
-        num = num%i[0]    
-    res = []
-    for i in numerals:
-        res.append(s.count(i))
-    return res
+<span class="k">def</span> <span class="nf">conv</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">numerals</span><span class="p">,</span> <span class="n">lt</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lt</span><span class="p">:</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">num</span><span class="o">//</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="n">num</span><span class="o">%</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>    
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">numerals</span><span class="p">:</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-def main():
-    global numerals
-    with open('preface.in','r') as fIn:
-        num = int(fIn.read())
-    res = [0]*7
-    for i in range(1,num+1):
-        res = [sum(k) for k in zip(res, conv(i))]
-    for i in range(6,-1,-1):
-        if res[i] != 0: break
-        res.pop(i)
-    with open('preface.out','w') as fOut:
-        for i in range(len(res)):
-            fOut.write('%s %d\n' %(numerals[i],res[i]))
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">numerals</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;preface.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="mi">7</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">num</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="nb">sum</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">conv</span><span class="p">(</span><span class="n">i</span><span class="p">))]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span> <span class="k">break</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;preface.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)):</span>
+            <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">numerals</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
 
-if __name__ == '__main__': main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span> <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

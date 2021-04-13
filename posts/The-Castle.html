@@ -17,119 +17,119 @@
 
 <p>First, we find the rooms with recursive flood-fill. This gives us the largest room size and the
 number of rooms. Then, we check all possible pairs of rooms to see if they share a border wall.
-If they do, we add the border-wall to optimalWalls and take note of the size of the room created
+If they do, we add the border-wall to <code>optimalWalls</code> and take note of the size of the room created
 when the wall is removed. If a created room is larger than the previous record, we delete all walls
-previously stored in optimalWalls. We also check for some time-consuming edge cases and solve them
+previously stored in <code>optimalWalls</code>. We also check for some time-consuming edge cases and solve them
 without running the optimal-wall function.</p>
 
 <h2>Python</h2>
 
-<pre><code>def getWalls(num):
-    # Returns a four-item list where each item represents the
-    # south, east, north and west walls respectively. Each item
-    # is 1 if a wall exists, and 0 otherwise.
-    return list(map(int,list(bin(num)[2:].zfill(4))))
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">getWalls</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="c1"># Returns a four-item list where each item represents the</span>
+    <span class="c1"># south, east, north and west walls respectively. Each item</span>
+    <span class="c1"># is 1 if a wall exists, and 0 otherwise.</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">list</span><span class="p">(</span><span class="nb">bin</span><span class="p">(</span><span class="n">num</span><span class="p">)[</span><span class="mi">2</span><span class="p">:]</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">4</span><span class="p">))))</span>
 
-def findRoom(start,matrix,visited):
-    # Calculates all modules in the same room as the start module.
-    # start: the point to start the flood-fill.
-    # matrix: 2D array containing the number of each module.
-    # visited: list of vertices that have already been visited.
-    if start in visited:
-        return []
-    res = set()
-    res.add(start)
-    walls = getWalls(matrix[start[0]][start[1]])
-    # Warning: dumb code ahead
-    if(not(walls[0])): res.update(findRoom((start[0]+1,start[1]),matrix,visited|res)) # south
-    if(not(walls[1])): res.update(findRoom((start[0],start[1]+1),matrix,visited|res)) # east
-    if(not(walls[2])): res.update(findRoom((start[0]-1,start[1]),matrix,visited|res)) # north
-    if(not(walls[3])): res.update(findRoom((start[0],start[1]-1),matrix,visited|res)) # west
-    return res
+<span class="k">def</span> <span class="nf">findRoom</span><span class="p">(</span><span class="n">start</span><span class="p">,</span><span class="n">matrix</span><span class="p">,</span><span class="n">visited</span><span class="p">):</span>
+    <span class="c1"># Calculates all modules in the same room as the start module.</span>
+    <span class="c1"># start: the point to start the flood-fill.</span>
+    <span class="c1"># matrix: 2D array containing the number of each module.</span>
+    <span class="c1"># visited: list of vertices that have already been visited.</span>
+    <span class="k">if</span> <span class="n">start</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[]</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">start</span><span class="p">)</span>
+    <span class="n">walls</span> <span class="o">=</span> <span class="n">getWalls</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="c1"># Warning: dumb code ahead</span>
+    <span class="k">if</span><span class="p">(</span><span class="ow">not</span><span class="p">(</span><span class="n">walls</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span> <span class="n">res</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">findRoom</span><span class="p">((</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">matrix</span><span class="p">,</span><span class="n">visited</span><span class="o">|</span><span class="n">res</span><span class="p">))</span> <span class="c1"># south</span>
+    <span class="k">if</span><span class="p">(</span><span class="ow">not</span><span class="p">(</span><span class="n">walls</span><span class="p">[</span><span class="mi">1</span><span class="p">])):</span> <span class="n">res</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">findRoom</span><span class="p">((</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span><span class="n">matrix</span><span class="p">,</span><span class="n">visited</span><span class="o">|</span><span class="n">res</span><span class="p">))</span> <span class="c1"># east</span>
+    <span class="k">if</span><span class="p">(</span><span class="ow">not</span><span class="p">(</span><span class="n">walls</span><span class="p">[</span><span class="mi">2</span><span class="p">])):</span> <span class="n">res</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">findRoom</span><span class="p">((</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">matrix</span><span class="p">,</span><span class="n">visited</span><span class="o">|</span><span class="n">res</span><span class="p">))</span> <span class="c1"># north</span>
+    <span class="k">if</span><span class="p">(</span><span class="ow">not</span><span class="p">(</span><span class="n">walls</span><span class="p">[</span><span class="mi">3</span><span class="p">])):</span> <span class="n">res</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">findRoom</span><span class="p">((</span><span class="n">start</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">start</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span><span class="n">matrix</span><span class="p">,</span><span class="n">visited</span><span class="o">|</span><span class="n">res</span><span class="p">))</span> <span class="c1"># west</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-def findAllRooms(matrix):
-    visited = set()
-    rooms = []
-    for y in range(len(matrix)):
-        for x in range(len(matrix[y])):
-            if (y,x) not in visited:
-                c = findRoom((y,x),matrix,visited)
-                rooms.append(c)
-                visited.update(c)
-    return rooms
+<span class="k">def</span> <span class="nf">findAllRooms</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">rooms</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">[</span><span class="n">y</span><span class="p">])):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+                <span class="n">c</span> <span class="o">=</span> <span class="n">findRoom</span><span class="p">((</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">),</span><span class="n">matrix</span><span class="p">,</span><span class="n">visited</span><span class="p">)</span>
+                <span class="n">rooms</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                <span class="n">visited</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">rooms</span>
 
-def areRoomsBordering(room1,room2):
-    borderWalls = []
-    for i in room1:
-        for x in [[-1,0],[0,1],[1,0],[0,-1]]:
-            n = (i[0]+x[0],i[1]+x[1])
-            if n in room2:
-                k = [i[0]+1,i[1]+1]
-                if x == [-1,0]: direction = 'N'
-                elif x == [0,1]: direction = 'E'
-                elif x == [1,0]:
-                    direction = 'N'
-                    k = [i[0]+2,i[1]+1]
-                elif x == [0,-1]:
-                    direction = 'E'
-                    k = [i[0]+1,i[1]]
-                borderWalls.append([k,direction]) # They start counting modules from 1
-    if len(borderWalls) == 0: return False
-    return borderWalls
+<span class="k">def</span> <span class="nf">areRoomsBordering</span><span class="p">(</span><span class="n">room1</span><span class="p">,</span><span class="n">room2</span><span class="p">):</span>
+    <span class="n">borderWalls</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">room1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]]:</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">room2</span><span class="p">:</span>
+                <span class="n">k</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">x</span> <span class="o">==</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]:</span> <span class="n">direction</span> <span class="o">=</span> <span class="s1">&#39;N&#39;</span>
+                <span class="k">elif</span> <span class="n">x</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]:</span> <span class="n">direction</span> <span class="o">=</span> <span class="s1">&#39;E&#39;</span>
+                <span class="k">elif</span> <span class="n">x</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]:</span>
+                    <span class="n">direction</span> <span class="o">=</span> <span class="s1">&#39;N&#39;</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">x</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">direction</span> <span class="o">=</span> <span class="s1">&#39;E&#39;</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+                <span class="n">borderWalls</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">k</span><span class="p">,</span><span class="n">direction</span><span class="p">])</span> <span class="c1"># They start counting modules from 1</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">borderWalls</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="n">borderWalls</span>
 
-def findLargestRoom(rooms):
-    # Find the largest room creatable by removing one wall.
-    optimalWalls = []
-    largestRoomSize = 0
-    for r1 in range(len(rooms)):
-        room1 = rooms[r1]
-        for r2 in range(r1):
-            room2 = rooms[r2]
-            roomSize = len(room1) + len(room2)
-            if roomSize &gt;= largestRoomSize:
-                borderWalls = areRoomsBordering(room1,room2)
-                if borderWalls:
-                    if len(room1) + len(room2) &gt; largestRoomSize:
-                        largestRoomSize = roomSize
-                        optimalWalls = []
-                    optimalWalls += borderWalls
-    #print(optimalWalls)
-    return largestRoomSize, sorted(sorted(sorted(optimalWalls,key=lambda i:['N','E'].index(i[1])),key=lambda i:-i[0][0]),key=lambda i:i[0][1])[0]
+<span class="k">def</span> <span class="nf">findLargestRoom</span><span class="p">(</span><span class="n">rooms</span><span class="p">):</span>
+    <span class="c1"># Find the largest room creatable by removing one wall.</span>
+    <span class="n">optimalWalls</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">largestRoomSize</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">r1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rooms</span><span class="p">)):</span>
+        <span class="n">room1</span> <span class="o">=</span> <span class="n">rooms</span><span class="p">[</span><span class="n">r1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">r2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">r1</span><span class="p">):</span>
+            <span class="n">room2</span> <span class="o">=</span> <span class="n">rooms</span><span class="p">[</span><span class="n">r2</span><span class="p">]</span>
+            <span class="n">roomSize</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">room1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">room2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">roomSize</span> <span class="o">&gt;=</span> <span class="n">largestRoomSize</span><span class="p">:</span>
+                <span class="n">borderWalls</span> <span class="o">=</span> <span class="n">areRoomsBordering</span><span class="p">(</span><span class="n">room1</span><span class="p">,</span><span class="n">room2</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">borderWalls</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">room1</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">room2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">largestRoomSize</span><span class="p">:</span>
+                        <span class="n">largestRoomSize</span> <span class="o">=</span> <span class="n">roomSize</span>
+                        <span class="n">optimalWalls</span> <span class="o">=</span> <span class="p">[]</span>
+                    <span class="n">optimalWalls</span> <span class="o">+=</span> <span class="n">borderWalls</span>
+    <span class="c1">#print(optimalWalls)</span>
+    <span class="k">return</span> <span class="n">largestRoomSize</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">optimalWalls</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span><span class="s1">&#39;E&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="o">-</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]),</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
 
-def parseInput(filename):
-    with open(filename,'r') as fIn:
-        lines = fIn.readlines()
-        m,n = map(int,lines[0].split())
-        matrix = [[None for _ in range(m)] for _ in range(n)]
-        for y in range(n):
-            for x in range(m):
-                matrix[y][x] = int(lines[y+1].split()[x])
-    return matrix
+<span class="k">def</span> <span class="nf">parseInput</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="n">fIn</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="n">m</span><span class="p">,</span><span class="n">n</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+        <span class="n">matrix</span> <span class="o">=</span> <span class="p">[[</span><span class="kc">None</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+                <span class="n">matrix</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">lines</span><span class="p">[</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="n">x</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">matrix</span>
 
-def main():
-    matrix = parseInput('castle.in')
-    print('input parsed')
-    rooms = findAllRooms(matrix)
-    print('rooms found')
-    numRooms = len(rooms)
-    maxRoom = len(max(rooms, key=len))
-    print('largest room found')
-    if max(list(map(len,rooms))) == 1:
-        # If all the rooms are only one module in size, there's no need to run through all the rooms
-        if len(matrix) &gt; 1: d = 'N'
-        else: d = 'E'
-        wallRemoval = [2, [[len(matrix),1],d]]
-    else: wallRemoval = findLargestRoom(rooms)
-    print('wall found')
-    with open('castle.out','w') as fOut:
-        fOut.write(str(numRooms)+'\n')
-        fOut.write(str(maxRoom)+'\n')
-        fOut.write(str(wallRemoval[0])+'\n')
-        fOut.write('%d %d %s\n' %(wallRemoval[1][0][0], wallRemoval[1][0][1], wallRemoval[1][1]))
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="n">parseInput</span><span class="p">(</span><span class="s1">&#39;castle.in&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;input parsed&#39;</span><span class="p">)</span>
+    <span class="n">rooms</span> <span class="o">=</span> <span class="n">findAllRooms</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;rooms found&#39;</span><span class="p">)</span>
+    <span class="n">numRooms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rooms</span><span class="p">)</span>
+    <span class="n">maxRoom</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">rooms</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;largest room found&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span><span class="n">rooms</span><span class="p">)))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="c1"># If all the rooms are only one module in size, there&#39;s no need to run through all the rooms</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="s1">&#39;N&#39;</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">d</span> <span class="o">=</span> <span class="s1">&#39;E&#39;</span>
+        <span class="n">wallRemoval</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">[[</span><span class="nb">len</span><span class="p">(</span><span class="n">matrix</span><span class="p">),</span><span class="mi">1</span><span class="p">],</span><span class="n">d</span><span class="p">]]</span>
+    <span class="k">else</span><span class="p">:</span> <span class="n">wallRemoval</span> <span class="o">=</span> <span class="n">findLargestRoom</span><span class="p">(</span><span class="n">rooms</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;wall found&#39;</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;castle.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">numRooms</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">maxRoom</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">wallRemoval</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1"> </span><span class="si">%d</span><span class="s1"> </span><span class="si">%s</span><span class="se">\n</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">wallRemoval</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">wallRemoval</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="n">wallRemoval</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

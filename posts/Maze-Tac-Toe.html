@@ -32,90 +32,90 @@ Visit(startLocation)
 
 <h2>Python</h2>
 
-<pre><code>import copy
-def parser(raw_grid):
-    grid = []
-    for line in raw_grid:
-        chunks = [line[i:i+3] for i in range(0, len(line), 3)]
-        grid.append(chunks)
-    return grid
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">copy</span>
+<span class="k">def</span> <span class="nf">parser</span><span class="p">(</span><span class="n">raw_grid</span><span class="p">):</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">raw_grid</span><span class="p">:</span>
+        <span class="n">chunks</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">3</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">),</span> <span class="mi">3</span><span class="p">)]</span>
+        <span class="n">grid</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">grid</span>
 
-visited = set()
-def getReachable(grid,x,y):
-    # finds all reachable squares.
-    global visited
-    res = set()
-    visited.add((x,y))
-    if grid[x][y] != "...":
-        res.add((x,y))
-        return res
-    if grid[x+1][y] != "###" and not (x+1,y) in visited: res = res.union(getReachable(grid,x+1,y))
-    if grid[x-1][y] != "###" and not (x-1,y) in visited: res = res.union(getReachable(grid,x-1,y))
-    if grid[x][y+1] != "###" and not (x,y+1) in visited: res = res.union(getReachable(grid,x,y+1))
-    if grid[x][y-1] != "###" and not (x,y-1) in visited: res = res.union(getReachable(grid,x,y-1))
-    return res
+<span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">getReachable</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+    <span class="c1"># finds all reachable squares.</span>
+    <span class="k">global</span> <span class="n">visited</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+    <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;...&quot;</span><span class="p">:</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">res</span>
+    <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;###&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span> <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">getReachable</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;###&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span> <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">getReachable</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;###&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span> <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">getReachable</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;###&quot;</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span> <span class="n">res</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">union</span><span class="p">(</span><span class="n">getReachable</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-def checkBoard(b):
-    checks = [
-        # 00 10 20
-        # 01 11 21
-        # 02 12 22
-        b[0][0]+b[1][0]+b[2][0],
-        b[0][1]+b[1][1]+b[2][1],
-        b[0][2]+b[1][2]+b[2][2],
+<span class="k">def</span> <span class="nf">checkBoard</span><span class="p">(</span><span class="n">b</span><span class="p">):</span>
+    <span class="n">checks</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="c1"># 00 10 20</span>
+        <span class="c1"># 01 11 21</span>
+        <span class="c1"># 02 12 22</span>
+        <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span>
+        <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
 
-        b[0][0]+b[0][1]+b[0][2],
-        b[1][0]+b[1][1]+b[1][2],
-        b[2][0]+b[2][1]+b[2][2],
+        <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
+        <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
+        <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
 
-        b[0][0]+b[1][1]+b[2][2],
-        b[2][0]+b[1][1]+b[0][2]
-    ]
-    for i in checks:
-        if i == "MOO" or i == "OOM":
-            return True
-    return False
+        <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
+        <span class="n">b</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+    <span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">checks</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="s2">&quot;MOO&quot;</span> <span class="ow">or</span> <span class="n">i</span> <span class="o">==</span> <span class="s2">&quot;OOM&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span>
 
-ways = set()
-def walk(x,y,b):
-    global ways, visited, grid
-    visited = set((x,y))
-    val = grid[x][y]
-    grid[x][y] = "..."
-    r = getReachable(grid,x,y)
-    #print([grid[i[0]][i[1]] for i in r])
-    for i in r:
-        board = copy.deepcopy(b)
-        j = grid[i[0]][i[1]]
-        letter = j[0]
-        mx = int(j[1])-1
-        my = int(j[2])-1
-        #print(mx,my)
-        if board[mx][my] == '.':
-            board[mx][my] = letter
-        #print(board)
-        if not checkBoard(board):
-            walk(i[0],i[1],board)
-        else:
-            board = tuple([tuple(i) for i in board])
-            if not board in ways:
-                ways.add(board)
-    grid[x][y] = val
-    #print(b)
+<span class="n">ways</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">walk</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">b</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">ways</span><span class="p">,</span> <span class="n">visited</span><span class="p">,</span> <span class="n">grid</span>
+    <span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">))</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span>
+    <span class="n">grid</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;...&quot;</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">getReachable</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+    <span class="c1">#print([grid[i[0]][i[1]] for i in r])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">r</span><span class="p">:</span>
+        <span class="n">board</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+        <span class="n">j</span> <span class="o">=</span> <span class="n">grid</span><span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">letter</span> <span class="o">=</span> <span class="n">j</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">mx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span>
+        <span class="n">my</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">j</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span><span class="o">-</span><span class="mi">1</span>
+        <span class="c1">#print(mx,my)</span>
+        <span class="k">if</span> <span class="n">board</span><span class="p">[</span><span class="n">mx</span><span class="p">][</span><span class="n">my</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;.&#39;</span><span class="p">:</span>
+            <span class="n">board</span><span class="p">[</span><span class="n">mx</span><span class="p">][</span><span class="n">my</span><span class="p">]</span> <span class="o">=</span> <span class="n">letter</span>
+        <span class="c1">#print(board)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">checkBoard</span><span class="p">(</span><span class="n">board</span><span class="p">):</span>
+            <span class="n">walk</span><span class="p">(</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">board</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">board</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="nb">tuple</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">board</span><span class="p">])</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">board</span> <span class="ow">in</span> <span class="n">ways</span><span class="p">:</span>
+                <span class="n">ways</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">board</span><span class="p">)</span>
+    <span class="n">grid</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+    <span class="c1">#print(b)</span>
 
-n = int(input())
-grid = []
-for i in range(n):
-    grid.append(input())
-grid = parser(grid)
-#print(grid)
-for x in range(n):
-    for y in range(n):
-        if grid[x][y] == "BBB":
-            walk(x,y,[['.','.','.'],['.','.','.'],['.','.','.']])
-            break
-print(len(ways))
-</code></pre>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">grid</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">grid</span> <span class="o">=</span> <span class="n">parser</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+<span class="c1">#print(grid)</span>
+<span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">grid</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;BBB&quot;</span><span class="p">:</span>
+            <span class="n">walk</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,[[</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">],[</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">],[</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">,</span><span class="s1">&#39;.&#39;</span><span class="p">]])</span>
+            <span class="k">break</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ways</span><span class="p">))</span>
+</code></pre></div>
 
             </div>            
         </div>

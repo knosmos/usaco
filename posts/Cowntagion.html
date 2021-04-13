@@ -28,33 +28,33 @@ all neighboring uninfected farms, and repeat until there are no more uninfected 
 
 <h2>Python</h2>
 
-<pre><code>n = int(input())
-cows = [0]*n # infected cows in each farm
-cows[0] = 1 # Infect first cow
-newInfected = [0] # Newly infected farms
-adj = [[] for _ in range(n)] # Adjacency List
-moves = 0
-for _ in range(n-1):
-    road = list(map(int,input().split()))
-    adj[road[0]-1].append(road[1]-1)
-    adj[road[1]-1].append(road[0]-1)
-while 0 in cows:
-    justInfected = []
-    for farm in newInfected:
-        canInfect = 0
-        for neighbor in adj[farm]:
-            if cows[neighbor] == 0:
-                canInfect += 1
-                moves += 1 # Cost to move infected cow to farm
-                cows[neighbor] += 1
-                justInfected.append(neighbor)
-        while cows[farm] &lt;= canInfect:
-            cows[farm] *= 2
-            moves += 1
-        cows[farm] -= canInfect
-    newInfected = list(justInfected)
-print(moves)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">cows</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">n</span> <span class="c1"># infected cows in each farm</span>
+<span class="n">cows</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># Infect first cow</span>
+<span class="n">newInfected</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># Newly infected farms</span>
+<span class="n">adj</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span> <span class="c1"># Adjacency List</span>
+<span class="n">moves</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">road</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+    <span class="n">adj</span><span class="p">[</span><span class="n">road</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">road</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">adj</span><span class="p">[</span><span class="n">road</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">road</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+<span class="k">while</span> <span class="mi">0</span> <span class="ow">in</span> <span class="n">cows</span><span class="p">:</span>
+    <span class="n">justInfected</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">farm</span> <span class="ow">in</span> <span class="n">newInfected</span><span class="p">:</span>
+        <span class="n">canInfect</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">neighbor</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">farm</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">cows</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">canInfect</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">moves</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># Cost to move infected cow to farm</span>
+                <span class="n">cows</span><span class="p">[</span><span class="n">neighbor</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">justInfected</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">neighbor</span><span class="p">)</span>
+        <span class="k">while</span> <span class="n">cows</span><span class="p">[</span><span class="n">farm</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">canInfect</span><span class="p">:</span>
+            <span class="n">cows</span><span class="p">[</span><span class="n">farm</span><span class="p">]</span> <span class="o">*=</span> <span class="mi">2</span>
+            <span class="n">moves</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">cows</span><span class="p">[</span><span class="n">farm</span><span class="p">]</span> <span class="o">-=</span> <span class="n">canInfect</span>
+    <span class="n">newInfected</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">justInfected</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">moves</span><span class="p">)</span>
+</code></pre></div>
 
             </div>            
         </div>

@@ -33,29 +33,29 @@ to find the one with the minimum cost.</p>
 
 <h2>Python</h2>
 
-<pre><code>def minCost(hills):
-    res = float('inf')
-    for i in range(0,max(hills)-16):
-        cost = 0
-        for hill in hills:
-            if hill &gt; i+17:
-                cost += (hill-(i+17))**2
-            elif hill &lt; i:
-                cost += (i-hill)**2
-        if res &gt; cost:
-            res = cost
-    return res
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">minCost</span><span class="p">(</span><span class="n">hills</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">hills</span><span class="p">)</span><span class="o">-</span><span class="mi">16</span><span class="p">):</span>
+        <span class="n">cost</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">hill</span> <span class="ow">in</span> <span class="n">hills</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">hill</span> <span class="o">&gt;</span> <span class="n">i</span><span class="o">+</span><span class="mi">17</span><span class="p">:</span>
+                <span class="n">cost</span> <span class="o">+=</span> <span class="p">(</span><span class="n">hill</span><span class="o">-</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">17</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+            <span class="k">elif</span> <span class="n">hill</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">:</span>
+                <span class="n">cost</span> <span class="o">+=</span> <span class="p">(</span><span class="n">i</span><span class="o">-</span><span class="n">hill</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+        <span class="k">if</span> <span class="n">res</span> <span class="o">&gt;</span> <span class="n">cost</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">cost</span>
+    <span class="k">return</span> <span class="n">res</span>
 
-def main():
-    with open('skidesign.in','r') as fIn:
-        hills = list(map(int,fIn.readlines()[1:]))
-    print(hills)
-    with open('skidesign.out','w') as fOut:
-        fOut.write(str(minCost(hills))+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;skidesign.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">hills</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">fIn</span><span class="o">.</span><span class="n">readlines</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">hills</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;skidesign.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">minCost</span><span class="p">(</span><span class="n">hills</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

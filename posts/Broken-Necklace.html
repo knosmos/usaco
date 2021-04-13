@@ -16,41 +16,41 @@
 <p>We iterate through each position j in the necklace. We see how far left we can go (determining validity with the "collectible" function) and how far right we can go.
 The number of beads that can be collected if we break the necklace position j is the sum of the number of beads that can be collected from the left and the number of beads that can be collected from the right.</p>
 
-<pre><code>with open('beads.in','r') as fin:
-    n,p,_ = fin.read().split('\n')
-n = int(n)
+<div class="codehilite"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;beads.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fin</span><span class="p">:</span>
+    <span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">,</span><span class="n">_</span> <span class="o">=</span> <span class="n">fin</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 
-def collectible(s): # Determine if string is collectible
-    return not('r' in s and 'b' in s) # return false if r and b are both present
+<span class="k">def</span> <span class="nf">collectible</span><span class="p">(</span><span class="n">s</span><span class="p">):</span> <span class="c1"># Determine if string is collectible</span>
+    <span class="k">return</span> <span class="ow">not</span><span class="p">(</span><span class="s1">&#39;r&#39;</span> <span class="ow">in</span> <span class="n">s</span> <span class="ow">and</span> <span class="s1">&#39;b&#39;</span> <span class="ow">in</span> <span class="n">s</span><span class="p">)</span> <span class="c1"># return false if r and b are both present</span>
 
-l = 0 # Largest value
-for j in range(0,n-1):
-    left = p[j%n]
-    pos = j
-    while pos&gt;0:
-        pos -=1
-        if collectible(left+p[pos%n]):
-            left += p[pos%n]
-        else:
-            break
-    right = p[(j+1)%n]
-    pos = j+1
-    while pos&lt;3*n-1:
-        pos += 1
-        if collectible(right+p[pos%n]):
-            right += p[pos%n]
-        else:
-            break
-    ct = len(left)+len(right)
-    if ct &gt; n:
-        ct = n
-    if ct &gt; l:
-        l = ct
+<span class="n">l</span> <span class="o">=</span> <span class="mi">0</span> <span class="c1"># Largest value</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">left</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="n">j</span><span class="o">%</span><span class="n">n</span><span class="p">]</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">j</span>
+    <span class="k">while</span> <span class="n">pos</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">pos</span> <span class="o">-=</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="n">collectible</span><span class="p">(</span><span class="n">left</span><span class="o">+</span><span class="n">p</span><span class="p">[</span><span class="n">pos</span><span class="o">%</span><span class="n">n</span><span class="p">]):</span>
+            <span class="n">left</span> <span class="o">+=</span> <span class="n">p</span><span class="p">[</span><span class="n">pos</span><span class="o">%</span><span class="n">n</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="n">right</span> <span class="o">=</span> <span class="n">p</span><span class="p">[(</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">%</span><span class="n">n</span><span class="p">]</span>
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">j</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">while</span> <span class="n">pos</span><span class="o">&lt;</span><span class="mi">3</span><span class="o">*</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">pos</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">collectible</span><span class="p">(</span><span class="n">right</span><span class="o">+</span><span class="n">p</span><span class="p">[</span><span class="n">pos</span><span class="o">%</span><span class="n">n</span><span class="p">]):</span>
+            <span class="n">right</span> <span class="o">+=</span> <span class="n">p</span><span class="p">[</span><span class="n">pos</span><span class="o">%</span><span class="n">n</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="n">ct</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">left</span><span class="p">)</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">right</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">ct</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">:</span>
+        <span class="n">ct</span> <span class="o">=</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">ct</span> <span class="o">&gt;</span> <span class="n">l</span><span class="p">:</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="n">ct</span>
 
-print l
-with open('beads.out','w') as fout:
-    fout.write(str(l)+'\n')
-</code></pre>
+<span class="nb">print</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;beads.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fout</span><span class="p">:</span>
+    <span class="n">fout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</code></pre></div>
 
             </div>            
         </div>

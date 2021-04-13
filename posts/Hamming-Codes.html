@@ -28,33 +28,33 @@ by counting the number of times a '1' appears.</p>
 
 <h2>Python</h2>
 
-<pre><code>def solve(n,b,d):
-    # n: num. of codes
-    # b: len of codes
-    # d: hamming dist.
-    past = [0]
-    for code in range(2**b+1):
-        for used in past:
-            if bin(used^code).count('1') &lt; d:
-                break
-        else: past.append(code)
-        if len(past) == n:
-            return past
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">d</span><span class="p">):</span>
+    <span class="c1"># n: num. of codes</span>
+    <span class="c1"># b: len of codes</span>
+    <span class="c1"># d: hamming dist.</span>
+    <span class="n">past</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">code</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">b</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">used</span> <span class="ow">in</span> <span class="n">past</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">bin</span><span class="p">(</span><span class="n">used</span><span class="o">^</span><span class="n">code</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;1&#39;</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">d</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span> <span class="n">past</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">past</span><span class="p">)</span> <span class="o">==</span> <span class="n">n</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">past</span>
 
-def main():
-    with open('hamming.in','r') as fIn:
-        n,b,d = list(map(int,fIn.read().split()))
-    with open('hamming.out','w') as fOut:
-        res = solve(n,b,d)
-        for i in range(len(res)):
-            if i%10 == 9: end = '\n'
-            elif i != len(res)-1: end = ' '
-            else: end = '\n'
-            fOut.write(str(res[i])+end)
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;hamming.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">n</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">d</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;hamming.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">solve</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">i</span><span class="o">%</span><span class="mi">10</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span> <span class="n">end</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="k">elif</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">:</span> <span class="n">end</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span>
+            <span class="k">else</span><span class="p">:</span> <span class="n">end</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">+</span><span class="n">end</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

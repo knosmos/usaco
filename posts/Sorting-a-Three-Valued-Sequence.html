@@ -24,47 +24,47 @@ misplaced elements by 3 and multiplying by 2.</p>
 
 <h2>Python</h2>
 
-<pre><code>def run(unsortedList):
-    sortedList = sorted(unsortedList)
-    misplaced = [[],[],[]]
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">unsortedList</span><span class="p">):</span>
+    <span class="n">sortedList</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">unsortedList</span><span class="p">)</span>
+    <span class="n">misplaced</span> <span class="o">=</span> <span class="p">[[],[],[]]</span>
 
-    for i in range(len(unsortedList)):
-        if unsortedList[i] != sortedList[i]:
-            misplaced[sortedList[i]-1].append(unsortedList[i])
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">unsortedList</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">unsortedList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">sortedList</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">misplaced</span><span class="p">[</span><span class="n">sortedList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">unsortedList</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-    print(misplaced)
+    <span class="nb">print</span><span class="p">(</span><span class="n">misplaced</span><span class="p">)</span>
 
-    swaps = 0
-    for section in range(len(misplaced)):
-        for m in misplaced[section]:
-            if m != None:
-                if section+1 in misplaced[m-1]:
-                    misplaced[m-1][misplaced[m-1].index(section+1)] = None
-                    misplaced[section][misplaced[section].index(m)] = None
-                    print('swapped',section+1,m)
-                    swaps += 1
-                else:
-                    print(m,section+1,'no match found')
+    <span class="n">swaps</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">section</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">misplaced</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">misplaced</span><span class="p">[</span><span class="n">section</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">m</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">section</span><span class="o">+</span><span class="mi">1</span> <span class="ow">in</span> <span class="n">misplaced</span><span class="p">[</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">misplaced</span><span class="p">[</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">misplaced</span><span class="p">[</span><span class="n">m</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">section</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="n">misplaced</span><span class="p">[</span><span class="n">section</span><span class="p">][</span><span class="n">misplaced</span><span class="p">[</span><span class="n">section</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">m</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">None</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;swapped&#39;</span><span class="p">,</span><span class="n">section</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">m</span><span class="p">)</span>
+                    <span class="n">swaps</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">section</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;no match found&#39;</span><span class="p">)</span>
 
-    misplaced = [[i for i in j if i != None] for j in misplaced]
+    <span class="n">misplaced</span> <span class="o">=</span> <span class="p">[[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">j</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">misplaced</span><span class="p">]</span>
 
-    print(misplaced,'still not fixed')
+    <span class="nb">print</span><span class="p">(</span><span class="n">misplaced</span><span class="p">,</span><span class="s1">&#39;still not fixed&#39;</span><span class="p">)</span>
 
-    remaining = sum(map(len,misplaced))
-    extra = int(remaining/3*2)
+    <span class="n">remaining</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span><span class="n">misplaced</span><span class="p">))</span>
+    <span class="n">extra</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">remaining</span><span class="o">/</span><span class="mi">3</span><span class="o">*</span><span class="mi">2</span><span class="p">)</span>
 
-    print(swaps+extra,'swaps')
-    return(swaps+extra)
+    <span class="nb">print</span><span class="p">(</span><span class="n">swaps</span><span class="o">+</span><span class="n">extra</span><span class="p">,</span><span class="s1">&#39;swaps&#39;</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">swaps</span><span class="o">+</span><span class="n">extra</span><span class="p">)</span>
 
-def main():
-    with open('sort3.in','r') as fIn:
-        unsortedList = list(map(int,fIn.readlines()))[1:]
-    with open('sort3.out','w') as fOut:
-        fOut.write(str(run(unsortedList))+'\n')
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;sort3.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">unsortedList</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">fIn</span><span class="o">.</span><span class="n">readlines</span><span class="p">()))[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;sort3.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">run</span><span class="p">(</span><span class="n">unsortedList</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
 
-if __name__ == '__main__':
-    main()
-</code></pre>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
 
             </div>            
         </div>

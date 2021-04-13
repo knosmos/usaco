@@ -17,38 +17,38 @@
 the digits d in the number. If d does not correspond to a letter in one of the remaining names, we remove that name.
 Finally, we output all the remaining names.</p>
 
-<pre><code>def trim(num,validNames):
-    mapping = {'2':'ABC','3':'DEF','4':'GHI','5':'JKL','6':'MNO','7':'PRS','8':'TUV','9':'WXY'}
-    dbg(len(validNames))
-    numlen = len(num)
-    lengthFittedNames = []
-    for name in validNames:
-        if len(name) == numlen:
-            lengthFittedNames.append(name)
-            dbg(f'{name} has been added')
-    dbg(len(lengthFittedNames))
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">trim</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">validNames</span><span class="p">):</span>
+    <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;2&#39;</span><span class="p">:</span><span class="s1">&#39;ABC&#39;</span><span class="p">,</span><span class="s1">&#39;3&#39;</span><span class="p">:</span><span class="s1">&#39;DEF&#39;</span><span class="p">,</span><span class="s1">&#39;4&#39;</span><span class="p">:</span><span class="s1">&#39;GHI&#39;</span><span class="p">,</span><span class="s1">&#39;5&#39;</span><span class="p">:</span><span class="s1">&#39;JKL&#39;</span><span class="p">,</span><span class="s1">&#39;6&#39;</span><span class="p">:</span><span class="s1">&#39;MNO&#39;</span><span class="p">,</span><span class="s1">&#39;7&#39;</span><span class="p">:</span><span class="s1">&#39;PRS&#39;</span><span class="p">,</span><span class="s1">&#39;8&#39;</span><span class="p">:</span><span class="s1">&#39;TUV&#39;</span><span class="p">,</span><span class="s1">&#39;9&#39;</span><span class="p">:</span><span class="s1">&#39;WXY&#39;</span><span class="p">}</span>
+    <span class="n">dbg</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">validNames</span><span class="p">))</span>
+    <span class="n">numlen</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="n">lengthFittedNames</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">validNames</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="o">==</span> <span class="n">numlen</span><span class="p">:</span>
+            <span class="n">lengthFittedNames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">dbg</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1"> has been added&#39;</span><span class="p">)</span>
+    <span class="n">dbg</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lengthFittedNames</span><span class="p">))</span>
 
-    survivedNames = lengthFittedNames
-    finalNames = []
-    for name in survivedNames:
-        for i in range(numlen):
-            if not name[i] in mapping[num[i]]:
-                break
-        else:
-            finalNames.append(name)
-    return finalNames
+    <span class="n">survivedNames</span> <span class="o">=</span> <span class="n">lengthFittedNames</span>
+    <span class="n">finalNames</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">survivedNames</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">numlen</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">name</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">[</span><span class="n">num</span><span class="p">[</span><span class="n">i</span><span class="p">]]:</span>
+                <span class="k">break</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">finalNames</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">finalNames</span>
 
-with open('dict.txt','r') as d:
-    validNames = d.read().split('\n')
-with open('namenum.in','r') as fIn:
-    res = trim(fIn.read().rstrip(),validNames)
-with open('namenum.out','w') as fOut:
-    if len(res) == 0:
-        fOut.write("NONE")
-    else:
-        fOut.write("\n".join(res))
-    fOut.write("\n")
-</code></pre>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;dict.txt&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">d</span><span class="p">:</span>
+    <span class="n">validNames</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;namenum.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">trim</span><span class="p">(</span><span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(),</span><span class="n">validNames</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;namenum.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;NONE&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">res</span><span class="p">))</span>
+    <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
 
             </div>            
         </div>
