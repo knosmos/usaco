@@ -12,7 +12,7 @@ nav{
     /*box-shadow:0px 0px 10px rgb(128, 128, 128);*/
     position:sticky;
     top: 0;
-    background-color:rgb(11, 20, 61);
+    background-color:rgba(8, 15, 46, 0.932);
     z-index:999;
 }
 nav a{
@@ -25,7 +25,7 @@ nav a{
     /*background-image:url('https://www.solidbackgrounds.com/images/website/950x534/950x534-blue-abstract-noise-free-website-background-image.jpg');*/
     /*background-color:rgb(14, 89, 151);*/
     background-color:rgb(209, 0, 98);
-    -webkit-clip-path: polygon(0 0, 100% 0, 100% 96%, 0 100%);
+    -webkit-clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
     padding-bottom:100px;
     clip-path: polygon(0 0, 100% 0, 100% 70%, 0 100%);
     z-index:-1;
@@ -42,13 +42,13 @@ nav a{
 
 @media screen and (max-width:1000px){
     .container{
-        padding-left:10px;
-        padding-right:10px;
+        padding-left:20px;
+        padding-right:20px;
     }
 }
 
 h1{
-    font-size:50pt;
+    font-size:40pt;
     font-weight:100;
     margin-bottom:5pt;
 }
@@ -58,6 +58,13 @@ h2{
     color:rgb(44, 120, 165);
     margin-bottom:5pt;
     font-weight:100;
+}
+h3{
+    margin-top:10pt;
+    font-size:25pt;
+    color:rgb(224, 47, 100);
+    margin-bottom:10pt;
+    font-weight:300;
 }
 code{
     font-family: Consolas,"courier new";
@@ -92,7 +99,7 @@ table{
 td{
     padding:10px;
 }
-li h2{
+.subheading{
     color:rgb(255, 28, 134);
 }
 a{
@@ -106,13 +113,40 @@ a:hover{
 }
 
 .content-body{
-    min-height:calc(100vh - 70px);
+    min-height:calc(100vh - 120px);
 }
 
 .footer{
     background-color:rgb(240,240,240);
     text-align:center;
     height:70px;
+    margin-top:50px;
+}
+p{
+    font-size:13pt;
+    line-height:1.5;
+}
+
+/* CUSTOM SCROLLBAR */
+/* https://css-tricks.com/almanac/properties/s/scrollbar-color/ */
+
+html {
+    --scrollbarBG: #f5f5f5;
+    --thumbBG: #b6b6b6;
+}
+body::-webkit-scrollbar {
+    width: 15px;
+}
+body {
+    scrollbar-color: var(--thumbBG) var(--scrollbarBG);
+}
+body::-webkit-scrollbar-track {
+    background: var(--scrollbarBG);
+}
+body::-webkit-scrollbar-thumb {
+    background-color: var(--thumbBG) ;
+    border-radius: 6px;
+    border: 3px solid var(--scrollbarBG);
 }
 
 /* CODE SYNTAX HIGHLIGHTING */

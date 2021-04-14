@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+        <title>USACO Solutions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel=icon href=../logo.png type=image/png>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <div class = "content-body">
+            <nav class = container>
+                <a href='../index.html'>USACO Solutions</a>
+            </nav>
+            <div class = "container wrapper">
+                <h1>Bessie Come Home</h1>
+
+<h3>comehome</h3>
+
+<h2>Algorithm</h2>
+
+<p>Runs Dijkstra to find the shortest path from each capital pasture to the barn. This would be much more
+efficient if Dijkstra was run only once from the barn to all of the pastures, but the current solution
+works for the given test cases.</p>
+
+<h2>Python</h2>
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">pathfind</span><span class="p">(</span><span class="n">adjList</span><span class="p">,</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="p">):</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">prev</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">pasture</span> <span class="ow">in</span> <span class="n">adjList</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">dist</span><span class="p">[</span><span class="n">pasture</span><span class="p">]</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+        <span class="n">prev</span><span class="p">[</span><span class="n">pasture</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span>
+        <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pasture</span><span class="p">)</span>
+    <span class="n">dist</span><span class="p">[</span><span class="n">start</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">while</span> <span class="nb">any</span><span class="p">(</span><span class="n">q</span><span class="p">):</span>
+        <span class="nb">min</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+        <span class="n">u</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">q</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">dist</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">:</span>
+                    <span class="nb">min</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+                    <span class="n">u</span> <span class="o">=</span> <span class="n">j</span>
+        <span class="k">if</span> <span class="n">u</span> <span class="o">==</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="o">-</span><span class="mi">1</span> <span class="c1"># No paths</span>
+        <span class="k">if</span> <span class="n">u</span> <span class="o">==</span> <span class="n">end</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="n">end</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">prev</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">u</span> <span class="o">==</span> <span class="n">start</span><span class="p">:</span>
+                <span class="k">while</span> <span class="n">u</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">s</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">u</span><span class="p">)</span>
+                    <span class="n">u</span> <span class="o">=</span> <span class="n">prev</span><span class="p">[</span><span class="n">u</span><span class="p">]</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">d</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">d</span>
+
+        <span class="k">for</span> <span class="n">connectedPasture</span> <span class="ow">in</span> <span class="n">adjList</span><span class="p">[</span><span class="n">u</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">connectedPasture</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">alt</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="n">u</span><span class="p">]</span> <span class="o">+</span> <span class="n">connectedPasture</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">alt</span> <span class="o">&lt;</span> <span class="n">dist</span><span class="p">[</span><span class="n">connectedPasture</span><span class="p">[</span><span class="mi">0</span><span class="p">]]:</span>
+                    <span class="n">dist</span><span class="p">[</span><span class="n">connectedPasture</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">alt</span>
+                    <span class="n">prev</span><span class="p">[</span><span class="n">connectedPasture</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">u</span>
+        <span class="n">q</span><span class="p">[</span><span class="n">q</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">u</span><span class="p">)]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">adjList</span><span class="p">):</span>
+    <span class="n">recordCow</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+    <span class="n">recordDistance</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s1">&#39;inf&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">cow</span> <span class="ow">in</span> <span class="n">adjList</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">cow</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span> <span class="ow">and</span> <span class="n">cow</span> <span class="o">!=</span> <span class="s1">&#39;Z&#39;</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">pathfind</span><span class="p">(</span><span class="n">adjList</span><span class="p">,</span><span class="n">cow</span><span class="p">,</span><span class="s1">&#39;Z&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">recordDistance</span> <span class="ow">and</span> <span class="n">d</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                <span class="n">recordCow</span> <span class="o">=</span> <span class="n">cow</span>
+                <span class="n">recordDistance</span> <span class="o">=</span> <span class="n">d</span>
+    <span class="k">return</span> <span class="n">recordCow</span><span class="p">,</span> <span class="n">recordDistance</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;comehome.in&#39;</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fIn</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">fIn</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">adjList</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="s1">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz&#39;</span><span class="p">:</span> <span class="c1"># initialize adjList</span>
+        <span class="n">adjList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">k</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">adjList</span><span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">])])</span>
+        <span class="n">adjList</span><span class="p">[</span><span class="n">k</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">k</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">[</span><span class="mi">2</span><span class="p">])])</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">adjList</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;comehome.out&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fOut</span><span class="p">:</span>
+        <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%d</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span> <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+            </div>            
+        </div>
+        <div class="container footer"><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+        </div>
+    </body>
+</html>
