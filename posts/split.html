@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+        <title>USACO Solutions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel=icon href=../logo.png type=image/png>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <div class = "content-body">
+            <nav class = container>
+                <a href='../index.html'>USACO Solutions</a>
+            </nav>
+            <div class = "container wrapper">
+                <h1>Splitting the Field</h1>
+
+<h3>USACO 2016 US Open - Gold, Problem 1</h3>
+
+<h2>Algorithm</h2>
+
+<p>Finding the area required for one fence is trivial (just find the topmost, leftmost, rightmost and bottommost cows).</p>
+
+<p>Notice that to have two non-overlapping fences, there has to be a vertical or horizontal line that separates
+the two fences. Without loss of generality assume that the optimal dividing line is vertical. We can then scan
+from left to right, calculating how much area is needed for the two fences.</p>
+
+<p>For the left fence:</p>
+
+<ul>
+<li>the left edge is the x-coordinate of the leftmost cow</li>
+<li>the right edge is the x-coordinate of the cow closest but left of the dividing line</li>
+<li>to find the top edge, we can keep a running maximum of the y-coordinates of each cow (since the y-coordinate of the topmost point will only ever increase as we scan)</li>
+<li>to find the bottom edge, we keep a running minimum of the y-coordinates of each cow</li>
+</ul>
+
+<p>We use a similar method to find the dimensions of the right fence. To solve for horizontal dividing lines, we can reflect the points across the line y=x.</p>
+
+<h2>Python</h2>
+
+<div class="codehilite"><pre><span></span><code><span class="n">f_in</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;split.in&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+<span class="n">f_out</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;split.out&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+
+<span class="nb">input</span> <span class="o">=</span> <span class="n">f_in</span><span class="o">.</span><span class="n">readline</span>
+<span class="nb">print</span> <span class="o">=</span> <span class="n">f_out</span><span class="o">.</span><span class="n">write</span>
+
+<span class="c1"># Get cow positions</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">cows</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">cows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())))</span>
+
+<span class="c1"># Get area</span>
+<span class="k">def</span> <span class="nf">run_single</span><span class="p">(</span><span class="n">cows</span><span class="p">):</span>
+    <span class="c1"># gets area required for single fence</span>
+    <span class="n">min_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cows</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">max_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cows</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">min_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">cows</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">max_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cows</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">area</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_x</span> <span class="o">-</span> <span class="n">min_x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_y</span> <span class="o">-</span> <span class="n">min_y</span><span class="p">)</span>
+    <span class="c1">#print(&quot;single area&quot;,area)</span>
+    <span class="k">return</span> <span class="n">area</span>
+
+<span class="k">def</span> <span class="nf">run_double</span><span class="p">(</span><span class="n">cows</span><span class="p">):</span>
+    <span class="c1"># gets area required for two fences, with</span>
+    <span class="c1"># vertical dividing line</span>
+    <span class="n">cows</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># sort in ascending order of x pos</span>
+    <span class="n">min_x</span> <span class="o">=</span> <span class="n">cows</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">max_x</span> <span class="o">=</span> <span class="n">cows</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># store each unique x position as well as the last</span>
+    <span class="c1"># position in cows where that x is found</span>
+    <span class="c1"># [x, last_cow_index, max_y, min_y]</span>
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">cow</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">cows</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="ow">or</span> <span class="n">cow</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">columns</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">cow</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">i</span><span class="p">,</span> <span class="n">cow</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">cow</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+            <span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span> <span class="n">cow</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">columns</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">3</span><span class="p">],</span> <span class="n">cow</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># build prefix-sum like arrays to store max/min y vals</span>
+    <span class="n">left_y_prefixes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">current_max</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">current_min</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">)):</span>
+        <span class="n">current_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">current_max</span><span class="p">,</span> <span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">current_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">current_min</span><span class="p">,</span> <span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span>
+        <span class="n">left_y_prefixes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">current_max</span><span class="p">,</span> <span class="n">current_min</span><span class="p">])</span>
+
+    <span class="n">right_y_prefixes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">current_max</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">current_min</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">current_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">current_max</span><span class="p">,</span> <span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">current_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">current_min</span><span class="p">,</span> <span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">3</span><span class="p">])</span>
+        <span class="n">right_y_prefixes</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">current_max</span><span class="p">,</span> <span class="n">current_min</span><span class="p">])</span>
+    <span class="n">right_y_prefixes</span> <span class="o">=</span> <span class="n">right_y_prefixes</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># print(left_y_prefixes,right_y_prefixes)</span>
+
+    <span class="n">min_total_area</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+    <span class="n">num_columns</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">next_x</span> <span class="o">=</span> <span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">min_y_left</span> <span class="o">=</span> <span class="n">left_y_prefixes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">max_y_left</span> <span class="o">=</span> <span class="n">left_y_prefixes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">area_left</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">min_x</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">max_y_left</span><span class="o">-</span><span class="n">min_y_left</span><span class="p">)</span>
+
+        <span class="n">min_y_right</span> <span class="o">=</span> <span class="n">right_y_prefixes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">max_y_right</span> <span class="o">=</span> <span class="n">right_y_prefixes</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">area_right</span> <span class="o">=</span> <span class="p">(</span><span class="n">max_x</span><span class="o">-</span><span class="n">next_x</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">max_y_right</span><span class="o">-</span><span class="n">min_y_right</span><span class="p">)</span>
+
+        <span class="c1">#print(area_left,area_right)</span>
+        <span class="n">min_total_area</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">min_total_area</span><span class="p">,</span> <span class="n">area_left</span><span class="o">+</span><span class="n">area_right</span><span class="p">)</span>
+    <span class="c1">#print(&quot;double area&quot;, min_total_area)</span>
+    <span class="k">return</span> <span class="n">min_total_area</span>
+
+<span class="c1"># Main</span>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">single_area</span> <span class="o">=</span> <span class="n">run_single</span><span class="p">(</span><span class="n">cows</span><span class="p">)</span>
+    <span class="n">double_area_vertical</span> <span class="o">=</span> <span class="n">run_double</span><span class="p">(</span><span class="n">cows</span><span class="p">)</span>
+    <span class="n">cows_reflect</span> <span class="o">=</span> <span class="p">[[</span><span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cows</span><span class="p">]</span> <span class="c1"># reflect across y=x</span>
+    <span class="n">double_area_horizontal</span> <span class="o">=</span> <span class="n">run_double</span><span class="p">(</span><span class="n">cows_reflect</span><span class="p">)</span>
+    <span class="n">double_area</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">double_area_horizontal</span><span class="p">,</span> <span class="n">double_area_vertical</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">single_area</span><span class="o">-</span><span class="n">double_area</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+            </div>            
+        </div>
+        <div class="container footer"><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+        </div>
+    </body>
+</html>

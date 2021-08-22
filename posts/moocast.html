@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+        <title>USACO Solutions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel=icon href=../logo.png type=image/png>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <div class = "content-body">
+            <nav class = container>
+                <a href='../index.html'>USACO Solutions</a>
+            </nav>
+            <div class = "container wrapper">
+                <h1>Moocast</h1>
+
+<h3>December 2016 Silver, Problem 3</h3>
+
+<h2>Algorithm</h2>
+
+<p>First, generate an adjacency list using the power of each of the transmitters.
+Run a DFS starting from each of the cows, and pick the one that reaches the 
+largest number of cows.</p>
+
+<h2>Python</h2>
+
+<div class="codehilite"><pre><span></span><code><span class="c1"># read input</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;moocast.in&quot;</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">f</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">walkies</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">:</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="n">i</span><span class="o">.</span><span class="n">split</span><span class="p">())),</span><span class="n">f</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+
+<span class="c1"># generate adjlist</span>
+<span class="n">adjList</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">j</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">walkies</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">walkies</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span><span class="o">+</span><span class="p">(</span><span class="n">walkies</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="n">walkies</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">walkies</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span><span class="o">**</span><span class="mi">2</span><span class="p">:</span>
+                <span class="n">adjList</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+<span class="c1"># run dfs</span>
+<span class="k">def</span> <span class="nf">dfs</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">adjList</span><span class="p">,</span> <span class="n">remaining</span>
+    <span class="n">remaining</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">adjList</span><span class="p">[</span><span class="n">node</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">remaining</span><span class="p">:</span>
+            <span class="n">dfs</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">remaining</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="n">dfs</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span><span class="n">n</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">remaining</span><span class="p">))</span>
+
+<span class="c1"># write output</span>
+<span class="nb">open</span><span class="p">(</span><span class="s2">&quot;moocast.out&quot;</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+            </div>            
+        </div>
+        <div class="container footer"><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+        <title>USACO Solutions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel=icon href=../logo.png type=image/png>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <div class = "content-body">
+            <nav class = container>
+                <a href='../index.html'>USACO Solutions</a>
+            </nav>
+            <div class = "container wrapper">
+                <h1>Hoof, Paper, Scissors</h1>
+
+<h3>USACO 2017 January Contest, Silver - Problem 2</h3>
+
+<h2>Algorithm</h2>
+
+<p>We want to find x such that the number of similar gestures from 1 -> x and x -> N is maximal. 
+The naive solution would be:</p>
+
+<pre><code>for gesture i in [H,P,S]:
+    for gesture j in [H,P,S]:
+        for x in range(0,N):
+            count_i = number of is from 1 to x
+            count_j = number of js from x to N
+            record = max(record, count_i+count_j)
+</code></pre>
+
+<p>However, this runs in O(N^2) time, since the counting operation runs in linear time.
+We can improve this algorithm so it runs in linear time:</p>
+
+<pre><code>for gesture i in [H,P,S]:
+    for gesture j in [H,P,S]:
+        count_i = 0
+        count_j = count number of js from 0 to N
+        for x in range(0,N):
+            if gestures[x] is i:
+                count_i += 1
+            if gestures[x] is j:
+                count_j -= 1
+            record = max(record, count_i+count_j)
+</code></pre>
+
+<h2>Python</h2>
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">gestures</span><span class="p">):</span>
+    <span class="n">record</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="s2">&quot;HPS&quot;</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="s2">&quot;HPS&quot;</span><span class="p">:</span>
+            <span class="n">count_i</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">count_j</span> <span class="o">=</span> <span class="n">gestures</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">gestures</span><span class="p">)):</span>
+                <span class="k">if</span> <span class="n">gestures</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="n">i</span><span class="p">:</span> <span class="n">count_i</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">gestures</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">==</span> <span class="n">j</span><span class="p">:</span> <span class="n">count_j</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="n">record</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="n">count_i</span><span class="o">+</span><span class="n">count_j</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">record</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">gestures</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s2">&quot;hps.in&quot;</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">run</span><span class="p">(</span><span class="n">gestures</span><span class="p">)</span>
+    <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;hps.out&quot;</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">res</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span> <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+
+            </div>            
+        </div>
+        <div class="container footer"><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+        </div>
+    </body>
+</html>
