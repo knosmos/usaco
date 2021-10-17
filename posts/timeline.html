@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+        <title>USACO Solutions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel=icon href=../logo.png type=image/png>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <div class = "content-body">
+            <nav class = container>
+                <a href='../index.html'>USACO Solutions</a>
+            </nav>
+            <div class = "container wrapper">
+                <h1>Timeline</h1>
+
+<h3>February 2020, Gold - Problem 1: timeline</h3>
+
+<h2>Algorithm</h2>
+
+<p>We can model the problem as a directed acyclic graph (DAG). We start by adding <code>n</code> vertices (one for each
+milking session), then add a vertex <code>k</code> with edges going to each session <code>i</code> with length <code>S_i</code>. Then, for
+each memory triple <code>(a,b,x)</code>, we draw an edge from vertex <code>a</code> to vertex <code>b</code> with length <code>x</code>. The answer
+for session <code>i</code> is the length of the longest path from <code>k</code> to <code>i</code>.</p>
+
+<p>To find the length of the longest path, we first use topological sort to order the vertices
+in a way that each edge points to a vertex later in the array. We then process each vertex <code>a</code> in
+our topologically sorted array. Initialize an array <code>res</code>, to store the current longest path for each session.
+For each neighbor <code>b</code> of <code>a</code>, we set its currently longest path to <code>max(res[b], res[a]+x)</code> where
+<code>x</code> is the length of the edge <code>(a,b)</code>. After we process all the vertices, <code>res</code> will contain
+the earliest date for each milking session.</p>
+
+<h2>Python</h2>
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">setio</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="c1"># Overwrites input/print functions to file io</span>
+    <span class="k">global</span> <span class="nb">input</span><span class="p">,</span> <span class="nb">print</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.in&quot;</span><span class="p">,</span><span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="n">o</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.out&quot;</span><span class="p">,</span><span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">readline</span>
+    <span class="nb">print</span> <span class="o">=</span> <span class="n">o</span><span class="o">.</span><span class="n">write</span>
+
+<span class="k">def</span> <span class="nf">intline</span><span class="p">():</span>
+    <span class="c1"># Get one-line list of space separated ints</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+
+<span class="c1"># Get Input</span>
+<span class="n">setio</span><span class="p">(</span><span class="s2">&quot;timeline&quot;</span><span class="p">)</span>
+<span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">intline</span><span class="p">()</span>
+<span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="n">intline</span><span class="p">()</span> <span class="c1"># S_i; edges are 1-indexed so we pad a 0</span>
+
+<span class="n">adj</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+<span class="n">indegree</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="c1"># (a, b, x)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">intline</span><span class="p">()</span>
+    <span class="n">adj</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+    <span class="n">indegree</span><span class="p">[</span><span class="n">s</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+<span class="c1"># Kahn&#39;s algorithm (Topological Sort)</span>
+<span class="n">topsorted</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">queue</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">indegree</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<span class="k">while</span> <span class="n">queue</span><span class="p">:</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+    <span class="n">topsorted</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">a</span><span class="p">]:</span>
+        <span class="n">b</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">edge</span>
+        <span class="n">indegree</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span> <span class="c1"># Remove edge from graph</span>
+        <span class="c1"># If b has no incoming edges, then add to queue</span>
+        <span class="k">if</span> <span class="n">indegree</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+
+<span class="c1"># Solve</span>
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">topsorted</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">a</span><span class="p">]:</span>
+        <span class="n">b</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">edge</span>
+        <span class="c1"># If a longer path is found, update res</span>
+        <span class="n">res</span><span class="p">[</span><span class="n">b</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">[</span><span class="n">b</span><span class="p">],</span> <span class="n">res</span><span class="p">[</span><span class="n">a</span><span class="p">]</span><span class="o">+</span><span class="n">x</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">,</span><span class="n">res</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+            </div>            
+        </div>
+        <div class="container footer"><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+        </div>
+    </body>
+</html>

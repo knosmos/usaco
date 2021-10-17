@@ -101,7 +101,9 @@ td{
 }
 .subheading{
     color:rgb(255, 28, 134);
+    font-size:25pt;
 }
+
 a{
     font-weight:100;
     color:rgb(0, 0, 0);
@@ -110,6 +112,23 @@ a{
 }
 a:hover{
     text-decoration: underline;
+}
+
+.index a{
+    font-weight:200;
+    color:rgb(0, 0, 0);
+    font-size:20pt;
+    text-decoration: none;
+    padding:10px;
+    margin:10px;
+    background-color:#f8f8f8;
+    border: 2px solid #ececec;
+    border-radius:10px;
+    display:block;
+    float:left;
+}
+.index a:hover{
+    background-color:#f3f3f3;
 }
 
 .content-body{
