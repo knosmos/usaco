@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+        <title>USACO Solutions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel=icon href=../logo.png type=image/png>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <div class = "content-body">
+            <nav class = container>
+                <a href='../index.html'>USACO Solutions</a>
+            </nav>
+            <div class = "container wrapper">
+                <h1>Bracelet Crossings</h1>
+
+<h3>USACO 2021 December Contest, Gold - Problem 3</h3>
+
+<h2>Algorithm</h2>
+
+<p>Conditions to check:</p>
+
+<ul>
+<li>The stack is valid (parenthesis matching problem)</li>
+<li>Each color is in a contiguous interval</li>
+<li>Ordering of colors is constant (if a appears before b in one x, it appears before b in all x)</li>
+<li>If a is contained within b in one x, it is contained within b in all x</li>
+</ul>
+
+<h2>Python</h2>
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">solve</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">case</span><span class="p">):</span>
+    <span class="n">active</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># 0 =&gt; not seen, 1 =&gt; seen, 2 ==&gt; previously seen</span>
+    <span class="n">orders</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">contain</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">sweep</span> <span class="ow">in</span> <span class="n">case</span><span class="p">:</span>
+        <span class="n">stack</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">curr_order</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">sweep</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">seen</span><span class="p">[</span><span class="n">color</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">color</span><span class="p">:</span>
+                    <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="c1">#print(&quot;stack fail&quot;)</span>
+                    <span class="k">return</span> <span class="kc">False</span> <span class="c1"># Invalid stack</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">contain</span><span class="p">[</span><span class="n">color</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">contain</span><span class="p">[</span><span class="n">color</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+                            <span class="c1">#print(&quot;contain fail&quot;)</span>
+                            <span class="k">return</span> <span class="kc">False</span> <span class="c1"># Invalid containment</span>
+                    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="n">contain</span><span class="p">[</span><span class="n">color</span><span class="p">]:</span>
+                        <span class="c1">#print(&quot;contain fail&quot;)</span>
+                        <span class="k">return</span> <span class="kc">False</span> <span class="c1"># Invalid containment</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">stack</span><span class="p">):</span>
+                    <span class="n">contain</span><span class="p">[</span><span class="n">color</span><span class="p">]</span> <span class="o">=</span> <span class="n">stack</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">contain</span><span class="p">[</span><span class="n">color</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>                
+                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+                <span class="n">curr_order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+            <span class="n">seen</span><span class="p">[</span><span class="n">color</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">active</span><span class="p">[</span><span class="n">color</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">active</span><span class="p">[</span><span class="n">color</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="n">active</span><span class="p">[</span><span class="n">color</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="c1">#print(&quot;continuity fail&quot;,active)</span>
+                <span class="k">return</span> <span class="kc">False</span> <span class="c1"># Not contiguous</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">active</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">seen</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">active</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="c1"># Test ordering</span>
+        <span class="k">for</span> <span class="n">order</span> <span class="ow">in</span> <span class="n">orders</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">order</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">curr_order</span><span class="p">:</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="n">curr_order</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="n">j</span><span class="p">:</span>
+                        <span class="c1">#print(&quot;order fail&quot;)</span>
+                        <span class="k">return</span> <span class="kc">False</span>
+                    <span class="n">j</span> <span class="o">=</span> <span class="n">k</span>
+        <span class="n">orders</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr_order</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">res</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">t</span><span class="p">):</span>
+    <span class="nb">input</span><span class="p">()</span>
+    <span class="n">n</span><span class="p">,</span> <span class="n">m</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+    <span class="n">case</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">m</span><span class="p">):</span>
+        <span class="n">case</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span><span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()))[</span><span class="mi">1</span><span class="p">:])</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="s2">&quot;NO&quot;</span><span class="p">,</span><span class="s2">&quot;YES&quot;</span><span class="p">][</span><span class="n">solve</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">case</span><span class="p">)])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">res</span><span class="p">:</span><span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</code></pre></div>
+
+            </div>            
+        </div>
+        <div class="container footer"><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+        </div>
+    </body>
+</html>
