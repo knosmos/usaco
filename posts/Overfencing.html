@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+        <title>USACO Solutions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel=icon href=../logo.png type=image/png>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <div class = "content-body">
+            <nav class = container>
+                <a href='../index.html'>USACO Solutions</a>
+            </nav>
+            <div class = "container wrapper">
+                <h1>Overfencing</h1>
+
+<h3>maze1</h3>
+
+<h2>Algorithm</h2>
+
+<p>This is mostly an ASCII parsing challenge. Search for the two exit points, then start a BFS from them. Largest depth reached is the answer.</p>
+
+<h2>Python</h2>
+
+<div class="codehilite"><pre><span></span><code><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">deque</span>
+
+<span class="k">def</span> <span class="nf">setio</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="c1"># Overwrites input/print functions to file io</span>
+    <span class="k">global</span> <span class="nb">input</span><span class="p">,</span> <span class="nb">print</span>
+    <span class="n">fIn</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.in&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="n">fOut</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.out&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">fIn</span><span class="o">.</span><span class="n">readline</span>
+    <span class="nb">print</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">setio</span><span class="p">(</span><span class="s2">&quot;maze1&quot;</span><span class="p">)</span>
+
+<span class="c1"># Load map</span>
+<span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
+<span class="n">m</span> <span class="o">=</span> <span class="p">[</span><span class="nb">input</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+
+<span class="c1"># Get edges</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span> <span class="c1"># Here, edges means the empty spaces between walls</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">w</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span> <span class="c1"># Looking for horizontal edges</span>
+            <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+                <span class="n">edges</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">j</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span> <span class="c1"># Looking for vertical edges</span>
+            <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+                <span class="n">edges</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+
+<span class="c1"># Get exits</span>
+<span class="n">exits</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+        <span class="n">exits</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">2</span><span class="o">*</span><span class="n">w</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+        <span class="n">exits</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">w</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">w</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+        <span class="n">exits</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot; &quot;</span><span class="p">:</span>
+        <span class="n">exits</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">h</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">j</span><span class="p">))</span>
+
+<span class="c1"># Run BFS</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">exits</span><span class="p">])</span>
+<span class="n">visited</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">exits</span><span class="p">)</span>
+<span class="n">res</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">q</span><span class="p">:</span>
+    <span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">d</span> <span class="o">=</span> <span class="n">q</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">res</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">di</span><span class="p">,</span> <span class="n">dj</span> <span class="ow">in</span> <span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">di</span><span class="p">,</span> <span class="n">j</span><span class="o">+</span><span class="n">dj</span><span class="p">)</span> <span class="ow">in</span> <span class="n">edges</span> <span class="ow">and</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="n">di</span> <span class="o">*</span> <span class="mi">2</span><span class="p">,</span> <span class="n">j</span><span class="o">+</span><span class="n">dj</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">visited</span><span class="p">:</span>
+            <span class="n">q</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="n">di</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">j</span><span class="o">+</span><span class="n">dj</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">d</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
+            <span class="n">visited</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="n">di</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">j</span><span class="o">+</span><span class="n">dj</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">res</span><span class="p">)</span>
+</code></pre></div>
+
+            </div>            
+        </div>
+        <div class="container footer"><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+        <title>USACO Solutions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel=icon href=../logo.png type=image/png>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <div class = "content-body">
+            <nav class = container>
+                <a href='../index.html'>USACO Solutions</a>
+            </nav>
+            <div class = "container wrapper">
+                <h1>Cow Tours</h1>
+
+<h3>cowtour</h3>
+
+<h2>Algorithm</h2>
+
+<p>Run floodfill to find connected components, precompute distances between each pair of points with Floyd-Warshall, and then calculate the diameter of each component. Then we iterate through each pair of point between each pair of components:</p>
+
+<pre><code>for each component a:
+    for each other component b:
+        for each point i in a:
+            get farthest point k from i in a
+            for each point j in b:
+                get farthest point l from j in b
+                diameter = max(
+                    diameter of a,
+                    diameter of b,
+                    distance between i and j + dist[i][k] + dist[j][l]
+                )
+</code></pre>
+
+<h2>Python</h2>
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">setio</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="c1"># Overwrites input/print functions to file io</span>
+    <span class="k">global</span> <span class="nb">input</span><span class="p">,</span> <span class="nb">print</span>
+    <span class="n">fIn</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.in&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+    <span class="n">fOut</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">.out&quot;</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span>
+    <span class="nb">input</span> <span class="o">=</span> <span class="n">fIn</span><span class="o">.</span><span class="n">readline</span>
+    <span class="nb">print</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">i</span><span class="p">:</span> <span class="n">fOut</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">floydWarshall</span><span class="p">(</span><span class="n">adj</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+    <span class="c1"># Floyd-Warshall Algorithm</span>
+    <span class="n">dist</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)]</span> <span class="o">*</span> <span class="n">v</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">weight</span> <span class="o">=</span> <span class="n">euclideanDist</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">pos</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+            <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">weight</span>
+        <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">dist</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]:</span>
+                    <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">dist</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="n">j</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">dist</span>
+
+<span class="k">def</span> <span class="nf">floodFill</span><span class="p">(</span><span class="n">adj</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+    <span class="c1"># Floodfill Algorithm</span>
+    <span class="n">vis</span> <span class="o">=</span> <span class="p">[</span><span class="kc">False</span><span class="p">]</span> <span class="o">*</span> <span class="n">v</span>
+    <span class="n">comp</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+        <span class="n">curr</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">vis</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span>
+            <span class="n">stack</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">vis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
+                <span class="n">curr</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">adj</span><span class="p">[</span><span class="n">x</span><span class="p">]:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">vis</span><span class="p">[</span><span class="n">y</span><span class="p">]:</span>
+                        <span class="n">vis</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+            <span class="n">comp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">curr</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">comp</span>
+
+<span class="k">def</span> <span class="nf">euclideanDist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="c1"># Euclidean distance between two points</span>
+    <span class="k">return</span> <span class="p">((</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+
+<span class="c1"># Input handling</span>
+<span class="n">setio</span><span class="p">(</span><span class="s2">&quot;cowtour&quot;</span><span class="p">)</span>
+<span class="n">n</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">())</span>
+<span class="n">pos</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">input</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">())))</span>
+<span class="n">adj</span> <span class="o">=</span> <span class="p">[[]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">line</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;1&quot;</span><span class="p">:</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+            <span class="n">adj</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="c1"># Precompute distances between each pair of points</span>
+<span class="n">dist</span> <span class="o">=</span> <span class="n">floydWarshall</span><span class="p">(</span><span class="n">adj</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Find connected components</span>
+<span class="n">comp</span> <span class="o">=</span> <span class="n">floodFill</span><span class="p">(</span><span class="n">adj</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+
+<span class="c1"># Find diameter of each component</span>
+<span class="n">diam</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">comp</span><span class="p">:</span>
+    <span class="n">maxDist</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">component</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">component</span><span class="p">:</span>
+            <span class="n">maxDist</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">maxDist</span><span class="p">,</span> <span class="n">dist</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">])</span>
+    <span class="n">diam</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">maxDist</span><span class="p">)</span>
+
+<span class="n">opt</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">comp</span><span class="p">)):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">comp</span><span class="p">[</span><span class="n">a</span><span class="p">]:</span>
+        <span class="n">ik_dist</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">comp</span><span class="p">[</span><span class="n">a</span><span class="p">]:</span>
+            <span class="n">ik_dist</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">ik_dist</span><span class="p">,</span> <span class="n">dist</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">])</span>    
+        <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">comp</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">comp</span><span class="p">[</span><span class="n">b</span><span class="p">]:</span>
+                <span class="n">jl_dist</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">comp</span><span class="p">[</span><span class="n">b</span><span class="p">]:</span>
+                    <span class="n">jl_dist</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">jl_dist</span><span class="p">,</span> <span class="n">dist</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">l</span><span class="p">])</span>
+                <span class="n">opt</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span>
+                    <span class="n">opt</span><span class="p">,</span>
+                    <span class="nb">max</span><span class="p">(</span>
+                        <span class="n">diam</span><span class="p">[</span><span class="n">a</span><span class="p">],</span>
+                        <span class="n">diam</span><span class="p">[</span><span class="n">b</span><span class="p">],</span>
+                        <span class="n">euclideanDist</span><span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">pos</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="o">+</span> <span class="n">ik_dist</span> <span class="o">+</span> <span class="n">jl_dist</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">opt</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+
+            </div>            
+        </div>
+        <div class="container footer"><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+        </div>
+    </body>
+</html>
