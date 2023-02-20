@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel=stylesheet type=text/css href='../style.css'>
+        <title>USACO Solutions</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel=icon href=../logo.png type=image/png>
+    </head>
+    <body style='min-height:100%;position:relative;'>
+        <div class = "content-body">
+            <nav class = container>
+                <a href='../index.html'>USACO Solutions</a>
+            </nav>
+            <div class = "container wrapper">
+                <h1>Agri-Net</h1>
+
+<h3>agrinet</h3>
+
+<h2>Algorithm</h2>
+
+<p>This is a standard Minimum Spanning Tree problem. We run Kruskal's MST algorithm, with a disjoint-set
+union-find data structure to keep track of the connected components for a runtime of O(N^2 log N); it 
+is complete overkill when N &lt;= 100 but it sounds cool so I'm using it anyway.</p>
+
+<h2>C++</h2>
+
+<div class="codehilite"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;bits/stdc++.h&gt;</span><span class="cp"></span>
+<span class="k">using</span> <span class="k">namespace</span> <span class="nn">std</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">setio</span><span class="p">(</span><span class="n">string</span> <span class="n">s</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">freopen</span><span class="p">((</span><span class="n">s</span><span class="o">+</span><span class="s">&quot;.in&quot;</span><span class="p">).</span><span class="n">c_str</span><span class="p">(),</span><span class="s">&quot;r&quot;</span><span class="p">,</span><span class="n">stdin</span><span class="p">);</span>
+    <span class="n">freopen</span><span class="p">((</span><span class="n">s</span><span class="o">+</span><span class="s">&quot;.out&quot;</span><span class="p">).</span><span class="n">c_str</span><span class="p">(),</span><span class="s">&quot;w&quot;</span><span class="p">,</span><span class="n">stdout</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">struct</span> <span class="nc">DSU</span> <span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">e</span><span class="p">;</span>
+    <span class="n">DSU</span><span class="p">(</span><span class="kt">int</span> <span class="n">N</span><span class="p">)</span> <span class="p">{</span> <span class="n">e</span> <span class="o">=</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="mi">-1</span><span class="p">);</span> <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">get</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">e</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">e</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="n">x</span><span class="p">]);</span> <span class="p">}</span>
+    <span class="kt">bool</span> <span class="n">same_set</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">get</span><span class="p">(</span><span class="n">a</span><span class="p">)</span> <span class="o">==</span> <span class="n">get</span><span class="p">(</span><span class="n">b</span><span class="p">);</span> <span class="p">}</span>
+    <span class="kt">int</span> <span class="n">size</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="o">-</span><span class="n">e</span><span class="p">[</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">)];</span> <span class="p">}</span>
+    <span class="kt">bool</span> <span class="n">unite</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="n">y</span><span class="p">)</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">e</span><span class="p">[</span><span class="n">y</span><span class="p">])</span> <span class="n">swap</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+        <span class="n">e</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">+=</span> <span class="n">e</span><span class="p">[</span><span class="n">y</span><span class="p">];</span> <span class="n">e</span><span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span> <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">setio</span><span class="p">(</span><span class="s">&quot;agrinet&quot;</span><span class="p">);</span>
+    <span class="kt">int</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">n</span><span class="p">;</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="n">tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="o">&gt;&gt;</span> <span class="n">e</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">j</span><span class="o">&lt;</span><span class="n">n</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">w</span><span class="p">;</span>
+            <span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">w</span><span class="p">;</span>
+            <span class="n">e</span><span class="p">.</span><span class="n">push_back</span><span class="p">({</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">w</span><span class="p">});</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">sort</span><span class="p">(</span>
+        <span class="n">e</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">e</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
+        <span class="p">[](</span><span class="k">const</span> <span class="n">tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="n">tuple</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">get</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">get</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">);</span>
+    <span class="kt">long</span> <span class="n">cost</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">DSU</span> <span class="n">dsu</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">e</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">a</span> <span class="o">=</span> <span class="n">get</span><span class="o">&lt;</span><span class="mi">0</span><span class="o">&gt;</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span> <span class="kt">int</span> <span class="n">b</span> <span class="o">=</span> <span class="n">get</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">dsu</span><span class="p">.</span><span class="n">same_set</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span> <span class="p">{</span>
+            <span class="n">cost</span> <span class="o">+=</span> <span class="n">get</span><span class="o">&lt;</span><span class="mi">2</span><span class="o">&gt;</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+            <span class="n">dsu</span><span class="p">.</span><span class="n">unite</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">cost</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+            </div>            
+        </div>
+        <div class="container footer"><br>
+            <a href='https://github.com/knosmos'>By Jieruei Chang @knosmos</a><br><br>
+        </div>
+    </body>
+</html>
